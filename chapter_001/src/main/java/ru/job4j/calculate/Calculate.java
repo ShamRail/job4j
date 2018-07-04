@@ -3,10 +3,9 @@ package ru.job4j.calculate;
 /*
 	*Calculate
 	*
-	*@author Rail Shamsemuhametov
+	*@author Rail Shamsemuhametov.
 */
- public class Calculate{ 
-	
+ public class Calculate {
 	/*
 		* Method echo.
 		* @param name Your name.
@@ -20,7 +19,7 @@ package ru.job4j.calculate;
 		*@return Hello world.
 	*/
 	
-	public static void main(String[] args){ 
+	public static void main(String[] args) {
 		System.out.println("Hello World"); 
 	} 
 }
