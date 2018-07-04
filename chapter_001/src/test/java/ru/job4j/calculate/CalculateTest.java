@@ -1,8 +1,9 @@
 package ru.job4j.calculate;
 
-import org.junit.Test;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import  org.junit.Test;
+import  org.hamcrest.core.Is.is;
+import  org.junit.Assert.assertThat;
+
 
 
 public class CalculateTest {
