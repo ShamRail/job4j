@@ -1,25 +1,62 @@
 package ru.job4j.calculate; 
  
-/*
-	*Calculate
-	*
-	*@author Rail Shamsemuhametov.
+/**
+	* Calculate
+	* @version 1.0
+	* @since 05.07.2018
+	* @author Rail Shamsemuhametov.
 */
  public class Calculate {
-	/*
-		* Method echo.
-		* @param name Your name.
-		* @return Echo plus your name.
+     /** Contain result of math operation*/
+     private double result;
+
+	/**
+	* add.
+	* @param first - first , second - second.
+	* @return sum of two digits .
 	*/
-	public String echo(String name) {
-		return "Echo, echo, echo : " + name;
-	}		
-	/*
-		*@param args - args.
-		*@return Hello world.
-	*/
-	
-	public static void main(String[] args) {
-		System.out.println("Hello World"); 
-	} 
+
+	public  void add(double first, double second) {
+		this.result = first + second;
+	}
+
+    /**
+     * sub.
+     * @param first - first , second - second.
+     * @return result of subtraction of two digits.
+     */
+
+	public  void sub(double first, double second) {
+		this.result = first - second;
+	}
+
+    /**
+     * mult.
+     * @param first - first , second - second.
+     * @return result of multiplication of two digits.
+     */
+
+	public  void mult(double first, double second) {
+		this.result = first * second;
+	}
+
+
+    /**
+     * div.
+     * @param first - first , second - second.
+     * @return result of division of two digits.
+     */
+
+	public  void div(double first, double second) {
+		this.result = first / second;
+	}
+
+    /**
+     *getResult.
+     *@return
+     */
+
+	public double getResult() {
+		return this.result;
+	}
 }
