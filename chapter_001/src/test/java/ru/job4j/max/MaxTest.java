@@ -26,4 +26,11 @@ public class MaxTest {
                 max.max(2, 2), Is.is(2)
         );
     }
+    @Test
+    public  void whenParamOneTwoThreeThenMaxThree(){
+        Max max = new Max();
+        Assert.assertThat(
+                max.max(1, 2, 3), Is.is(3)
+        );
+    }
 }
