@@ -20,14 +20,14 @@ public class ConverterTest {
         Assert.assertThat(result, Is.is(1));
     }
     @Test
-    public void when1DollarToRuble() {
+    public void when1DollarToRubleThen60() {
         Converter converter = new Converter();
         int result = converter.dollarToRuble(1);
         Assert.assertThat(result, Is.is(60));
     }
 
     @Test
-    public void when1EuroToRuble() {
+    public void when1EuroToRubleThen70() {
         Converter converter = new Converter();
         int result = converter.euroToRuble(1);
         Assert.assertThat(result, Is.is(70));
