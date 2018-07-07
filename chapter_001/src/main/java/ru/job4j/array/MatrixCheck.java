@@ -19,17 +19,16 @@ public class MatrixCheck {
      * */
 
     public boolean mono(boolean[][] data) {
+
         boolean result = true;
         boolean fistfromLeft = data[0][0];
         boolean fistfromRight = data[0][data.length - 1];
 
-        mainloop : for (int i = 0; i < data.length; i++) {
-            for (int j = 0; j < data.length; j++) {
-                if (data[i][j] != fistfromLeft
-                        && data[j][i] != fistfromRight) {
-                    result = false;
-                    break mainloop;
-                }
+        for (int i = 1; i < data.length; i++) {
+            if (data[i][i] != fistfromLeft
+                    ||  data[data.length - 1 - i][i] != fistfromRight) {
+                result = false;
+                break;
             }
         }
         return result;
