@@ -41,7 +41,7 @@ public class AddArrays {
             stepByArr1++;
             stepByResult++;
         }
-        while (stepByArr2 < arr1.length) {
+        while (stepByArr2 < arr2.length) {
             result[stepByResult] = arr2[stepByArr2];
             stepByArr2++;
             stepByResult++;
