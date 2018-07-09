@@ -54,7 +54,8 @@ public class Logic3T {
         boolean result = false;
         for (int i = 0; i < table.length; i++) {
             for (int j = 0; j < table.length; j++) {
-                if (table[i][j] != null) {
+                if (table[i][j].hasMarkO() == false
+                        && table[i][j].hasMarkX() == false) {
                     result = true;
                 }
             }
