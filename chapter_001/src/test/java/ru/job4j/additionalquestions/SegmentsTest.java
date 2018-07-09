@@ -39,6 +39,30 @@ public class SegmentsTest {
     }
 
     @Test
+    public void whenA1B2C2D4() {
+        Segments segments = new Segments(1, 2, 2, 4);
+        Assert.assertThat(
+                segments.isSegmentsCrossing(), Is.is(true)
+        );
+    }
+
+    @Test
+    public void whenA2B3C1D2() {
+        Segments segments = new Segments(2, 3, 1, 2);
+        Assert.assertThat(
+                segments.isSegmentsCrossing(), Is.is(true)
+        );
+    }
+
+    @Test
+    public void whenA1B2C1D2() {
+        Segments segments = new Segments(1, 2, 1, 2);
+        Assert.assertThat(
+                segments.isSegmentsCrossing(), Is.is(true)
+        );
+    }
+
+    @Test
     public void whenNoCrossingA1B2C3D4() {
         Segments segments = new Segments(1, 2, 3, 4);
         Assert.assertThat(
@@ -53,4 +77,6 @@ public class SegmentsTest {
                 segments.isSegmentsCrossing(), Is.is(false)
         );
     }
+
+
 }

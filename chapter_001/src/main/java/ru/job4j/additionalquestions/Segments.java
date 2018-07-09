@@ -29,9 +29,9 @@ public class Segments {
      * */
 
     public boolean isSegmentsCrossing() {
-        return (a < c && b < d && c < b)
-                || (c < a && d < b && a < d)
-                || (a < c && d < b && c < d)
-                || (c < a && b < d && a < b);
+        return (a <= c && b <= d && c <= b)
+                || (c <= a && d <= b && a <= d)
+                || (a <= c && d <= b && c <= d)
+                || (c <= a && b <= d && a <= b);
     }
 }
