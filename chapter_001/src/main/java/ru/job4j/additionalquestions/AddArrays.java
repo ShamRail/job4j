@@ -25,25 +25,23 @@ public class AddArrays {
 
     public int[] addArrays() {
         int[] result = new int[arr1.length + arr2.length];
-        int stepByArr1 = 0, stepByArr2 = 0, stepByResult = 0;
+        int stepByArr1 = 0;
+        int stepByArr2 = 0;
+        int stepByResult = 0;
         while (stepByArr1 < arr1.length && stepByArr2 < arr2.length) {
             if (arr1[stepByArr1] < arr2[stepByArr2]) {
-                result[stepByResult] = arr1[stepByArr1];
-                stepByArr1++;
+                result[stepByResult] = arr1[stepByArr1++];
             } else {
-                result[stepByResult] = arr2[stepByArr2];
-                stepByArr2++;
+                result[stepByResult] = arr2[stepByArr2++];
             }
             stepByResult++;
         }
         while (stepByArr1 < arr1.length) {
-            result[stepByResult] = arr1[stepByArr1];
-            stepByArr1++;
+            result[stepByResult] = arr1[stepByArr1++];
             stepByResult++;
         }
         while (stepByArr2 < arr2.length) {
-            result[stepByResult] = arr2[stepByArr2];
-            stepByArr2++;
+            result[stepByResult] = arr2[stepByArr2++];
             stepByResult++;
         }
         return result;
