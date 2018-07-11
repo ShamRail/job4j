@@ -56,25 +56,17 @@ public class Tracker {
      * Метод, удаляющий ячейку по идентификатору.
      * @param id - идентификатор.
      * */
-    public void delete(String id) {
-        if (this.position != 0) {
-            int delBegin = -1;
-            for (int i = 0; i != this.position; i++) {
-                if (this.items[i].getId().equals(id)) {
-                    delBegin = i;
-                    break;
-                } else {
-                    delBegin++;
-                }
-            }
-            if (delBegin != -1) {
-                System.arraycopy(items, delBegin + 1, items, delBegin,
-                        items.length - delBegin - 1);
-                this.items[items.length - 1] = null;
-                position--;
+    public boolean delete(String id) {
+        boolean del = false;
+        for (int i = 0; i < this.position; i++) {
+            if (id != null && this.items[i].getId().equals(id)) {
+                System.arraycopy(this.items, i + 1, this.items, i, position);
+                this.position--;
+                del = true;
+                break;
             }
         }
-
+        return del;
     }
     /**
      * findAll.
@@ -91,24 +83,21 @@ public class Tracker {
      * @return массив ячеек с таким именем.
      * */
     public Item[] findByName(String key) {
-        Item[] result = new Item[this.position];
-        if (this.position != 0) {
+        Item[] result = null;
+        if (this.position != 0 && key != null) {
+            Item[] temp = new Item[this.position];
             int index = 0;
             for (int i = 0; i != this.position; i++) {
                 if (items[i].getName().equals(key)) {
-                    result[index++] = items[i];
+                    temp[index++] = items[i];
                 }
             }
             if (index != 0) {
-                Arrays.copyOf(result, index);
+                result  = Arrays.copyOf(temp, index);
             } else {
                 result = null;
             }
-
-        } else {
-            result = null;
         }
-
         return result;
     }
     /**
