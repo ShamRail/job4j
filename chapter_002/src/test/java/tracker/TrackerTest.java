@@ -67,7 +67,7 @@ public class TrackerTest {
     public void whenItemsIsEmptyThenFindByNameReturnEmptyArray() {
         Tracker tracker = new Tracker();
         Item expect = null;
-        Assert.assertThat(tracker.findByName("Name")[0], Is.is(expect));
+        Assert.assertThat(tracker.findByName("Name"), Is.is(expect));
     }
 
     @Test

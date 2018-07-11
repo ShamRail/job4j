@@ -46,6 +46,7 @@ public class Tracker {
         for (int i = 0; i != this.position; i++) {
             if (items[i].getId().equals(id)) {
                 items[i] = item;
+                items[i].setId(id);
                 break;
             }
         }
@@ -56,19 +57,24 @@ public class Tracker {
      * @param id - идентификатор.
      * */
     public void delete(String id) {
-        int delBegin = 0;
-        for (int i = 0; i != this.position; i++) {
-            if (this.items[i].getId().equals(id)) {
-                delBegin = i;
-                break;
-            } else {
-                delBegin++;
+        if (this.position != 0) {
+            int delBegin = -1;
+            for (int i = 0; i != this.position; i++) {
+                if (this.items[i].getId().equals(id)) {
+                    delBegin = i;
+                    break;
+                } else {
+                    delBegin++;
+                }
+            }
+            if (delBegin != -1) {
+                System.arraycopy(items, delBegin + 1, items, delBegin,
+                        items.length - delBegin - 1);
+                this.items[items.length - 1] = null;
+                position--;
             }
         }
-        System.arraycopy(items, delBegin + 1, items, delBegin,
-                items.length - delBegin - 1);
-        this.items[items.length - 1] = null;
-        position--;
+
     }
     /**
      * findAll.
@@ -76,13 +82,7 @@ public class Tracker {
      * @return - массив ячеек.
      * */
     public Item[] findAll() {
-        Item[] iteml = new Item[this.position];
-        for (int i = 0; i != this.position; i++) {
-            if (items[i] != null) {
-                iteml[i] = items[i];
-            }
-        }
-        return iteml;
+        return Arrays.copyOf(this.items, position);
     }
     /**
      * findByName.
@@ -91,13 +91,24 @@ public class Tracker {
      * @return массив ячеек с таким именем.
      * */
     public Item[] findByName(String key) {
-        Item[] result = new Item[100];
-        int index = 0;
-        for (int i = 0; i != this.position; i++) {
-            if (items[i].getName().equals(key)) {
-                result[index++] = items[i];
+        Item[] result = new Item[this.position];
+        if (this.position != 0) {
+            int index = 0;
+            for (int i = 0; i != this.position; i++) {
+                if (items[i].getName().equals(key)) {
+                    result[index++] = items[i];
+                }
             }
+            if (index != 0) {
+                Arrays.copyOf(result, index);
+            } else {
+                result = null;
+            }
+
+        } else {
+            result = null;
         }
+
         return result;
     }
     /**
@@ -122,7 +133,7 @@ public class Tracker {
      * Метод, генерирующий идентификатор.
      * @return - сгенерированный идентификатор.
      * */
-    String generateId() {
+    private String generateId() {
         return String.valueOf(System.currentTimeMillis() + RN.nextInt());
     }
 }
