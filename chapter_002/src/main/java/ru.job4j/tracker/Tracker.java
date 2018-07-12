@@ -118,6 +118,25 @@ public class Tracker {
         return result;
     }
     /**
+     * addCommentById.
+     * Метод, добавляющий комментарий по идентификатору.
+     * @param id - идентификатор.
+     * @param comment - комментарий
+     * */
+    public boolean addCommentById(String id, String comment) {
+        boolean res = false;
+        if (id != null && comment != null) {
+            for (Item item : items) {
+                if (item.getId().equals(id)) {
+                    item.setComments(comment);
+                    res = true;
+                    break;
+                }
+            }
+        }
+        return res;
+    }
+    /**
      * generateId.
      * Метод, генерирующий идентификатор.
      * @return - сгенерированный идентификатор.

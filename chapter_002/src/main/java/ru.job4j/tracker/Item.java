@@ -16,20 +16,27 @@ public class Item {
     private String description;
     /**Время создания миллисекундах*/
     private long create;
-    /**Комментарий*/
-    private String comment;
-
+    /**Комментарии*/
+    private String[] comments = new String[10];
+    /**Позиция комментария*/
+    private int commentposition = 0;
     public Item() {
 
     }
 
+    public Item(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
     public Item(String id, String name,
-                String description, long create, String comment) {
+                String description, long create, String[] comments) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.create = create;
-        this.comment = comment;
+        this.comments = comments;
+        commentposition = comments.length;
     }
 
     public void setId(String id) {
@@ -44,8 +51,10 @@ public class Item {
         this.description = description;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setComments(String comment) {
+        if (commentposition < 10) {
+            this.comments[commentposition++] = comment;
+        }
     }
 
     public void setCreate(long create) {
@@ -64,8 +73,8 @@ public class Item {
         return this.description;
     }
 
-    public String getComment() {
-        return this.comment;
+    public String[] getComments() {
+        return this.comments;
     }
 
     public long getCreate() {
