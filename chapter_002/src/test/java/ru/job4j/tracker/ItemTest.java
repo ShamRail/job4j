@@ -1,9 +1,9 @@
-package tracker;
+package ru.job4j.tracker;
 
 import org.hamcrest.core.Is;
 import org.junit.Assert;
 import org.junit.Test;
-import ru.job4j.tracker.Item;
+import ru.job4j.Item;
 
 
 public class ItemTest {

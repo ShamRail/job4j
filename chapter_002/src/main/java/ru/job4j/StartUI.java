@@ -1,7 +1,4 @@
-
-package ru.job4j.tracker;
-
-import javax.annotation.processing.SupportedSourceVersion;
+package ru.job4j;
 
 /**
  * @version $Id$
@@ -71,7 +68,6 @@ public class StartUI {
             this.showMenu();
             String answer = this.input.ask("Введите пункт меню : ");
             if (ADD.equals(answer)) {
-                //добавление заявки вынесено в отдельный метод.
                 this.createItem();
             } else if (SHOW.equals(answer)) {
                 this.showItems();
@@ -109,7 +105,7 @@ public class StartUI {
         System.out.println("------------ Все заявки --------------");
         Item[] items = this.tracker.findAll();
         for (Item item : items) {
-            System.out.println("идентификатор : " + item.getId() + ", имя : " + item.getName() + ", описание заявки : " + item.getDescription());
+            System.out.println(item.toString(item.getId(), item.getName(), item.getDescription()));
         }
     }
     /**
@@ -121,9 +117,14 @@ public class StartUI {
         String name = this.input.ask("Введите имя заявки :");
         String desc = this.input.ask("Введите описание заявки :");
         Item item = new Item(name, desc);
-        this.tracker.replace(id, item);
-        System.out.println("------------ Заявка успешно отредактирована --------------");
-        System.out.println("Новое имя : " + item.getName() + ", новое описание : " + item.getDescription());
+        if (this.tracker.findById(id) != null) {
+            this.tracker.replace(id, item);
+            System.out.println("------------ Заявка успешно отредактирована --------------");
+            System.out.println(item.toString(item.getName(), item.getDescription()));
+        } else {
+            System.out.println("Заяка не может быть отредактирована, неверный id");
+        }
+
     }
     /**
      * Метод реализует удаление заявки из хранилища.
@@ -149,7 +150,7 @@ public class StartUI {
             System.out.println("Заявка не найдена, повторите попытку");
         } else {
             System.out.println("------------ Заявка успешно найдена --------------");
-            System.out.println("Имя заявки : " + result.getName() + ", описание заяки : " + result.getDescription());
+            System.out.println(result.toString(result.getName(), result.getDescription()));
         }
     }
     /**
@@ -164,7 +165,7 @@ public class StartUI {
         } else {
             System.out.println("------------ Заявки успешно найдена --------------");
             for (Item item : result) {
-                System.out.println("идентификатор : " + item.getId() + ", имя : " + item.getName() + ", описание заявки : " + item.getDescription());
+                System.out.println(item.toString(item.getId(), item.getName(), item.getDescription()));
             }
         }
     }
@@ -176,7 +177,7 @@ public class StartUI {
         String id = this.input.ask("Введите id заявки : ");
         String comment = this.input.ask("Введите комментарий к заявке : ");
         boolean result = this.tracker.addCommentById(id, comment);
-        if (!result) {
+        if (result) {
             System.out.println("------------ Комментарий успешно добавлен --------------");
             Item item = this.tracker.findById(id);
             String[] comments = item.getComments();
@@ -194,7 +195,8 @@ public class StartUI {
      * Метод реализует показ функций меню.
      */
     private void showMenu() {
-        System.out.println("Меню.\nВыберите пункт меню");
+        System.out.printf("%s%s%s%s", "Меню.", System.lineSeparator(),
+                "Выберите пункт меню :", System.lineSeparator());
         System.out.println("0.Добавить новую заявку");
         System.out.println("1.Показать все заявки");
         System.out.println("2.Редактировать заявку");
