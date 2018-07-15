@@ -66,7 +66,7 @@ public class StartUITest {
     @Test
     public void whenAddComments() {
         Tracker tracker = new Tracker();
-        Item item = tracker.add(new Item("123","name","desc",1l, new String[]{"comm1", "comm2"}));
+        Item item = tracker.add(new Item("123", "name", "desc", 1L, new String[]{"comm1", "comm2"}));
         Input input = new StubInput(new String[]{"6", item.getId(), "comm3", "7"});
         tracker.addCommentById(item.getId(), "comm3");
         new StartUI(input, tracker).init();

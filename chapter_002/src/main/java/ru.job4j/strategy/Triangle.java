@@ -2,7 +2,7 @@ package ru.job4j.strategy;
 
 public class Triangle implements Shape {
 
-    int height ;
+    int height;
 
     public Triangle(int height) {
         this.height = height;

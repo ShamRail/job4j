@@ -35,7 +35,7 @@ public class Item {
         this.name = name;
         this.description = description;
         this.create = create;
-        for (int i = 0; i < comments.length; i++){
+        for (int i = 0; i < comments.length; i++) {
             this.comments[this.commentposition++] = comments[i];
         }
     }
@@ -87,6 +87,6 @@ public class Item {
     }
 
     public String toString(String id, String name, String description) {
-        return String.format("идентификатор : %s, имя : %s, описание заявки : %s" , id, name, description);
+        return String.format("идентификатор : %s, имя : %s, описание заявки : %s", id, name, description);
     }
 }
