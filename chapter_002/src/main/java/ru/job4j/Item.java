@@ -35,8 +35,9 @@ public class Item {
         this.name = name;
         this.description = description;
         this.create = create;
-        this.comments = comments;
-        commentposition = comments.length;
+        for (int i = 0; i < comments.length; i++){
+            this.comments[this.commentposition++] = comments[i];
+        }
     }
 
     public void setId(String id) {
@@ -52,8 +53,8 @@ public class Item {
     }
 
     public void setComments(String comment) {
-        if (commentposition < 10) {
-            this.comments[commentposition++] = comment;
+        if (this.commentposition < 10) {
+            this.comments[this.commentposition++] = comment;
         }
     }
 
