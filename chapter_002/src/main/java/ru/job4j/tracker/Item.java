@@ -1,4 +1,4 @@
-package ru.job4j;
+package ru.job4j.tracker;
 
 /**
  * Item.
@@ -82,11 +82,9 @@ public class Item {
         return this.create;
     }
 
-    public String toString(String name, String description) {
-        return String.format("Имя заявки : %s, описание заяки : %s", name, description);
-    }
 
-    public String toString(String id, String name, String description) {
+    @Override
+    public String toString() {
         return String.format("идентификатор : %s, имя : %s, описание заявки : %s", id, name, description);
     }
 }

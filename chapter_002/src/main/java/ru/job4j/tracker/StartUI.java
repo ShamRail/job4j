@@ -6,10 +6,6 @@ package ru.job4j.tracker;
  */
 public class StartUI {
     /**
-     * Массив допустимых значений пунктов меню.
-     * */
-    private int[] range = {0, 1, 2, 3, 4, 5, 6, 7};
-    /**
      * Получение данных от пользователя.
      */
     private final Input input;
@@ -46,7 +42,7 @@ public class StartUI {
                     "Выберите пункт меню :", System.lineSeparator());
             menu.show();
             //int answer = this.input.ask(this.input.ask("Выберите пункт меню :"), range);
-            int answer = this.input.ask("Выберите пункт меню :", range);
+            int answer = this.input.ask("Выберите пункт меню :", menu.fillMenuRange());
             menu.select(answer);
         }
     }

@@ -13,7 +13,7 @@ class FindByIdAction implements UserAction {
             System.out.println("Заявка не найдена, повторите попытку");
         } else {
             System.out.println("------------ Заявка успешно найдена --------------");
-            System.out.println(result.toString(result.getName(), result.getDescription()));
+            System.out.println(result.toString());
         }
     }
 
@@ -36,7 +36,7 @@ class FindByNameAction implements UserAction {
         } else {
             System.out.println("------------ Заявки успешно найдена --------------");
             for (Item item : result) {
-                System.out.println(item.toString(item.getId(), item.getName(), item.getDescription()));
+                System.out.println(item.toString());
             }
         }
     }
@@ -134,6 +134,18 @@ public class MenuTracker {
             }
         }
     }
+    /**
+     * fillMenuRange.
+     * Метод, возвращающий диапозон, доступных пунктов меню.
+     * @return диапозон.
+     * */
+    public int[] fillMenuRange() {
+        int[] range = new int[this.actions.length];
+        for (int i = 0; i < this.actions.length; i++){
+            range[i] = i;
+        }
+        return range;
+    }
 
     private class AddAction implements UserAction {
         public int key() {
@@ -162,7 +174,7 @@ public class MenuTracker {
             System.out.println("------------ Все заявки --------------");
             Item[] items = tracker.findAll();
             for (Item item : items) {
-                System.out.println(item.toString(item.getId(), item.getName(), item.getDescription()));
+                System.out.println(item.toString());
             }
         }
 
@@ -185,7 +197,7 @@ public class MenuTracker {
             if (tracker.findById(id) != null) {
                 tracker.replace(id, item);
                 System.out.println("------------ Заявка успешно отредактирована --------------");
-                System.out.println(item.toString(item.getName(), item.getDescription()));
+                System.out.println(item.toString());
             } else {
                 System.out.println("Заяка не может быть отредактирована, неверный id");
             }
