@@ -5,17 +5,16 @@ import org.junit.Before;
 import org.junit.Test;
 import org.hamcrest.core.Is;
 import org.junit.Assert;
-import ru.job4j.*;
-
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 import static org.junit.Assert.assertThat;
 
 public class StartUITest {
+
     @Test
     public void whenUserAddItemThenTrackerHasNewItemWithSameName() {
-        Tracker tracker = new Tracker();     // создаём Tracker
+        Tracker tracker = new Tracker();
         Input input = new StubInput(new String[]{"0", "test name", "desc", "7"});   //создаём StubInput с последовательностью действий
         new StartUI(input, tracker).init();     //   создаём StartUI и вызываем метод init()
         Assert.assertThat(tracker.findAll()[0].getName(), Is.is("test name")); // проверяем, что нулевой элемент массива в трекере содержит имя, введённое при эмуляции.
@@ -102,6 +101,8 @@ public class StartUITest {
         System.setOut(this.stdout);
     }
 
+    private  final String s = System.lineSeparator();
+
     @Test
     public void whenShowItems() {
         Tracker tracker = new Tracker();
@@ -109,23 +110,129 @@ public class StartUITest {
         Item item2 = tracker.add(new Item("name2", "desc2"));
         Item item3 = tracker.add(new Item("name3", "desc3"));
         Input input = new StubInput(new String[]{"1", "7"});
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder
+                .append(String.format("------------ Все заявки --------------%s", s))
+                .append(String.format("идентификатор : %s, имя : name1, описание заявки : desc1%s", item1.getId(), s))
+                .append(String.format("идентификатор : %s, имя : name2, описание заявки : desc2%s", item2.getId(), s))
+                .append(String.format("идентификатор : %s, имя : name3, описание заявки : desc3%s", item3.getId(), s));
         new StartUI(input, tracker).init();
         assertThat(
-                new String(this.out.toByteArray()), Is.is(this.toString(item1.getId(), item2.getId(), item3.getId())));
+                new String(this.out.toByteArray()), Is.is(this.toString(stringBuilder)));
 
     }
-    private String toString(String id1, String id2, String id3) {
+
+    @Test
+    public void whenAddItemThenWrite() {
+        Tracker tracker = new Tracker();
+        Input input = new StubInput(new String[]{"0", "name1", "desc1", "7"});
+        new StartUI(input, tracker).init();
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder
+                .append(String.format("------------ Добавление новой заявки --------------%s", s))
+                .append(String.format("------------ Новая заявка с getId : %s-----------%s", tracker.findAll()[0].getId(), s));
+        assertThat(
+                new String(this.out.toByteArray()), Is.is(this.toString(stringBuilder)));
+    }
+
+    @Test
+    public void whenEditItemThenWrite() {
+        Tracker tracker = new Tracker();
+        Item item = new Item("name2", "desc2");
+        tracker.add(item);
+        Input input = new StubInput(new String[]{"2", item.getId(),"name1", "desc2", "7"});
+        new StartUI(input, tracker).init();
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder
+                .append(String.format("------------ Редактирование новой заявки --------------%s", s))
+                .append(String.format("------------ Заявка успешно отредактирована --------------%s", s))
+                .append(String.format("идентификатор : %s, имя : name1, описание заявки : %s%s", item.getId(),
+                        item.getDescription(), s));
+        assertThat(
+                new String(this.out.toByteArray()), Is.is(this.toString(stringBuilder)));
+    }
+
+    @Test
+    public void whenDeleteItemThenWrite() {
+        Tracker tracker = new Tracker();
+        Item item = new Item("name2", "desc2");
+        tracker.add(item);
+        Input input = new StubInput(new String[]{"3", item.getId(), "7"});
+        new StartUI(input, tracker).init();
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder
+                .append(String.format("------------ Удаление заявки --------------%s", s))
+                .append(String.format("------------ Заявка успешно удалена --------------%s", s));
+        assertThat(
+                new String(this.out.toByteArray()), Is.is(this.toString(stringBuilder)));
+    }
+
+    @Test
+    public void whenFindByIdWrite() {
+        Tracker tracker = new Tracker();
+        Item item1 = tracker.add(new Item("name1", "desc1"));
+        Item item2 = tracker.add(new Item("name2", "desc2"));
+        Input input = new StubInput(new String[]{"4", item1.getId(), "7"});
+        new StartUI(input, tracker).init();
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder
+                .append(String.format("------------ Поиск заявки по id --------------%s", s))
+                .append(String.format("------------ Заявка успешно найдена --------------%s", s))
+                .append(String.format("идентификатор : %s, имя : name1, описание заявки : %s%s", item1.getId(),
+                        item1.getDescription(), s));
+        assertThat(
+                new String(this.out.toByteArray()), Is.is(this.toString(stringBuilder)));
+    }
+
+    @Test
+    public void whenFindByNameWrite() {
+        Tracker tracker = new Tracker();
+        Item item1 = tracker.add(new Item("name1", "desc1"));
+        Item item2 = tracker.add(new Item("name2", "desc2"));
+        Item item3 = tracker.add(new Item("name1", "desc3"));
+        Input input = new StubInput(new String[]{"5", item1.getName(), "7"});
+        new StartUI(input, tracker).init();
+        Item[] result = tracker.findByName("name1");
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder
+                .append(String.format("------------ Поиск заявки по имени --------------%s", s))
+                .append(String.format("------------ Заявки успешно найдена --------------%s", s))
+                .append(String.format("идентификатор : %s, имя : %s, описание заявки : %s%s", result[0].getId(), result[0].getName(),
+                        result[0].getDescription(), s))
+                .append(String.format("идентификатор : %s, имя : %s, описание заявки : %s%s", result[1].getId(), result[1].getName(),
+                        result[1].getDescription(), s));
+        assertThat(
+                new String(this.out.toByteArray()), Is.is(this.toString(stringBuilder)));
+    }
+
+    @Test
+    public void whenAddCommentsThenWrite() {
+        Tracker tracker = new Tracker();
+        Item item = tracker.add(new Item("123", "name", "desc", 1L, new String[]{"comm1", "comm2"}));
+        Input input = new StubInput(new String[]{"6", item.getId(), "comm3", "7"});
+        tracker.addCommentById(item.getId(), "comm3");
+        new StartUI(input, tracker).init();
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder
+                .append(String.format("------------ Добавляние комментария по id --------------%s", s))
+                .append(String.format("------------ Комментарий успешно добавлен --------------%s", s))
+                .append(String.format("------------ Список всех комментариев --------------%s", s))
+                .append(String.format("comm1%s", s))
+                .append(String.format("comm2%s", s))
+                .append(String.format("comm3%s", s));
+        assertThat(
+                new String(this.out.toByteArray()), Is.is(this.toString(stringBuilder)));
+    }
+
+    private String toString(StringBuilder info) {
         String s = System.lineSeparator();
         String menu = String.format("Меню.%sВыберите пункт меню :%s0.Добавить новую заявку%s1.Показать все заявки%s2.Редактировать заявку%s3.Удалить заявку%s4.Найти заявку по id%s5.Найти заявки по имени%s6.Добавить комментарий по id%s7.Выйти%s",
                 s, s, s, s, s, s, s, s, s, s);
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(menu);
-        stringBuilder
-                .append(String.format("------------ Все заявки --------------%s", s))
-                .append(String.format("идентификатор : %s, имя : name1, описание заявки : desc1%s", id1, s))
-                .append(String.format("идентификатор : %s, имя : name2, описание заявки : desc2%s", id2, s))
-                .append(String.format("идентификатор : %s, имя : name3, описание заявки : desc3%s", id3, s));
+        stringBuilder.append(info);
         stringBuilder.append(menu);
         return stringBuilder.toString();
     }
 }
+
