@@ -1,9 +1,8 @@
-package strategy;
+package ru.job4j.strategy;
 
 import org.hamcrest.core.Is;
 import org.junit.Assert;
 import org.junit.Test;
-import ru.job4j.strategy.Triangle;
 
 public class TriangleTest {
 

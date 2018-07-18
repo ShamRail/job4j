@@ -8,7 +8,7 @@ public class StartUI {
     /**
      * Получение данных от пользователя.
      */
-    private final Input input;
+    private  final Input input;
 
     /**
      * Хранилище заявок.
@@ -41,7 +41,7 @@ public class StartUI {
             System.out.printf("%s%s%s%s", "Меню.", System.lineSeparator(),
                     "Выберите пункт меню :", System.lineSeparator());
             menu.show();
-            //int answer = this.input.ask(this.input.ask("Выберите пункт меню :"), range);
+            //int answer = this.input.ask(this.input.ask("Выберите пункт меню :"), menu.fillMenuRange());
             int answer = this.input.ask("Выберите пункт меню :", menu.fillMenuRange());
             menu.select(answer);
         }
@@ -52,6 +52,6 @@ public class StartUI {
      * @param args
      */
     public static void main(String[] args) {
-        new StartUI(new ValidateInput(), new Tracker()).init();
+        new StartUI(new ValidateInput(new ConsoleInput()), new Tracker()).init();
     }
 }

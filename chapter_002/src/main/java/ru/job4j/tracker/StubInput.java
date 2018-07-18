@@ -1,4 +1,4 @@
-package ru.job4j;
+package ru.job4j.tracker;
 
 public class StubInput implements Input {
     /**
@@ -20,6 +20,7 @@ public class StubInput implements Input {
 
     public StubInput(final String[] value) {
         this.value = value;
+        //position = value.length;
     }
 
     /**
@@ -33,5 +34,25 @@ public class StubInput implements Input {
     @Override
     public String ask(String question) {
         return this.value[this.position++];
+    }
+
+    @Override
+    public int ask(String question, int[] range) {
+        //return Integer.valueOf(question);
+        //return new ConsoleInput().ask(question, range);
+        int key = Integer.valueOf(this.ask(question));
+        //int key = Integer.valueOf(question);
+        boolean exist = false;
+        for (int value : range) {
+            if (value == key) {
+                exist = true;
+                break;
+            }
+        }
+        if (exist) {
+            return key;
+        } else {
+            throw new MenuOutException("Вне границ массива");
+        }
     }
 }

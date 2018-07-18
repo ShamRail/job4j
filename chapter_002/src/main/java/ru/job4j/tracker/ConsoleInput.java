@@ -11,8 +11,7 @@ public class ConsoleInput implements Input {
     }
 
     public int ask(String question, int[] range) {
-        //int key = Integer.valueOf(this.ask(question));
-        int key = Integer.valueOf(question);
+        int key = Integer.valueOf(this.ask(question));
         boolean exist = false;
         for (int value : range) {
             if (value == key) {
@@ -20,10 +19,9 @@ public class ConsoleInput implements Input {
                 break;
             }
         }
-        if (exist) {
-            return key;
-        } else {
+        if (!exist) {
             throw new MenuOutException("Вне границ массива");
         }
+        return key;
     }
 }
