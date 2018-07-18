@@ -1,4 +1,4 @@
-package ru.job4j;
+package ru.job4j.tracker;
 
 class FindByIdAction implements UserAction {
     public int key() {
@@ -104,7 +104,7 @@ public class MenuTracker {
     /**
      * Метод заполняет массив.
      */
-    public void fillActions() {
+    public void fillActions(StartUI ui) {
         this.actions[0] = new AddAction();
         this.actions[1] = new ShowAction();
         this.actions[2] = new MenuTracker.EditAction();
@@ -112,7 +112,7 @@ public class MenuTracker {
         this.actions[4] = new FindByIdAction();
         this.actions[5] = new FindByNameAction();
         this.actions[6] = new AddCommentAction();
-        this.actions[7] = new MenuTracker.ExitAction();
+        this.actions[7] = new MenuTracker.ExitAction(ui);
     }
 
     /**
@@ -218,12 +218,17 @@ public class MenuTracker {
     }
 
     private static class ExitAction implements UserAction {
+        StartUI ui;
+        public ExitAction(StartUI ui) {
+            this.ui = ui;
+        }
+
         public int key() {
             return 7;
         }
 
         public void execute(Input input, Tracker tracker) {
-
+            ui.stop();
         }
 
         public String info() {
