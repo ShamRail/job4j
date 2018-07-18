@@ -54,7 +54,7 @@ public class Item {
 
     public void setComments(String comment) {
         if (this.commentposition < 10) {
-            this.comments[this.commentposition++] = comment;
+            this.comments[this.commentposition] = comment;
         }
     }
 
