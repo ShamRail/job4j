@@ -140,7 +140,7 @@ public class StartUITest {
         Tracker tracker = new Tracker();
         Item item = new Item("name2", "desc2");
         tracker.add(item);
-        Input input = new StubInput(new String[]{"2", item.getId(),"name1", "desc2", "7"});
+        Input input = new StubInput(new String[]{"2", item.getId(), "name1", "desc2", "7"});
         new StartUI(input, tracker).init();
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder
