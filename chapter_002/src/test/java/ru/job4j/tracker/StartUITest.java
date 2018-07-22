@@ -7,6 +7,7 @@ import org.hamcrest.core.Is;
 import org.junit.Assert;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 
 import static org.junit.Assert.assertThat;
 
@@ -17,7 +18,7 @@ public class StartUITest {
         Tracker tracker = new Tracker();
         Input input = new StubInput(new String[]{"0", "test name", "desc", "7"});   //создаём StubInput с последовательностью действий
         new StartUI(input, tracker).init();     //   создаём StartUI и вызываем метод init()
-        Assert.assertThat(tracker.findAll()[0].getName(), Is.is("test name")); // проверяем, что нулевой элемент массива в трекере содержит имя, введённое при эмуляции.
+        Assert.assertThat(tracker.findAll().get(0).getName(), Is.is("test name")); // проверяем, что нулевой элемент массива в трекере содержит имя, введённое при эмуляции.
     }
 
     @Test
@@ -64,8 +65,8 @@ public class StartUITest {
         Item item3 = tracker.add(new Item("name1", "desc3"));
         Input input = new StubInput(new String[]{"5", item1.getName(), "7"});
         new StartUI(input, tracker).init();
-        Item[] result = tracker.findByName("name1");
-        Assert.assertThat(result[0].getDescription() + result[1].getDescription(),
+        ArrayList<Item> result = tracker.findByName("name1");
+        Assert.assertThat(result.get(0).getDescription() + result.get(1).getDescription(),
                 Is.is("desc1desc3"));
     }
 
@@ -81,7 +82,7 @@ public class StartUITest {
                 System.out.println(string);
             }
         }
-        Assert.assertThat(tracker.findAll()[0].getComments()[2], Is.is("comm3"));
+        Assert.assertThat(tracker.findAll().get(0).getComments().get(2), Is.is("comm3"));
     }
 
     // поле содержит дефолтный вывод в консоль.
@@ -130,7 +131,7 @@ public class StartUITest {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder
                 .append(String.format("------------ Добавление новой заявки --------------%s", s))
-                .append(String.format("------------ Новая заявка с getId : %s-----------%s", tracker.findAll()[0].getId(), s));
+                .append(String.format("------------ Новая заявка с getId : %s-----------%s", tracker.findAll().get(0).getId(), s));
         assertThat(
                 new String(this.out.toByteArray()), Is.is(this.toString(stringBuilder)));
     }
@@ -192,15 +193,15 @@ public class StartUITest {
         Item item3 = tracker.add(new Item("name1", "desc3"));
         Input input = new StubInput(new String[]{"5", item1.getName(), "7"});
         new StartUI(input, tracker).init();
-        Item[] result = tracker.findByName("name1");
+        ArrayList<Item> result = tracker.findByName("name1");
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder
                 .append(String.format("------------ Поиск заявки по имени --------------%s", s))
                 .append(String.format("------------ Заявки успешно найдена --------------%s", s))
-                .append(String.format("идентификатор : %s, имя : %s, описание заявки : %s%s", result[0].getId(), result[0].getName(),
-                        result[0].getDescription(), s))
-                .append(String.format("идентификатор : %s, имя : %s, описание заявки : %s%s", result[1].getId(), result[1].getName(),
-                        result[1].getDescription(), s));
+                .append(String.format("идентификатор : %s, имя : %s, описание заявки : %s%s", result.get(0).getId(), result.get(0).getName(),
+                        result.get(0).getDescription(), s))
+                .append(String.format("идентификатор : %s, имя : %s, описание заявки : %s%s", result.get(1).getId(), result.get(1).getName(),
+                        result.get(1).getDescription(), s));
         assertThat(
                 new String(this.out.toByteArray()), Is.is(this.toString(stringBuilder)));
     }

@@ -1,5 +1,7 @@
 package ru.job4j.tracker;
 
+import java.util.ArrayList;
+
 class FindByIdAction extends BaseAction {
 
     public FindByIdAction(int key, String name) {
@@ -27,7 +29,7 @@ class FindByNameAction extends BaseAction {
     public void execute(Input input, Tracker tracker) {
         System.out.println("------------ Поиск заявки по имени --------------");
         String name = input.ask("Введите имя искомых заявок : ");
-        Item[] result = tracker.findByName(name);
+        ArrayList<Item> result = tracker.findByName(name);
         if (result == null) {
             System.out.println("Заявки не найдены, повторите попытку");
         } else {
@@ -53,12 +55,10 @@ class AddCommentAction extends BaseAction {
         if (result) {
             System.out.println("------------ Комментарий успешно добавлен --------------");
             Item item = tracker.findById(id);
-            String[] comments = item.getComments();
+            ArrayList<String> comments = item.getComments();
             System.out.println("------------ Список всех комментариев --------------");
-            for (int i = 0; i < comments.length; i++) {
-                if (comments[i] != null) {
-                    System.out.println(comments[i]);
-                }
+            for (String string : comments) {
+                System.out.println(string);
             }
         } else {
             System.out.println("Комментарий не может быть добавлен, повторите попытку");
@@ -163,7 +163,7 @@ public class MenuTracker {
 
         public void execute(Input input, Tracker tracker) {
             System.out.println("------------ Все заявки --------------");
-            Item[] items = tracker.findAll();
+            ArrayList<Item> items = tracker.findAll();
             for (Item item : items) {
                 System.out.println(item.toString());
             }

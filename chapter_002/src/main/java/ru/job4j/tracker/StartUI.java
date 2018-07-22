@@ -41,7 +41,6 @@ public class StartUI {
             System.out.printf("%s%s%s%s", "Меню.", System.lineSeparator(),
                     "Выберите пункт меню :", System.lineSeparator());
             menu.show();
-            //int answer = this.input.ask(this.input.ask("Выберите пункт меню :"), menu.fillMenuRange());
             int answer = this.input.ask("Выберите пункт меню :", menu.fillMenuRange());
             menu.select(answer);
         }

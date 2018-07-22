@@ -16,11 +16,7 @@ public class Tracker {
     /**
      * items - массив ячеек.
      * */
-    private Item[] items = new Item[100];
-    /**
-     * position - конечная позиция не нулевого элемента.
-     * */
-    private int position = 0;
+    private ArrayList<Item> items = new ArrayList<Item>();
     /**
      * RN - объект генерирующий id.
      * */
@@ -33,7 +29,7 @@ public class Tracker {
      * */
     public Item add(Item item) {
         item.setId(this.generateId());
-        this.items[this.position++] = item;
+        this.items.add(item);
         return item;
     }
     /**
@@ -43,10 +39,10 @@ public class Tracker {
      * @param item - ячейка, на которую меняем.
      * */
     public void replace(String id, Item item) {
-        for (int i = 0; i != this.position; i++) {
-            if (items[i].getId().equals(id)) {
-                items[i] = item;
-                items[i].setId(id);
+        for (Item item1 : this.items) {
+            if (item1.getId().equals(id)) {
+                item.setId(id);
+                this.items.set(this.items.indexOf(item1), item);
                 break;
             }
         }
@@ -58,10 +54,9 @@ public class Tracker {
      * */
     public boolean delete(String id) {
         boolean del = false;
-        for (int i = 0; i < this.position; i++) {
-            if (id != null && this.items[i].getId().equals(id)) {
-                System.arraycopy(this.items, i + 1, this.items, i, position);
-                this.position--;
+        for (Item item : this.items) {
+            if (id != null && item.getId().equals(id)) {
+                this.items.remove(item);
                 del = true;
                 break;
             }
@@ -73,8 +68,8 @@ public class Tracker {
      * Метод, возвращающий массив непустых ячеек.
      * @return - массив ячеек.
      * */
-    public Item[] findAll() {
-        return Arrays.copyOf(this.items, position);
+    public ArrayList<Item> findAll() {
+        return this.items;
     }
     /**
      * findByName.
@@ -82,20 +77,13 @@ public class Tracker {
      * @param key - имя.
      * @return массив ячеек с таким именем.
      * */
-    public Item[] findByName(String key) {
-        Item[] result = null;
-        if (this.position != 0 && key != null) {
-            Item[] temp = new Item[this.position];
-            int index = 0;
-            for (int i = 0; i != this.position; i++) {
-                if (items[i].getName().equals(key)) {
-                    temp[index++] = items[i];
+    public ArrayList<Item> findByName(String key) {
+        ArrayList<Item> result = new ArrayList<Item>();
+        if (this.items.size() != 0 && key != null) {
+            for (Item item : this.items) {
+                if (item.getName().equals(key)) {
+                    result.add(item);
                 }
-            }
-            if (index != 0) {
-                result  = Arrays.copyOf(temp, index);
-            } else {
-                result = null;
             }
         }
         return result;
@@ -109,9 +97,9 @@ public class Tracker {
      * */
     public Item findById(String id) {
         Item result = null;
-        for (Item item1 : items) {
-            if (item1 != null && item1.getId().equals(id)) {
-                result = item1;
+        for (Item item : this.items) {
+            if (item != null && item.getId().equals(id)) {
+                result = item;
                 break;
             }
         }
@@ -126,7 +114,7 @@ public class Tracker {
     public boolean addCommentById(String id, String comment) {
         boolean res = false;
         if (id != null && comment != null) {
-            for (Item item : items) {
+            for (Item item : this.items) {
                 if (item.getId().equals(id)) {
                     item.setComments(comment);
                     res = true;

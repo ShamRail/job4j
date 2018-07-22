@@ -32,7 +32,7 @@ public class ItemTest {
     public void whenSetCommentCommThenCommentComm() {
         Item item = new Item();
         item.setComments("comm");
-        Assert.assertThat(item.getComments()[0], Is.is("comm"));
+        Assert.assertThat(item.getComments().get(0), Is.is("comm"));
     }
     @Test
     public void whenSetCreate123ThenCreate123() {

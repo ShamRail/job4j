@@ -1,5 +1,7 @@
 package ru.job4j.tracker;
 
+import java.util.ArrayList;
+
 /**
  * Item.
  * Класс - ячейка .
@@ -17,9 +19,8 @@ public class Item {
     /**Время создания миллисекундах*/
     private long create;
     /**Комментарии*/
-    private String[] comments = new String[10];
+    private ArrayList<String> comments = new ArrayList<String>();
     /**Позиция комментария*/
-    private int commentposition = 0;
     public Item() {
 
     }
@@ -36,7 +37,7 @@ public class Item {
         this.description = description;
         this.create = create;
         for (int i = 0; i < comments.length; i++) {
-            this.comments[this.commentposition++] = comments[i];
+            this.comments.add(comments[i]);
         }
     }
 
@@ -53,9 +54,7 @@ public class Item {
     }
 
     public void setComments(String comment) {
-        if (this.commentposition < 10) {
-            this.comments[this.commentposition++] = comment;
-        }
+        this.comments.add(comment);
     }
 
     public void setCreate(long create) {
@@ -74,7 +73,7 @@ public class Item {
         return this.description;
     }
 
-    public String[] getComments() {
+    public ArrayList<String> getComments() {
         return this.comments;
     }
 
