@@ -14,9 +14,10 @@ public class SortUserTest {
     public void whenSortUsersWithoutSameNames() {
         User user1 = new User("Andrei", 19);
         User user2 = new User("Boris", 18);
+        User user3 = new User("Masha", 17);
         List<User> users = Arrays.asList(user1, user2);
         Set<User> result = new SortUser().sort(users);
-        Assert.assertThat(((TreeSet<User>) result).last(), Is.is(user2));
+        Assert.assertThat(((TreeSet<User>) result).last(), Is.is(user1));
     }
     @Test
     public void whenSortUsersWithOutSameNames() {
@@ -24,7 +25,7 @@ public class SortUserTest {
         User user2 = new User("Andrei", 18);
         List<User> users = Arrays.asList(user1, user2);
         Set<User> result = new SortUser().sort(users);
-        Assert.assertThat(((TreeSet<User>) result).last(), Is.is(user1));
+        Assert.assertThat(((TreeSet<User>) result).last(), Is.is(user2));
     }
 
     @Test

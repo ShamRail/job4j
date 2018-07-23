@@ -6,22 +6,18 @@ import java.util.*;
 public class SortUser {
     /**
      * sort.
-     * Сортирует сначало по имени , потом по возрасту.
+     * Сортирует  по возрасту.
      * @param users - пользователи.
      * @return отсортированный список.
      * */
     public Set<User> sort(List<User> users) {
-        Set<User> result = new TreeSet<User>();
-        for (int i = 1; i < users.size(); i++) {
-            int resultOfCompare = users.get(i - 1).compareTo(users.get(i));
-            if (resultOfCompare >= 0) {
-                result.add(users.get(i));
-                result.add(users.get(i - 1));
-            } else{
-                result.add(users.get(i - 1));
-                result.add(users.get(i));
-                }
+        Set<User> result = new TreeSet<>(new Comparator<User>() {
+            @Override
+            public int compare(User o1, User o2) {
+                return o1.compareTo(o2);
             }
+        });
+        result.addAll(users);
         return result;
     }
     /**
