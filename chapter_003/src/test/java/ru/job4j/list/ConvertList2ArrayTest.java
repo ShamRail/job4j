@@ -21,7 +21,7 @@ public class ConvertList2ArrayTest {
         int[][] expect = {
                 {1, 2, 3},
                 {4, 5, 6},
-                {7, 0 ,0}
+                {7, 0, 0}
         };
         assertThat(result, is(expect));
     }
@@ -40,7 +40,10 @@ public class ConvertList2ArrayTest {
     @Test
     public void whenConvertListOfArraysToOneList() {
         ConvertList2Array convertlList = new ConvertList2Array();
-        List<int[]> list = Arrays.asList(new int[]{1, 2}, new int[]{3, 4, 5, 6}, new int[]{7, 8, 9});
-        Assert.assertThat(convertlList.convert(list), Is.is(Arrays.asList(1, 2, 3, 4 , 5 , 6, 7, 8, 9)));
+        List<int[]> list = Arrays.asList(
+                new int[]{1, 2},
+                new int[]{3, 4, 5, 6},
+                new int[]{7, 8, 9});
+        Assert.assertThat(convertlList.convert(list), Is.is(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9)));
     }
 }
