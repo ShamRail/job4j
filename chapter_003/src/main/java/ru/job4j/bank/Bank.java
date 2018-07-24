@@ -95,14 +95,13 @@ public class Bank {
         boolean result = false;
         if (srcPassport != null && srcRequisite != null && destPassport != null && dstRequisite != null
                 && amount > 0) {
-            List<Account> destaccounts = this.getUserAccounts(destPassport);
-            List<Account> srcaccounts = this.getUserAccounts(srcPassport);
-            Account srcaccount = this.findAccountByRequisite(srcaccounts, srcRequisite);
-            Account dstaccount = this.findAccountByRequisite(destaccounts, dstRequisite);
-                if (srcaccounts != null && destaccounts != null
-                        && srcaccount != null && dstaccount != null && srcaccount.getValue() - amount >= 0) {
-                    srcaccount.setValue(srcaccount.getValue() - amount);
-                    dstaccount.setValue(dstaccount.getValue() + amount);
+
+            Account srcAccount = this.findAccountByRequisiteAndPassport(srcPassport, srcRequisite);
+            Account dstAccount = this.findAccountByRequisiteAndPassport(destPassport, dstRequisite);
+
+            if (srcAccount != null && dstAccount != null && srcAccount.getValue() - amount >= 0) {
+                    srcAccount.setValue(srcAccount.getValue() - amount);
+                    dstAccount.setValue(dstAccount.getValue() + amount);
                     result = true;
                 }
             }
@@ -110,16 +109,20 @@ public class Bank {
     }
     /**
      * findAccountByRequisite.
-     * Находит счет по реквизитам, если его нет то возвращает null.
-     * @param accounts - счета.
+     * Находит счет по паспорту и реквизитам, если его нет то возвращает null.
+     * @param passport - паспорт.
      * @param requisite - реквизиты.
      * @return счет.
      * */
-    public Account findAccountByRequisite(List<Account> accounts, String requisite) {
+    public Account findAccountByRequisiteAndPassport(String passport, String requisite) {
         Account result = null;
-        for (Account account : accounts) {
-            if (account.getRequisites().equals(requisite)) {
-                result = account;
+        List<Account> accounts = this.getUserAccounts(passport);
+        if (passport != null && requisite != null && accounts != null) {
+            for (Account account : accounts) {
+                if (account.getRequisites().equals(requisite)) {
+                    result = account;
+                    break;
+                }
             }
         }
         return result;
