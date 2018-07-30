@@ -31,7 +31,7 @@ public class QeenBlack extends Figure {
         }
         Cell[] way = new Cell[currentPosition.x == appointPosition.x ? Math.abs(appointPosition.y - currentPosition.y)
                 : Math.abs(appointPosition.x - currentPosition.x)];
-        InterimCalculations.fillSteps(this, way, currentPosition, appointPosition);
+        new InterimCalculations().fillSteps(this, way, currentPosition, appointPosition);
         return way;
     }
 

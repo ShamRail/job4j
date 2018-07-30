@@ -31,7 +31,7 @@ public class RookBlack extends Figure {
         }
         Cell[] steps = new Cell[appointPosition.x != currentPosition.x ? Math.abs(appointPosition.x - currentPosition.x)
                 : Math.abs(appointPosition.y - currentPosition.y)];
-        InterimCalculations.fillSteps(this, steps, currentPosition, appointPosition);
+        new InterimCalculations().fillSteps(this, steps, currentPosition, appointPosition);
         return steps;
     }
     /**

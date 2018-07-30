@@ -20,7 +20,7 @@ public class InterimCalculations {
      * @param appointCoordinatePosition координата назначения.
      * @return результат.
      * */
-    private static int findDelta(int currentCoordinatePosition, int appointCoordinatePosition) {
+    private int findDelta(int currentCoordinatePosition, int appointCoordinatePosition) {
         return Integer.compare(appointCoordinatePosition, currentCoordinatePosition);
     }
     /**
@@ -31,9 +31,9 @@ public class InterimCalculations {
      * @param currentPosition текущее положение фигуры.
      * @param appointPosition назначение фигуры.
      * */
-    public static void fillSteps(Figure figure, Cell[] steps, Cell currentPosition, Cell appointPosition) {
-        int deltaX = findDelta(currentPosition.x, appointPosition.x);
-        int deltaY = findDelta(currentPosition.y, appointPosition.y);
+    public void fillSteps(Figure figure, Cell[] steps, Cell currentPosition, Cell appointPosition) {
+        int deltaX = this.findDelta(currentPosition.x, appointPosition.x);
+        int deltaY = this.findDelta(currentPosition.y, appointPosition.y);
         int x = currentPosition.x + deltaX;
         int y = currentPosition.y + deltaY;
         for (int index = 0; index < steps.length; index++) {

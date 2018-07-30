@@ -29,7 +29,7 @@ public class KingBlack extends Figure {
             throw new ImposibleMoveException("Фигура так не ходит!");
         }
         Cell[] steps = new Cell[1];
-        InterimCalculations.fillSteps(this, steps, currentPosition, appointPosition);
+        new InterimCalculations().fillSteps(this, steps, currentPosition, appointPosition);
         return steps;
     }
     /**
