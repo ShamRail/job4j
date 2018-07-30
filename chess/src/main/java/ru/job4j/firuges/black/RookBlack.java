@@ -31,17 +31,7 @@ public class RookBlack extends Figure {
         }
         Cell[] steps = new Cell[appointPosition.x != currentPosition.x ? Math.abs(appointPosition.x - currentPosition.x)
                 : Math.abs(appointPosition.y - currentPosition.y)];
-        if (appointPosition.x != currentPosition.x) {
-            for (int index = 1; index <= steps.length; index++) {
-                steps[index - 1] = this.findByCoordinates(appointPosition.x > currentPosition.x ? currentPosition.x + index
-                        : currentPosition.x - index, currentPosition.y);
-            }
-        } else {
-            for (int index = 1; index <= steps.length; index++) {
-                steps[index - 1] = this.findByCoordinates(currentPosition.x, appointPosition.y > currentPosition.y ? currentPosition.y + index
-                        : currentPosition.y - index);
-            }
-        }
+        InterimCalculations.fillSteps(this, steps, currentPosition, appointPosition);
         return steps;
     }
     /**

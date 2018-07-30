@@ -51,7 +51,7 @@ public abstract class Figure {
      * @param y - координата у.
      * @return позиция.
      * */
-    protected Cell findByCoordinates(int x, int y) {
+    public Cell findByCoordinates(int x, int y) {
         Cell rst = Cell.A1;
         for (Cell cell : Cell.values()) {
             if (cell.x == x && cell.y == y) {

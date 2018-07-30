@@ -30,11 +30,7 @@ public class BishopBlack extends Figure {
             throw new ImposibleMoveException("Фигура так не ходит!");
         }
         Cell[] steps = new Cell[Math.abs(currentPosition.x - appointPosition.x)];
-        for (int index = 1; index <= steps.length; index++) {
-            int x = appointPosition.x > currentPosition.x ? currentPosition.x + index : currentPosition.x - index;
-            int y = appointPosition.y > currentPosition.y ? currentPosition.y + index : currentPosition.y - index;
-            steps[index - 1] = this.findByCoordinates(x, y);
-        }
+        InterimCalculations.fillSteps(this, steps, currentPosition, appointPosition);
         return steps;
     }
     /**

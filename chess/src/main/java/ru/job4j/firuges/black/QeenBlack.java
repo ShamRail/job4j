@@ -31,19 +31,7 @@ public class QeenBlack extends Figure {
         }
         Cell[] way = new Cell[currentPosition.x == appointPosition.x ? Math.abs(appointPosition.y - currentPosition.y)
                 : Math.abs(appointPosition.x - currentPosition.x)];
-        int x = appointPosition.x;
-        int y = appointPosition.y;
-        for (int index = 1; index <= way.length; index++) {
-            if (appointPosition.x == currentPosition.x) {
-                y = appointPosition.y > currentPosition.y ? currentPosition.y + index : currentPosition.y - index;
-            } else if (appointPosition.y == currentPosition.y) {
-                x = appointPosition.x > currentPosition.x ? currentPosition.x + index : currentPosition.x - index;
-            } else {
-                x = appointPosition.x > currentPosition.x ? currentPosition.x + index : currentPosition.x - index;
-                y = appointPosition.y > currentPosition.y ? currentPosition.y + index : currentPosition.y - index;
-            }
-            way[index - 1] = this.findByCoordinates(x, y);
-        }
+        InterimCalculations.fillSteps(this, way, currentPosition, appointPosition);
         return way;
     }
 

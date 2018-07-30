@@ -29,15 +29,7 @@ public class KingBlack extends Figure {
             throw new ImposibleMoveException("Фигура так не ходит!");
         }
         Cell[] steps = new Cell[1];
-        int x = appointPosition.x;
-        int y = appointPosition.y;
-        if (appointPosition.x != currentPosition.x) {
-            x = appointPosition.x > currentPosition.x ? currentPosition.x + 1 : currentPosition.x - 1;
-        }
-        if (appointPosition.y != currentPosition.y) {
-            y = appointPosition.y > currentPosition.y ? currentPosition.y + 1 : currentPosition.y - 1;
-        }
-        steps[0] = this.findByCoordinates(x, y);
+        InterimCalculations.fillSteps(this, steps, currentPosition, appointPosition);
         return steps;
     }
     /**

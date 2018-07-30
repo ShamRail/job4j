@@ -1,6 +1,7 @@
 package ru.job4j;
 
 import ru.job4j.firuges.Cell;
+import ru.job4j.firuges.Figure;
 
 /**
  * InterimCalculations.
@@ -11,7 +12,36 @@ import ru.job4j.firuges.Cell;
  * */
 
 public class InterimCalculations {
-
+    /**
+     * findDelta.
+     * Возвращает дельту движения по координате.
+     * 1 - вправо(вверх), -1 - влево(вниз), 0 - не двигаться.
+     * @param currentCoordinatePosition текущая координата.
+     * @param appointCoordinatePosition координата назначения.
+     * @return результат.
+     * */
+    private static int findDelta(int currentCoordinatePosition, int appointCoordinatePosition) {
+        return Integer.compare(appointCoordinatePosition, currentCoordinatePosition);
+    }
+    /**
+     * fillSteps.
+     * Заполняет путь движения фигуры.
+     * @param figure фигура.
+     * @param steps массив шагов.
+     * @param currentPosition текущее положение фигуры.
+     * @param appointPosition назначение фигуры.
+     * */
+    public static void fillSteps(Figure figure, Cell[] steps, Cell currentPosition, Cell appointPosition) {
+        int deltaX = findDelta(currentPosition.x, appointPosition.x);
+        int deltaY = findDelta(currentPosition.y, appointPosition.y);
+        int x = currentPosition.x + deltaX;
+        int y = currentPosition.y + deltaY;
+        for (int index = 0; index < steps.length; index++) {
+            steps[index] = figure.findByCoordinates(x, y);
+            x += deltaX;
+            y += deltaY;
+        }
+    }
     /**
      * isBishopCanGo.
      * Описывает может ли ходить слон.
