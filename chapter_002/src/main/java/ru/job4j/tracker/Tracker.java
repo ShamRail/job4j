@@ -2,6 +2,9 @@ package ru.job4j.tracker;
 
 import java.util.*;
 import java.lang.*;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Tracker.
@@ -33,6 +36,18 @@ public class Tracker {
         return item;
     }
     /**
+     * idComparing.
+     * Сравнивает идентификаторы.
+     * @param id идентификатор.
+     * @param item ячейка.
+     * @return результат.
+     * */
+    private boolean idComparing(Item item, String id) {
+        Predicate<String> predicate = (itemId) -> item.getId().equals(itemId);
+        return predicate.test(id);
+    }
+
+    /**
      * replace.
      * Метод, меняюший значение ячеек по id.
      * @param id - идентификатор , заменяемой ячейки.
@@ -40,7 +55,7 @@ public class Tracker {
      * */
     public void replace(String id, Item item) {
         for (Item item1 : this.items) {
-            if (item1.getId().equals(id)) {
+            if (idComparing(item1, id)) {
                 item.setId(id);
                 this.items.set(this.items.indexOf(item1), item);
                 break;
@@ -55,7 +70,7 @@ public class Tracker {
     public boolean delete(String id) {
         boolean del = false;
         for (Item item : this.items) {
-            if (id != null && item.getId().equals(id)) {
+            if (id != null && idComparing(item, id)) {
                 this.items.remove(item);
                 del = true;
                 break;
@@ -98,7 +113,7 @@ public class Tracker {
     public Item findById(String id) {
         Item result = null;
         for (Item item : this.items) {
-            if (item != null && item.getId().equals(id)) {
+            if (item != null && idComparing(item, id)) {
                 result = item;
                 break;
             }
@@ -115,7 +130,7 @@ public class Tracker {
         boolean res = false;
         if (id != null && comment != null) {
             for (Item item : this.items) {
-                if (item.getId().equals(id)) {
+                if (idComparing(item, id)) {
                     item.setComments(comment);
                     res = true;
                     break;
