@@ -21,6 +21,8 @@ import ru.job4j.firuges.black.*;
 import ru.job4j.firuges.white.*;
 import javafx.scene.control.Alert;
 
+import java.util.function.Predicate;
+
 /**
  * Chess.
  * Класс, строящий интерфейс приложения и описывающий общую логику.
@@ -201,8 +203,9 @@ public class Chess extends Application {
         Cell rst = Cell.A1;
         int x = (int) graphX / 40;
         int y = (int) graphY / 40;
+        Predicate<Cell> predicate = (cell -> cell.x == x && cell.y == y);
         for (Cell cell : Cell.values()) {
-            if (cell.x == x && cell.y == y) {
+            if (predicate.test(cell)) {
                 rst = cell;
                 break;
             }

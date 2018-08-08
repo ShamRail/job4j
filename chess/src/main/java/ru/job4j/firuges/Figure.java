@@ -1,6 +1,8 @@
 package ru.job4j.firuges;
 
 import ru.job4j.exceptions.ImposibleMoveException;
+import java.util.function.Predicate;
+
 
 public abstract class Figure {
     /**Позиция фигуры*/
@@ -53,13 +55,13 @@ public abstract class Figure {
      * */
     public Cell findByCoordinates(int x, int y) {
         Cell rst = Cell.A1;
+        Predicate<Cell> predicate = (cell -> cell.x == x && cell.y == y);
         for (Cell cell : Cell.values()) {
-            if (cell.x == x && cell.y == y) {
+            if (predicate.test(cell)) {
                 rst = cell;
                 break;
             }
         }
         return rst;
     }
-
 }

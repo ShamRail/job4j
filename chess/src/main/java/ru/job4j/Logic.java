@@ -5,10 +5,8 @@ import ru.job4j.exceptions.ImposibleMoveException;
 import ru.job4j.exceptions.OccupiedWayException;
 import ru.job4j.firuges.Cell;
 import ru.job4j.firuges.Figure;
-import ru.job4j.firuges.black.BishopBlack;
-import ru.job4j.firuges.black.PawnBlack;
-import ru.job4j.firuges.black.RookBlack;
-import ru.job4j.firuges.white.RookWhite;
+import java.util.Arrays;
+import java.util.function.Predicate;
 
 /**
  * //TODO add comments.
@@ -86,8 +84,9 @@ public class Logic {
      * */
     private int findByPosition(Cell position) {
         int rst = -1;
+        Predicate<Cell> predicate = (cell -> cell.equals(position));
         for (int index = 0; index != this.figures.length; index++) {
-            if (this.figures[index] != null && this.figures[index].position().equals(position)) {
+            if (this.figures[index] != null && predicate.test(this.figures[index].position())) {
                 rst = index;
                 break;
             }
@@ -101,15 +100,7 @@ public class Logic {
      * @param way - путь.
      * @return результат.
      * */
-
     private boolean occupaidWay(Cell[] way) {
-        boolean result = false;
-        for (Cell cell : way) {
-            if (this.findByPosition(cell) != -1) {
-                result = true;
-                break;
-            }
-        }
-        return result;
+        return Arrays.stream(way).anyMatch((cell -> this.findByPosition(cell) != -1));
     }
 }
