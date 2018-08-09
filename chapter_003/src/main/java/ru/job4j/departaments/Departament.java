@@ -1,13 +1,14 @@
 package ru.job4j.departaments;
 
-import java.util.Comparator;
-import java.util.TreeSet;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Department.
- * Class use Set to store codes of departaments, because it can't be equal.
+ * Class use Map to store codes of departaments.
+ * Mapping according to : code of high department(key) - code's of subdepartments(value's).
  * @version 1.0.
- * @since 07.08.2018.
+ * @since 09.08.2018.
  * @author Rail Shamsemukhametov.
  * */
 
@@ -15,14 +16,35 @@ public class Departament {
     /**
      * Store of departments.
      * */
-    private TreeSet<String> departaments = new TreeSet<>();
+    private LinkedHashMap<String, TreeSet<String>> departaments = new LinkedHashMap<>();
 
     /**
      * getterMethod.
      * */
 
-    public TreeSet<String> getDepartaments() {
+    public LinkedHashMap<String, TreeSet<String>> getDepartaments() {
         return this.departaments;
+    }
+
+    /**
+     * divideOnSubDepartments.
+     * Divide code of department to the TreeSet of all above department's code's.
+     * @param departament code of adding department.
+     * @param code's of all above department's.
+     * */
+
+    public TreeSet<String> divideOnSubDepartments(String departament) {
+        TreeSet<String> result = new TreeSet<>();
+        StringBuilder stringBuffer = new StringBuilder();
+        for (int i = 0; i < departament.length(); i++) {
+            if (departament.charAt(i) == '\\') {
+                result.add(stringBuffer.toString());
+            }
+            stringBuffer.append(departament.charAt(i));
+        }
+        result.add(departament);
+        result.remove(result.first());
+        return result;
     }
 
     /**
@@ -33,70 +55,37 @@ public class Departament {
      * */
 
     public void add(String departament) {
-        StringBuilder stringBuffer = new StringBuilder();
-        for (int i = 0; i < departament.length(); i++) {
-            if (departament.charAt(i) == '\\' && !this.departaments.contains(stringBuffer.toString())) {
-                this.departaments.add(stringBuffer.toString());
-            }
-            stringBuffer.append(departament.charAt(i));
+        int indexOfFirtstSlash = departament.indexOf("\\");
+        String key = (indexOfFirtstSlash == -1) ? departament : departament.substring(0, indexOfFirtstSlash);
+        if (!this.departaments.containsKey(key)) {
+            this.departaments.put(key, new TreeSet<>());
         }
-        this.departaments.add(departament);
+        if (indexOfFirtstSlash != -1) {
+            this.departaments.get(key).addAll(this.divideOnSubDepartments(departament));
+        }
     }
 
     /**
      * ascendingSort.
-     * We not need to implement ascending sort apart, because
-     * TreeSet use it by default (natural order).
-     * However, if we need to change our store, we must realize it.
-     * @return ascending sorted store.
+     * sorting according to Natural order.
      * */
 
-    public TreeSet<String> ascendingSort() {
-        TreeSet<String> result = new TreeSet<>(new Comparator<String>() {
-            @Override
-            public int compare(String o1, String o2) {
-                return o1.compareTo(o2);
-            }
-        });
-        result.addAll(this.departaments);
-        this.departaments = result;
-        return result;
+    public void ascendingSort() {
+        this.departaments = this.departaments.entrySet().stream()
+                .sorted(Map.Entry.comparingByKey(Comparator.naturalOrder()))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                        (oldValue, newValue) -> oldValue, LinkedHashMap::new));
     }
 
     /**
-     * descendingSort.
-     * To save hierarchy of the store it is sorted only by highest code's of departaments.
-     * So, we need ignore symbols after last "K" (we can do it, because  every code has "K")
-     * in code's except in highest. At first, input strings in param of comparator is checking on equality to highest code
-     * (highest code can't contain "\"). If both strings is highest we reverse order(natural order by default).
-     * At last, we find length of comparing part. If both strings are not highest length will be minimum of it's
-     * last indexes of last "K". On other hand, if one of strings is highest(or both) we must't cut length to compare.
-     * At last, strings are compared symbols by symbols till length.
-     * If result = -1, first string is previous by second, else next by second.
-     * @return descending sorted store.
+     * ascendingSort.
+     * sorting according to Reverse order.
      * */
 
-    public TreeSet<String> descendingSort() {
-        TreeSet<String> result = new TreeSet<>(new Comparator<String>() {
-            @Override
-            public int compare(String o1, String o2) {
-                int result = 1;
-                if (!o1.contains("\\") && !o2.contains("\\")) {
-                    result = -1;
-                } else {
-                    int lenght = (!o1.contains("\\") || !o2.contains("\\"))
-                            ? Math.min(o1.length(), o2.length()) : Math.min(o1.lastIndexOf("K"), o2.lastIndexOf("K")) + 1;
-                    for (int i = 0; i < lenght; i++) {
-                        if (o1.charAt(i) > o2.charAt(i)) {
-                            result = -1;
-                        }
-                    }
-                }
-                return result;
-            }
-        });
-        result.addAll(this.departaments);
-        this.departaments = result;
-        return result;
+    public void descengingSort() {
+        this.departaments = this.departaments.entrySet().stream()
+                .sorted(Map.Entry.comparingByKey(Comparator.reverseOrder()))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                        (oldValue, newValue) -> oldValue, LinkedHashMap::new));
     }
 }
