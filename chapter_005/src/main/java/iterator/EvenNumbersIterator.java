@@ -11,6 +11,7 @@ public class EvenNumbersIterator implements Iterator {
 
     public EvenNumbersIterator(int[] array) {
         this.array = array;
+        this.firstEvenIndex = this.firstEvenElement();
     }
 
     /**
@@ -40,7 +41,7 @@ public class EvenNumbersIterator implements Iterator {
 
     @Override
     public boolean hasNext() {
-        return firstEvenElement() != -1;
+        return this.firstEvenIndex != -1;
     }
 
     /**
@@ -52,11 +53,11 @@ public class EvenNumbersIterator implements Iterator {
 
     @Override
     public Object next() {
-        int indexOfFirstEven = this.firstEvenElement();
-        if (indexOfFirstEven == -1) {
+        if (this.firstEvenIndex == -1) {
             throw new NoSuchElementException();
         }
-        firstEvenIndex = indexOfFirstEven;
-        return this.array[firstEvenIndex];
+        int result = this.array[firstEvenIndex];
+        firstEvenIndex = this.firstEvenElement();
+        return result;
     }
 }
