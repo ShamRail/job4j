@@ -11,8 +11,11 @@ public class MatrixIterator implements Iterator {
     /**индекс элемента в подмассиве.*/
     private int indexOfValueInSubArray = 0;
 
+    private int indexOfFirstNoEmptyArray = -1;
+
     public MatrixIterator(int[][] multiArray) {
         this.multiArray = multiArray;
+        this.indexOfFirstNoEmptyArray = this.indexOfNoEmptySubArray();
     }
 
 
@@ -26,7 +29,7 @@ public class MatrixIterator implements Iterator {
     @Override
     public boolean hasNext() {
         return indexOfValueInSubArray < multiArray[subArrayIndex].length
-                || indexOfNoEmptySubArray() != -1;
+                || this.indexOfFirstNoEmptyArray != -1;
     }
 
     /**
@@ -61,7 +64,6 @@ public class MatrixIterator implements Iterator {
     public Object next() {
         Object result = null;
 
-        int indexOfFirstNoEmptyArray = indexOfNoEmptySubArray();
         if (subArrayIndex >= multiArray.length
             || (indexOfValueInSubArray >= multiArray[subArrayIndex].length && indexOfFirstNoEmptyArray == -1)) {
                 throw new NoSuchElementException();
@@ -73,6 +75,7 @@ public class MatrixIterator implements Iterator {
             indexOfValueInSubArray = 0;
             result = multiArray[indexOfFirstNoEmptyArray][indexOfValueInSubArray++];
             subArrayIndex = indexOfFirstNoEmptyArray;
+            indexOfFirstNoEmptyArray = indexOfNoEmptySubArray();
         }
 
         return result;
