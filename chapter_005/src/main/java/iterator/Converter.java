@@ -15,9 +15,9 @@ public class Converter {
     public Iterator<Integer> convert(Iterator<Iterator<Integer>> it) {
         return new Iterator<Integer>() {
             /**Pointer to current iterator.*/
-            private Iterator<Integer> pointer = (it.hasNext()) ? it.next() : null;
+            private Iterator<Integer> pointer = this.movePointerToFirstNoEmptyInterator();
             /**Flag of existence next element.*/
-            private boolean isNextElementExist = pointer.hasNext();
+            private boolean isNextElementExist = pointer != null && pointer.hasNext();
 
             public boolean hasNext() {
                 return this.isNextElementExist;
@@ -50,10 +50,16 @@ public class Converter {
              * movePointerToFirstNoEmptyInterator.
              * */
 
-            private void movePointerToFirstNoEmptyInterator() {
-                while (it.hasNext() && !pointer.hasNext()) {
+            private Iterator<Integer> movePointerToFirstNoEmptyInterator() {
+                Iterator<Integer> result = null;
+                while (it.hasNext()) {
                     pointer = it.next();
+                    result = pointer;
+                    if (pointer.hasNext()) {
+                        break;
+                    }
                 }
+                return result;
             }
         };
     }
