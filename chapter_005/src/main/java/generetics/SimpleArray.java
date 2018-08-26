@@ -15,6 +15,16 @@ public class SimpleArray<T> implements Iterable<T> {
         this.store = new Object[size];
         this.count = size;
     }
+
+    /**
+     * size.
+     * @return store size.
+     * */
+
+    public int size() {
+        return this.position;
+    }
+
     /**
      * add.
      * @param value adding value.
@@ -23,6 +33,7 @@ public class SimpleArray<T> implements Iterable<T> {
      * @return result of adding.
      * @exception ArrayIndexOutOfBoundsException
      * */
+
     public void add(T value) {
         this.checkIndex(position);
         this.store[position++] = value;
