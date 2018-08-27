@@ -74,11 +74,9 @@ public class SimpleArray<T> implements Iterable<T> {
     public void delete(int index) {
         this.checkIndex(index);
 
-        for (int i = index; i < position - 1; i++) {
-            this.store[i] = this.store[i + 1];
-        }
-        this.store[position - 1] = null;
-        position--;
+        System.arraycopy(this.store, index + 1, this.store, index, this.position - index - 1);
+        this.store[this.position - 1] = null;
+        this.position--;
     }
     /**
      * checkIndex.
@@ -108,7 +106,7 @@ public class SimpleArray<T> implements Iterable<T> {
 
             @Override
             public T next() {
-                if (!isExistNextElement) {
+                if (!this.hasNext()) {
                     throw new NoSuchElementException();
                 }
                 T result = (T) store[this.cursor];
