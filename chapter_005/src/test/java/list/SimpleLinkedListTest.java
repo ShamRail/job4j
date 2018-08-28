@@ -1,5 +1,6 @@
 package list;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import java.util.ConcurrentModificationException;
@@ -64,11 +65,6 @@ public class SimpleLinkedListTest {
         assertThat(integerIterator.hasNext(), is(true));
         assertThat(integerIterator.next(), is(1));
         assertThat(integerIterator.hasNext(), is(false));
-
-
-
-
-
-
     }
+
 }
