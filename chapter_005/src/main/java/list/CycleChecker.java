@@ -19,16 +19,9 @@ public class CycleChecker<E> {
         if (first != null) {
             Node<E> slow = first;
             Node<E> fast = first;
-            while (true) {
+            while (slow != null && fast != null && fast.next != null) {
                 slow = slow.next;
-                if (fast.next != null) {
-                    fast = fast.next.next;
-                } else {
-                    break;
-                }
-                if (slow == null || fast == null) {
-                    break;
-                }
+                fast = fast.next.next;
                 if (slow == fast) {
                     result = true;
                     break;
