@@ -23,14 +23,13 @@ public class CycleChecker<E> {
                 slow = slow.next;
                 if (fast.next != null) {
                     fast = fast.next.next;
-                }
-                else {
+                } else {
                     break;
                 }
-                if(slow == null || fast == null) {
+                if (slow == null || fast == null) {
                     break;
                 }
-                if(slow == fast) {
+                if (slow == fast) {
                     result = true;
                     break;
                 }

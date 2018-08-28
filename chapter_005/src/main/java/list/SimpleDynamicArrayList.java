@@ -20,11 +20,26 @@ public class SimpleDynamicArrayList<E> implements Iterable<E> {
         this.modCount++;
     }
 
-    public E get(int index) {
+    public int size() {
+        return this.position;
+    }
+
+    E get(int index) {
         if (this.isIndexIsOutOfBounds(index)) {
             throw new ArrayIndexOutOfBoundsException();
         }
         return (E) this.store[index];
+    }
+
+    public boolean contains(E data) {
+        boolean result = false;
+        for (int i = 0; i < this.position; i++) {
+            if (this.store[i].equals(data)) {
+                result = true;
+                break;
+            }
+        }
+        return result;
     }
 
     private boolean isIndexIsOutOfBounds(int index) {
