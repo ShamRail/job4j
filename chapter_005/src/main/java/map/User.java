@@ -12,4 +12,14 @@ public class User {
         this.children = children;
         this.birthday = birthday;
     }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + name.hashCode();
+        result = prime * result + children;
+        result = prime * result + birthday.hashCode();
+        return result;
+    }
 }
