@@ -33,4 +33,10 @@ public class UserTest {
         System.out.println(users);
         Assert.assertThat(users.size(), Is.is(2));
     }
+
+    @Test
+    public void whenEqualsAndHashcodeBothDefinedThenSizeMustOne() {
+        System.out.println(users);
+        Assert.assertThat(users.size(), Is.is(1));
+    }
 }
