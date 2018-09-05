@@ -9,17 +9,14 @@ import java.util.Iterator;
 
 public class SimpleSetTest {
 
-    SimpleSet<String> cities = new SimpleSet<>();
+    @Test
+    public void whenTryAddExistElementThenItWontAdd() {
 
-    @Before
-    public void setUp() {
+        SimpleSet<String> cities = new SimpleSet<>();
         cities.add("Moscow");
         cities.add("Ufa");
         cities.add("Sant-Petersburg");
-    }
 
-    @Test
-    public void whenTryAddExistElementThenItWontAdd() {
         int sizeBefore = cities.size();
         cities.add("Ufa");
         Assert.assertThat(cities.size(), Is.is(sizeBefore));
@@ -27,6 +24,11 @@ public class SimpleSetTest {
 
     @Test
     public void whenTryAddNotExistElementThenItAdd() {
+        SimpleSet<String> cities = new SimpleSet<>();
+        cities.add("Moscow");
+        cities.add("Ufa");
+        cities.add("Sant-Petersburg");
+
         int sizeBefore = cities.size();
         cities.add("Volgograd");
         Assert.assertThat(cities.size(), Is.is(sizeBefore + 1));
@@ -39,11 +41,23 @@ public class SimpleSetTest {
 
     @Test
     public void whenSetDoesntContainsThenFalse() {
+
+        SimpleSet<String> cities = new SimpleSet<>();
+        cities.add("Moscow");
+        cities.add("Ufa");
+        cities.add("Sant-Petersburg");
+
         Assert.assertThat(cities.contains("Kazan"), Is.is(false));
     }
 
     @Test
     public void whenSetContainsThenTrue() {
+
+        SimpleSet<String> cities = new SimpleSet<>();
+        cities.add("Moscow");
+        cities.add("Ufa");
+        cities.add("Sant-Petersburg");
+
         Assert.assertThat(cities.contains("Ufa"), Is.is(true));
     }
 }
