@@ -3,7 +3,7 @@ package tree;
 import java.util.*;
 import java.util.function.Predicate;
 
-public class SimpleTree<E extends Comparable<E>> implements Iterable<Node<E>> {
+public class SimpleTree<E extends Comparable<E>> implements Iterable<E> {
     /**корень дерева*/
     private final Node<E> root;
     /**количество структурных изменений*/
@@ -45,8 +45,8 @@ public class SimpleTree<E extends Comparable<E>> implements Iterable<Node<E>> {
 
     private boolean getResultAccordingExpression(Predicate<Node<E>> expression) {
         boolean result = true;
-        for (Node<E> node : this) {
-            if (expression.test(node)) {
+        for (E value : this) {
+            if (expression.test(findBy(value).get())) {
                 result = false;
                 break;
             }
@@ -71,8 +71,8 @@ public class SimpleTree<E extends Comparable<E>> implements Iterable<Node<E>> {
      * */
 
     @Override
-    public Iterator<Node<E>> iterator() {
-        return new Iterator<Node<E>>() {
+    public Iterator<E> iterator() {
+        return new Iterator<E>() {
             private final LinkedList<Node<E>> children = new LinkedList<>(Collections.singletonList(root));
             private boolean nextExist = root != null;
             private final int expectedModCount = modCount;
@@ -86,16 +86,16 @@ public class SimpleTree<E extends Comparable<E>> implements Iterable<Node<E>> {
             }
 
             @Override
-            public Node<E> next() {
+            public E next() {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                Node<E> result = null;
+                E result = null;
                 if (children.size() != 0) {
                     Node<E> firstOfChildren = children.pollFirst();
                     if (firstOfChildren != null) {
                         children.addAll(firstOfChildren.leaves());
-                        result = firstOfChildren;
+                        result = firstOfChildren.getValue();
                         nextExist = children.size() != 0;
                     }
                 }
