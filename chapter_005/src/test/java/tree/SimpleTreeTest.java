@@ -44,28 +44,28 @@ public class SimpleTreeTest {
 
     @Test
     public void whenIterateWithoutConcurrentModifications() {
-        Iterator<Integer> treeIterator = tree.iterator();
+        Iterator<Node<Integer>> treeIterator = tree.iterator();
 
         Assert.assertThat(treeIterator.hasNext(), Is.is(true));
-        Assert.assertThat(treeIterator.next(), Is.is(0));
+        Assert.assertThat(treeIterator.next().getValue(), Is.is(0));
 
         Assert.assertThat(treeIterator.hasNext(), Is.is(true));
-        Assert.assertThat(treeIterator.next(), Is.is(1));
+        Assert.assertThat(treeIterator.next().getValue(), Is.is(1));
 
         Assert.assertThat(treeIterator.hasNext(), Is.is(true));
-        Assert.assertThat(treeIterator.next(), Is.is(2));
+        Assert.assertThat(treeIterator.next().getValue(), Is.is(2));
 
         Assert.assertThat(treeIterator.hasNext(), Is.is(true));
-        Assert.assertThat(treeIterator.next(), Is.is(7));
+        Assert.assertThat(treeIterator.next().getValue(), Is.is(7));
 
         Assert.assertThat(treeIterator.hasNext(), Is.is(true));
-        Assert.assertThat(treeIterator.next(), Is.is(3));
+        Assert.assertThat(treeIterator.next().getValue(), Is.is(3));
 
         Assert.assertThat(treeIterator.hasNext(), Is.is(true));
-        Assert.assertThat(treeIterator.next(), Is.is(5));
+        Assert.assertThat(treeIterator.next().getValue(), Is.is(5));
 
         Assert.assertThat(treeIterator.hasNext(), Is.is(true));
-        Assert.assertThat(treeIterator.next(), Is.is(6));
+        Assert.assertThat(treeIterator.next().getValue(), Is.is(6));
 
         Assert.assertThat(treeIterator.hasNext(), Is.is(false));
     }
@@ -74,24 +74,24 @@ public class SimpleTreeTest {
     public void whenExistOnlyRootThenMustNextReturnRoot() {
         tree = new SimpleTree<>(root);
 
-        Iterator<Integer> treeIterator = tree.iterator();
+        Iterator<Node<Integer>> treeIterator = tree.iterator();
 
         Assert.assertThat(treeIterator.hasNext(), Is.is(true));
-        Assert.assertThat(treeIterator.next(), Is.is(0));
+        Assert.assertThat(treeIterator.next().getValue(), Is.is(0));
     }
 
     @Test(expected = NoSuchElementException.class)
     public void whenTreeIsEmptyMustReturnException() {
         tree = new SimpleTree<>(null);
 
-        Iterator<Integer> treeIterator = tree.iterator();
+        Iterator<Node<Integer>> treeIterator = tree.iterator();
 
         treeIterator.next();
     }
 
     @Test(expected = ConcurrentModificationException.class)
     public void whenIterateWithConcurrentModificationThenMustBeException() {
-        Iterator<Integer> treeIterator = tree.iterator();
+        Iterator<Node<Integer>> treeIterator = tree.iterator();
 
         tree.add(7, 8);
 
@@ -100,7 +100,7 @@ public class SimpleTreeTest {
 
     @Test(expected = NoSuchElementException.class)
     public void whenAllIterateThenNextInvokeException() {
-        Iterator<Integer> treeIterator = tree.iterator();
+        Iterator<Node<Integer>> treeIterator = tree.iterator();
 
         for (int i = 0; i < 7; i++) {
             treeIterator.next();
@@ -113,16 +113,16 @@ public class SimpleTreeTest {
     public void whenAddAllExistElementThenItMustBeIgnoredToAdd() {
         tree.add(0, 2);
 
-        Iterator<Integer> treeIterator = tree.iterator();
+        Iterator<Node<Integer>> treeIterator = tree.iterator();
 
-        Assert.assertThat(treeIterator.next(), Is.is(0));
-        Assert.assertThat(treeIterator.next(), Is.is(1));
-        Assert.assertThat(treeIterator.next(), Is.is(2));
-        Assert.assertThat(treeIterator.next(), Is.is(7));
+        Assert.assertThat(treeIterator.next().getValue(), Is.is(0));
+        Assert.assertThat(treeIterator.next().getValue(), Is.is(1));
+        Assert.assertThat(treeIterator.next().getValue(), Is.is(2));
+        Assert.assertThat(treeIterator.next().getValue(), Is.is(7));
 
         // moving to next level, second "2" was ignored
 
-        Assert.assertThat(treeIterator.next(), Is.is(3));
+        Assert.assertThat(treeIterator.next().getValue(), Is.is(3));
     }
 
     @Test

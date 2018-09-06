@@ -3,7 +3,7 @@ package tree;
 import java.util.*;
 import java.util.function.Predicate;
 
-public class SimpleTree<E extends Comparable<E>> implements Iterable<E> {
+public class SimpleTree<E extends Comparable<E>> implements Iterable<Node<E>> {
     /**корень дерева*/
     private final Node<E> root;
     /**количество структурных изменений*/
@@ -45,20 +45,12 @@ public class SimpleTree<E extends Comparable<E>> implements Iterable<E> {
 
     private boolean getResultAccordingExpression(Predicate<Node<E>> expression) {
         boolean result = true;
-
-        Queue<Node<E>> data = new LinkedList<>();
-        data.offer(this.root);
-        while (!data.isEmpty()) {
-            Node<E> el = data.poll();
-            if (expression.test(el)) {
+        for (Node<E> node : this) {
+            if (expression.test(node)) {
                 result = false;
                 break;
             }
-            for (Node<E> child : el.leaves()) {
-                data.offer(child);
-            }
         }
-
         return result;
     }
 
@@ -79,31 +71,31 @@ public class SimpleTree<E extends Comparable<E>> implements Iterable<E> {
      * */
 
     @Override
-    public Iterator<E> iterator() {
-        return new Iterator<E>() {
+    public Iterator<Node<E>> iterator() {
+        return new Iterator<Node<E>>() {
             private final LinkedList<Node<E>> children = new LinkedList<>(Collections.singletonList(root));
             private boolean nextExist = root != null;
             private final int expectedModCount = modCount;
 
             @Override
             public boolean hasNext() {
+                if (expectedModCount != modCount) {
+                    throw new ConcurrentModificationException();
+                }
                 return nextExist;
             }
 
             @Override
-            public E next() {
-                if (expectedModCount != modCount) {
-                    throw new ConcurrentModificationException();
-                }
+            public Node<E> next() {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                E result = null;
+                Node<E> result = null;
                 if (children.size() != 0) {
                     Node<E> firstOfChildren = children.pollFirst();
                     if (firstOfChildren != null) {
                         children.addAll(firstOfChildren.leaves());
-                        result = firstOfChildren.getValue();
+                        result = firstOfChildren;
                         nextExist = children.size() != 0;
                     }
                 }
