@@ -3,51 +3,48 @@ package iterator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class MatrixIterator implements Iterator {
+public class MatrixIterator implements Iterator<Integer> {
     /**массив, хранящий переданный массив.*/
-    private int[][] multiArray;
-    /**индекс подмассива.*/
-    private int subArrayIndex = 0;
-    /**индекс элемента в подмассиве.*/
-    private int indexOfValueInSubArray = 0;
+    private final int[][] matrix;
+    /**индекс строки.*/
+    private int row = 0;
+    /**индекс столбца.*/
+    private int column = 0;
 
-    private int indexOfFirstNoEmptyArray = -1;
+    private Integer cursor;
 
-    public MatrixIterator(int[][] multiArray) {
-        this.multiArray = multiArray;
-        this.indexOfFirstNoEmptyArray = this.indexOfNoEmptySubArray();
+    public MatrixIterator(int[][] matrix) {
+        this.matrix = matrix;
+        cursor = moveCursor();
     }
 
+    private Integer moveCursor() {
+        Integer result = null;
+        if (matrix.length > 0) {
+            for (int rowIndex = row; rowIndex < matrix.length; rowIndex++) {
+                if (matrix[rowIndex].length > 0 && column < matrix[rowIndex].length) {
+                   result = matrix[rowIndex][column];
+                   column++;
+                   break;
+                } else {
+                    column = 0;
+                    row = rowIndex + 1;
+                }
+            }
+        }
+        return result;
+    }
 
     /**
      * hasNext.
      * Проверяет сначало, если элементы в подмассиве,
      * если нет их то проверяет есть следующий подмассив,
      * Если оба условия не выпоняются возвращает false, иначе true.
-     * @param result
      * */
+
     @Override
     public boolean hasNext() {
-        return indexOfValueInSubArray < multiArray[subArrayIndex].length
-                || this.indexOfFirstNoEmptyArray != -1;
-    }
-
-    /**
-     * indexOfNoEmptySubArray.
-     * Возвращает элемент первого не пустого подмассива.
-     * Иначе -1.
-     * @return результат.
-     * */
-
-    private int indexOfNoEmptySubArray() {
-        int result = -1;
-        for (int i = subArrayIndex + 1; i < multiArray.length; i++) {
-            if (multiArray[i].length != 0) {
-                result = i;
-                break;
-            }
-        }
-        return result;
+        return cursor != null;
     }
 
     /**
@@ -56,28 +53,17 @@ public class MatrixIterator implements Iterator {
      * Если подмассивы есть, то
      * Сначало возвращается элемент в подмассиве, если есть,
      * Иначе возвращается первый элемент следующего подмассива
-     * @exception NoSuchElementException
      * @return элемент.
      * */
 
     @Override
-    public Object next() {
-        Object result = null;
-
-        if (subArrayIndex >= multiArray.length
-            || (indexOfValueInSubArray >= multiArray[subArrayIndex].length && indexOfFirstNoEmptyArray == -1)) {
-                throw new NoSuchElementException();
+    public Integer next() {
+        Integer result;
+        if (!hasNext()) {
+            throw new NoSuchElementException();
         }
-
-        if (indexOfValueInSubArray < multiArray[subArrayIndex].length) {
-            result = multiArray[subArrayIndex][indexOfValueInSubArray++];
-        } else {
-            indexOfValueInSubArray = 0;
-            result = multiArray[indexOfFirstNoEmptyArray][indexOfValueInSubArray++];
-            subArrayIndex = indexOfFirstNoEmptyArray;
-            indexOfFirstNoEmptyArray = indexOfNoEmptySubArray();
-        }
-
+        result = cursor;
+        cursor = moveCursor();
         return result;
     }
 
