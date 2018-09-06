@@ -1,11 +1,12 @@
 package generetics;
-import list.SimpleArrayList;
 
 /**Класс реализующий структуры данных стек.
  * @see list.SimpleArrayList
  * */
 
-public class SimpleStack<E> extends SimpleArrayList<E> {
+public class SimpleStack<E> {
+
+    private SimpleDequeue<E> simpleDequeue = new SimpleDequeue<>();
 
     /**
      * push.
@@ -16,7 +17,7 @@ public class SimpleStack<E> extends SimpleArrayList<E> {
      * */
 
     public void push(E data) {
-        super.add(data);
+        simpleDequeue.insertFirst(data);
     }
 
     /**
@@ -27,6 +28,6 @@ public class SimpleStack<E> extends SimpleArrayList<E> {
      * */
 
     public E poll() {
-        return super.delete();
+        return simpleDequeue.deleteFirst();
     }
 }
