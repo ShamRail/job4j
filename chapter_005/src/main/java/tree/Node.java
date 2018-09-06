@@ -32,4 +32,8 @@ public class Node<E extends Comparable<E>> {
     public E getValue() {
         return this.value;
     }
+
+    public int childrenCount() {
+        return children.size();
+    }
 }

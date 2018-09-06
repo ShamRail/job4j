@@ -1,6 +1,7 @@
 package tree;
 
 import java.util.*;
+import java.util.function.Predicate;
 
 public class SimpleTree<E extends Comparable<E>> implements Iterable<E> {
     /**корень дерева*/
@@ -42,14 +43,14 @@ public class SimpleTree<E extends Comparable<E>> implements Iterable<E> {
         return result;
     }
 
-    private boolean treeUnContainChildren(E childValue) {
+    private boolean getResultAccordingExpression(Predicate<Node<E>> expression) {
         boolean result = true;
 
         Queue<Node<E>> data = new LinkedList<>();
         data.offer(this.root);
         while (!data.isEmpty()) {
             Node<E> el = data.poll();
-            if (!el.unContainsChild(childValue)) {
+            if (expression.test(el)) {
                 result = false;
                 break;
             }
@@ -59,6 +60,15 @@ public class SimpleTree<E extends Comparable<E>> implements Iterable<E> {
         }
 
         return result;
+    }
+
+
+    private boolean treeUnContainChildren(E childValue) {
+        return getResultAccordingExpression((node) -> !node.unContainsChild(childValue));
+    }
+
+    public boolean isBinary() {
+        return getResultAccordingExpression((node) -> node.childrenCount() > 2);
     }
 
     /**

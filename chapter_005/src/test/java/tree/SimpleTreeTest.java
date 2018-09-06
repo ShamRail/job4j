@@ -9,7 +9,7 @@ import java.util.*;
 
 public class SimpleTreeTest {
 
-    private Node<Integer> root = new Node<Integer>(0);
+    private final Node<Integer> root = new Node<>(0);
     private SimpleTree<Integer> tree = new SimpleTree<>(root);
 
     @Before
@@ -123,5 +123,29 @@ public class SimpleTreeTest {
         // moving to next level, second "2" was ignored
 
         Assert.assertThat(treeIterator.next(), Is.is(3));
+    }
+
+    @Test
+    public void whenTestCurrentTreeThenIsBinaryMethodMustReturnFalse() {
+        Assert.assertThat(tree.isBinary(), Is.is(false));
+    }
+
+    @Test
+    public void whenCheckBinaryTreeMustReturnTrue() {
+        SimpleTree<Integer> binaryTree = new SimpleTree<>(new Node<>(0));
+
+        Node<Integer> firstLevelFirst = new Node<>(1);
+        Node<Integer> firstLevelSecond = new Node<>(2);
+
+        Node<Integer> secondLevelFirst = new Node<>(3);
+        Node<Integer> secondLevelSecond = new Node<>(5);
+
+        binaryTree.add(root.getValue(), firstLevelFirst.getValue());
+        binaryTree.add(root.getValue(), firstLevelSecond.getValue());
+
+        binaryTree.add(firstLevelFirst.getValue(), secondLevelFirst.getValue());
+        binaryTree.add(firstLevelSecond.getValue(), secondLevelSecond.getValue());
+
+        Assert.assertThat(binaryTree.isBinary(), Is.is(true));
     }
 }
