@@ -99,7 +99,7 @@ public class SimpleTreeTest {
     }
 
     @Test(expected = NoSuchElementException.class)
-    public void whenAllIteratTHeneNextInvokeException() {
+    public void whenAllIterateThenNextInvokeException() {
         Iterator<Integer> treeIterator = tree.iterator();
 
         for (int i = 0; i < 7; i++) {

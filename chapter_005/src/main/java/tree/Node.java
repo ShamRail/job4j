@@ -24,7 +24,7 @@ public class Node<E extends Comparable<E>> {
 
     }
 
-    public boolean contains(E childValue) {
+    public boolean unContainsChild(E childValue) {
         return children.stream().noneMatch((value) -> value.value.equals(childValue));
     }
 

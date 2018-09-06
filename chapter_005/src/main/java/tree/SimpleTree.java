@@ -4,7 +4,7 @@ import java.util.*;
 
 public class SimpleTree<E extends Comparable<E>> implements Iterable<E> {
     /**корень дерева*/
-    private Node<E> root;
+    private final Node<E> root;
     /**количество структурных изменений*/
     private int modCount = 0;
 
@@ -33,10 +33,29 @@ public class SimpleTree<E extends Comparable<E>> implements Iterable<E> {
         Optional<Node<E>> addToParent = findBy(parent);
         boolean result = false;
 
-        if (addToParent.isPresent() && addToParent.get().contains(childValue)) {
+        if (addToParent.isPresent() && treeUnContainChildren(childValue)) {
             addToParent.get().add(new Node<>(childValue));
             modCount++;
             result = true;
+        }
+
+        return result;
+    }
+
+    private boolean treeUnContainChildren(E childValue) {
+        boolean result = true;
+
+        Queue<Node<E>> data = new LinkedList<>();
+        data.offer(this.root);
+        while (!data.isEmpty()) {
+            Node<E> el = data.poll();
+            if (!el.unContainsChild(childValue)) {
+                result = false;
+                break;
+            }
+            for (Node<E> child : el.leaves()) {
+                data.offer(child);
+            }
         }
 
         return result;
@@ -52,9 +71,9 @@ public class SimpleTree<E extends Comparable<E>> implements Iterable<E> {
     @Override
     public Iterator<E> iterator() {
         return new Iterator<E>() {
-            private LinkedList<Node<E>> childs = new LinkedList<>(Collections.singletonList(root));
+            private final LinkedList<Node<E>> children = new LinkedList<>(Collections.singletonList(root));
             private boolean nextExist = root != null;
-            int expectedModCount = modCount;
+            private final int expectedModCount = modCount;
 
             @Override
             public boolean hasNext() {
@@ -70,11 +89,13 @@ public class SimpleTree<E extends Comparable<E>> implements Iterable<E> {
                     throw new NoSuchElementException();
                 }
                 E result = null;
-                if (childs.size() != 0) {
-                    Node<E> firstOfChilds = childs.pollFirst();
-                    childs.addAll(firstOfChilds.leaves());
-                    result = firstOfChilds.getValue();
-                    nextExist = childs.size() != 0;
+                if (children.size() != 0) {
+                    Node<E> firstOfChildren = children.pollFirst();
+                    if (firstOfChildren != null) {
+                        children.addAll(firstOfChildren.leaves());
+                        result = firstOfChildren.getValue();
+                        nextExist = children.size() != 0;
+                    }
                 }
                 return result;
             }
