@@ -1,6 +1,10 @@
 package generetics;
 
-public class SimpleDequeue<T> {
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+public class SimpleDequeue<T> implements Iterable<T> {
 
     private Node<T> top = new Node<>(null);
     private Node<T> bottom = new Node<>(null);
@@ -50,5 +54,33 @@ public class SimpleDequeue<T> {
         public Node(T value) {
             this.value = value;
         }
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
+
+            private Node<T> pointer = top;
+            private final int expectedModCount = size;
+
+            @Override
+            public boolean hasNext() {
+                if (expectedModCount != size) {
+                    throw new ConcurrentModificationException();
+                }
+                return pointer != null;
+            }
+
+            @Override
+            public T next() {
+                if (!this.hasNext()) {
+                    throw new NoSuchElementException();
+                }
+
+                T result = this.pointer.value;
+                this.pointer = this.pointer.next;
+                return result;
+            }
+        };
     }
 }
