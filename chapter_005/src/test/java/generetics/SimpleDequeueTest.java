@@ -25,6 +25,7 @@ public class SimpleDequeueTest {
         SimpleDequeue<Integer> simpleDequeue = new SimpleDequeue<>();
         Iterator<Integer> integerIterator = simpleDequeue.iterator();
         integerIterator.next();
+        integerIterator.next();
     }
 
     @Test(expected = NoSuchElementException.class)
@@ -32,6 +33,7 @@ public class SimpleDequeueTest {
         SimpleDequeue<Integer> simpleDequeue = new SimpleDequeue<>();
         simpleDequeue.insertFirst(1);
         Iterator<Integer> integerIterator = simpleDequeue.iterator();
+        integerIterator.next();
         integerIterator.next();
         integerIterator.next();
     }
