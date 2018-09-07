@@ -60,8 +60,18 @@ public class SimpleTree<E extends Comparable<E>> implements Iterable<E> {
     }
 
     public boolean isBinary() {
-        return getResultAccordingExpression((node) -> node.childrenCount() > 2);
+       boolean result = true;
+        TreeIterator<E> treeIterator = (TreeIterator<E>) this.iterator();
+        while (treeIterator.hasNext()) {
+            if (!treeIterator.isAccordChildCount(2)) {
+                result = false;
+                break;
+            }
+            treeIterator.next();
+        }
+        return result;
     }
+
 
     /**
      * итератор осуществляет обход в ширину.
@@ -72,10 +82,11 @@ public class SimpleTree<E extends Comparable<E>> implements Iterable<E> {
 
     @Override
     public Iterator<E> iterator() {
-        return new Iterator<E>() {
+        return new TreeIterator<E>() {
             private final LinkedList<Node<E>> children = new LinkedList<>(Collections.singletonList(root));
             private boolean nextExist = root != null;
             private final int expectedModCount = modCount;
+            private int childCount = (root != null) ? root.leaves().size() : -1;
 
             @Override
             public boolean hasNext() {
@@ -96,10 +107,16 @@ public class SimpleTree<E extends Comparable<E>> implements Iterable<E> {
                     if (firstOfChildren != null) {
                         children.addAll(firstOfChildren.leaves());
                         result = firstOfChildren.getValue();
+                        childCount = firstOfChildren.leaves().size();
                         nextExist = children.size() != 0;
                     }
                 }
                 return result;
+            }
+
+            @Override
+            public boolean isAccordChildCount(int children) {
+                return childCount <= children;
             }
 
         };
