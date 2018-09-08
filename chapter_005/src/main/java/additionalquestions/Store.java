@@ -17,7 +17,7 @@ public class Store {
                 }
             }
         }
-        result.setAddedCount(Math.abs(current.size() - previous.size()  - result.getDeletedCount()));
+        result.setAddedCount(Math.abs(previous.size()  - result.getDeletedCount() - current.size()));
         return result;
     }
 
