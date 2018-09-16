@@ -1,6 +1,8 @@
 package ru.job4j.tracker;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Objects;
 
 class FindByIdAction extends BaseAction {
 
@@ -118,11 +120,7 @@ public class MenuTracker {
      * Метод выводит на экран меню.
      */
     public void show() {
-        for (UserAction action : this.actions) {
-            if (action != null) {
-                System.out.println(action.info());
-            }
-        }
+        Arrays.stream(this.actions).filter(Objects::nonNull).forEach((action) -> System.out.println(action.info()));
     }
     /**
      * fillMenuRange.
