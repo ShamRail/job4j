@@ -10,6 +10,10 @@ public class SimpleDequeue<T> implements Iterable<T> {
     private Node<T> bottom = new Node<>(null);
     private int size = 0;
 
+    public int size() {
+        return this.size;
+    }
+
     public void insertFirst(T value) {
         Node<T> newNode = new Node<>(value);
         if (size == 0) {

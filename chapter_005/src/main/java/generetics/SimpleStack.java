@@ -30,4 +30,8 @@ public class SimpleStack<E> {
     public E poll() {
         return simpleDequeue.deleteFirst();
     }
+
+    public boolean isEmpty() {
+        return simpleDequeue.size() == 0;
+    }
 }
