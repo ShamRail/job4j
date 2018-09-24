@@ -6,7 +6,7 @@ import net.jcip.annotations.ThreadSafe;
 import java.util.Iterator;
 
 @ThreadSafe
-public class ConcurrentSimpleArrayList<E> implements Iterable<E>{
+public class ConcurrentSimpleArrayList<E> implements Iterable<E> {
 
     @GuardedBy("this")
     private final SimpleDynamicArrayList<E> list = new SimpleDynamicArrayList<>();
@@ -32,7 +32,7 @@ public class ConcurrentSimpleArrayList<E> implements Iterable<E>{
         return this.copy(this.list).iterator();
     }
 
-    private SimpleDynamicArrayList<E> copy(SimpleDynamicArrayList<E> arrayList) {
+    private synchronized SimpleDynamicArrayList<E> copy(SimpleDynamicArrayList<E> arrayList) {
         SimpleDynamicArrayList<E> newArrayList = new SimpleDynamicArrayList<>();
         for (E value : arrayList) {
             newArrayList.add(value);
