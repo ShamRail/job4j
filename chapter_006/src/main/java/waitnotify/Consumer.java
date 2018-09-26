@@ -11,7 +11,11 @@ public class Consumer implements Runnable {
     @Override
     public void run() {
         for (int i = 0; i < 15; i++) {
-            System.out.println(String.format("Произошло взятие %s", this.simpleBlockingQueue.poll()));
+            try {
+                System.out.println(String.format("Произошло взятие %s", this.simpleBlockingQueue.poll()));
+            } catch (InterruptedException ie) {
+                ie.printStackTrace();
+            }
         }
     }
 

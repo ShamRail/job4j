@@ -33,14 +33,10 @@ public class SimpleBlockingQueue<T> {
         this.notify();
     }
 
-    public synchronized T poll() {
+    public synchronized T poll() throws InterruptedException {
         while (queue.size() == 0) {
-            try {
-                System.out.println("Ожидается добавление");
-                this.wait();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            System.out.println("Ожидается добавление");
+            this.wait();
         }
         T result = queue.poll();
         System.out.println(String.format("Взят элемент =  %s", result));
