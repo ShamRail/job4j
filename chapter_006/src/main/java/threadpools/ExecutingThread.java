@@ -13,11 +13,10 @@ public class ExecutingThread implements Runnable {
     @Override
     public synchronized void run() {
         try {
-            while (simpleBlockingQueue.isEmpty()) {
-                this.wait();
+            while (!Thread.currentThread().isInterrupted()) {
+                Runnable task = simpleBlockingQueue.poll();
+                task.run();
             }
-            Runnable task = simpleBlockingQueue.poll();
-            task.run();
         } catch (Exception e) {
             e.printStackTrace();
         }

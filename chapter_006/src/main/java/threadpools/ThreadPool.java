@@ -8,7 +8,7 @@ public class ThreadPool {
 
     private final List<Thread> threads;
     private final SimpleBlockingQueue<Runnable> tasks;
-    private boolean isThreadsStopped = false;
+    private volatile boolean isThreadsStopped = false;
 
     public ThreadPool(int maxTasksCount) {
         this.threads = new LinkedList<>();
@@ -27,7 +27,6 @@ public class ThreadPool {
             throw new IllegalStateException("Threads are already stopped!");
         }
         tasks.offer(job);
-        tasks.notifyAll();
     }
 
     public void shutdown() {
