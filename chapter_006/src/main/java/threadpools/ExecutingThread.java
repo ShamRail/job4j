@@ -11,7 +11,7 @@ public class ExecutingThread implements Runnable {
     }
 
     @Override
-    public synchronized void run() {
+    public void run() {
         try {
             while (!Thread.currentThread().isInterrupted()) {
                 Runnable task = simpleBlockingQueue.poll();
