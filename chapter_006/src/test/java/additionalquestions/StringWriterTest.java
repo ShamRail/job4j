@@ -3,13 +3,16 @@ package additionalquestions;
 import org.junit.Test;
 
 public class StringWriterTest {
+
     @Test
     public void stringWriterTest() {
-        StringPresentation stringPresentation = new StringPresentation();
-        Thread thread1 = new Thread(new StringWriter(stringPresentation, 1));
-        Thread thread2 = new Thread(new StringWriter(stringPresentation, 2));
+        Switcher switcher = new Switcher();
+        switcher.start();
 
-        thread1.start();
-        thread2.start();
+        try {
+            Thread.currentThread().join();
+        } catch (InterruptedException ie) {
+            ie.printStackTrace();
+        }
     }
 }
