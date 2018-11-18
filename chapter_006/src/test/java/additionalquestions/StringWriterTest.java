@@ -8,11 +8,10 @@ public class StringWriterTest {
     public void stringWriterTest() {
         Switcher switcher = new Switcher();
         switcher.start();
-
-        try {
-            Thread.currentThread().join();
-        } catch (InterruptedException ie) {
-            ie.printStackTrace();
-        }
+//        try {
+//            Thread.currentThread().join();
+//        } catch (InterruptedException ie) {
+//            ie.printStackTrace();
+//        }
     }
 }
