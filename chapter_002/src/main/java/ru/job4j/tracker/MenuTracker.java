@@ -9,7 +9,7 @@ class FindByIdAction extends BaseAction {
     public FindByIdAction(int key, String name) {
         super(key, name);
     }
-    public void execute(Input input, Tracker tracker) {
+    public void execute(Input input, ITracker tracker) {
         System.out.println("------------ Поиск заявки по id --------------");
         String id = input.ask("Введите id искомой заявки : ");
         Item result = tracker.findById(id);
@@ -28,7 +28,7 @@ class FindByNameAction extends BaseAction {
         super(key, name);
     }
 
-    public void execute(Input input, Tracker tracker) {
+    public void execute(Input input, ITracker tracker) {
         System.out.println("------------ Поиск заявки по имени --------------");
         String name = input.ask("Введите имя искомых заявок : ");
         ArrayList<Item> result = tracker.findByName(name);
@@ -49,7 +49,7 @@ class AddCommentAction extends BaseAction {
         super(key, name);
     }
 
-    public void execute(Input input, Tracker tracker) {
+    public void execute(Input input, ITracker tracker) {
         System.out.println("------------ Добавляние комментария по id --------------");
         String id = input.ask("Введите id заявки : ");
         String comment = input.ask("Введите комментарий к заявке : ");
@@ -76,7 +76,7 @@ public class MenuTracker {
     /**
      * @param хранит ссылку на объект .
      */
-    private Tracker tracker;
+    private ITracker tracker;
     /**
      * @param хранит ссылку на массив типа UserAction.
      */
@@ -88,7 +88,7 @@ public class MenuTracker {
      * @param input   объект типа Input
      * @param tracker объект типа Tracker
      */
-    public MenuTracker(Input input, Tracker tracker) {
+    public MenuTracker(Input input, ITracker tracker) {
         this.input = input;
         this.tracker = tracker;
     }
@@ -141,7 +141,7 @@ public class MenuTracker {
             super(key, name);
         }
 
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, ITracker tracker) {
             System.out.println("------------ Добавление новой заявки --------------");
             String name = input.ask("Введите имя заявки :");
             String desc = input.ask("Введите описание заявки :");
@@ -159,7 +159,7 @@ public class MenuTracker {
             super(key, name);
         }
 
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, ITracker tracker) {
             System.out.println("------------ Все заявки --------------");
             ArrayList<Item> items = tracker.findAll();
             for (Item item : items) {
@@ -174,7 +174,7 @@ public class MenuTracker {
             super(key, name);
         }
 
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, ITracker tracker) {
             System.out.println("------------ Редактирование новой заявки --------------");
             String id = input.ask("Введите id редактируемой заявки : ");
             String name = input.ask("Введите имя заявки :");
@@ -196,7 +196,7 @@ public class MenuTracker {
             super(key, name);
         }
 
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, ITracker tracker) {
             System.out.println("------------ Удаление заявки --------------");
             String id = input.ask("Введите id удаляемой заявки : ");
             boolean result = tracker.delete(id);
@@ -218,7 +218,7 @@ public class MenuTracker {
             return 7;
         }
 
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, ITracker tracker) {
             ui.stop();
         }
 

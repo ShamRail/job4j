@@ -3,8 +3,6 @@ package ru.job4j.tracker;
 import java.util.*;
 import java.lang.*;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Tracker.
@@ -15,11 +13,11 @@ import java.util.stream.Stream;
  * @author Rail Shamsemukhametov.
  * */
 
-public class Tracker {
+public class Tracker implements ITracker {
     /**
      * items - массив ячеек.
      * */
-    private ArrayList<Item> items = new ArrayList<Item>();
+    private ArrayList<Item> items = new ArrayList<>();
     /**
      * RN - объект генерирующий id.
      * */
@@ -30,6 +28,7 @@ public class Tracker {
      * @param item - ячейка.
      * @return - ячейка.
      * */
+    @Override
     public Item add(Item item) {
         item.setId(this.generateId());
         this.items.add(item);
@@ -53,6 +52,7 @@ public class Tracker {
      * @param id - идентификатор , заменяемой ячейки.
      * @param item - ячейка, на которую меняем.
      * */
+    @Override
     public void replace(String id, Item item) {
         for (Item item1 : this.items) {
             if (idComparing(item1, id)) {
@@ -67,6 +67,7 @@ public class Tracker {
      * Метод, удаляющий ячейку по идентификатору.
      * @param id - идентификатор.
      * */
+    @Override
     public boolean delete(String id) {
         boolean del = false;
         for (Item item : this.items) {
@@ -83,6 +84,7 @@ public class Tracker {
      * Метод, возвращающий массив непустых ячеек.
      * @return - массив ячеек.
      * */
+    @Override
     public ArrayList<Item> findAll() {
         return this.items;
     }
@@ -92,8 +94,9 @@ public class Tracker {
      * @param key - имя.
      * @return массив ячеек с таким именем.
      * */
+    @Override
     public ArrayList<Item> findByName(String key) {
-        ArrayList<Item> result = new ArrayList<Item>();
+        ArrayList<Item> result = new ArrayList<>();
         if (this.items.size() != 0 && key != null) {
             for (Item item : this.items) {
                 if (item.getName().equals(key)) {
@@ -110,6 +113,7 @@ public class Tracker {
      * @param id - идентификатор.
      * @return - ячейка.
      * */
+    @Override
     public Item findById(String id) {
         Item result = null;
         for (Item item : this.items) {
@@ -126,6 +130,7 @@ public class Tracker {
      * @param id - идентификатор.
      * @param comment - комментарий
      * */
+    @Override
     public boolean addCommentById(String id, String comment) {
         boolean res = false;
         if (id != null && comment != null) {

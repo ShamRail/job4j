@@ -1,6 +1,7 @@
 package ru.job4j.tracker;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Item.
@@ -19,7 +20,7 @@ public class Item {
     /**Время создания миллисекундах*/
     private long create;
     /**Комментарии*/
-    private ArrayList<String> comments = new ArrayList<String>();
+    private ArrayList<String> comments = new ArrayList<>();
     /**Позиция комментария*/
     public Item() {
 
@@ -36,9 +37,7 @@ public class Item {
         this.name = name;
         this.description = description;
         this.create = create;
-        for (int i = 0; i < comments.length; i++) {
-            this.comments.add(comments[i]);
-        }
+        this.comments.addAll(Arrays.asList(comments));
     }
 
     public void setId(String id) {
