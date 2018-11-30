@@ -80,6 +80,24 @@ public class Item {
         return this.create;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        boolean isChecked = false;
+        boolean result = false;
+        if (this == obj) {
+            result = true;
+            isChecked = true;
+        }
+        if (!isChecked && (obj == null || obj.getClass() != this.getClass())) {
+            isChecked = true;
+        }
+        if (!isChecked) {
+            Item item = (Item)obj;
+            result = item.id.equals(this.id) && item.create == this.create
+                    && item.name.equals(this.name) && item.comments.equals(this.comments);
+        }
+        return result;
+    }
 
     @Override
     public String toString() {
