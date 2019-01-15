@@ -30,4 +30,52 @@ public class StreamHandlerTest {
 		StreamHandler streamHandler = new StreamHandler();
 		assertThat(streamHandler.isNumber(inputStream), is(false));
 	}
+	
+	@Test
+	public void whenOneAbuseAndOneMatchWordThenItMustBeRemoved() {
+		String input = "one two three";
+		String[] abuses = {"two"};
+		String expected = "one  three";
+		ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes());
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		StreamHandler streamHandler = new StreamHandler();
+		streamHandler.dropAbuses(inputStream, outputStream, abuses);
+		assertThat(outputStream.toString(), is(expected));
+	}
+	
+	@Test
+	public void whenOneAbuseAndSomeMatchesWordThenItMustBeRemoved() {
+		String input = "one two three four five one two";
+		String[] abuses = {"one"};
+		String expected = " two three four five  two";
+		ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes());
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		StreamHandler streamHandler = new StreamHandler();
+		streamHandler.dropAbuses(inputStream, outputStream, abuses);
+		assertThat(outputStream.toString(), is(expected));
+	}
+	
+	@Test
+	public void whenSomeAbuseAndSomeMatchesWordThenItMustBeRemoved() {
+		String input = "one two three four five one two";
+		String[] abuses = {"one", "two"};
+		String expected = "  three four five  ";
+		ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes());
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		StreamHandler streamHandler = new StreamHandler();
+		streamHandler.dropAbuses(inputStream, outputStream, abuses);
+		assertThat(outputStream.toString(), is(expected));
+	}
+	
+	@Test
+	public void whenStreamHasntMatchesThenOutputDoesntChange() {
+		String input = "one two three four five one two";
+		String[] abuses = {"seven", "nine"};
+		String expected = "one two three four five one two";
+		ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes());
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		StreamHandler streamHandler = new StreamHandler();
+		streamHandler.dropAbuses(inputStream, outputStream, abuses);
+		assertThat(outputStream.toString(), is(expected));
+	}
 }
