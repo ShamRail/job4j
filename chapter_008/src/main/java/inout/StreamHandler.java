@@ -32,44 +32,31 @@ public class StreamHandler {
 	 * All spliters are also going to write.
 	 *
 	*/
-	
-	public void dropAbuses(InputStream in, OutputStream out, String[] abuse) {
-		try (InputStream input = in;
-			 OutputStream output = out) {
-			HashSet<String> abusesSet = new HashSet<String>(Arrays.asList(abuse));
-			StringBuilder currentWord = new StringBuilder();
-			int currentByte;
-			char currentCharacter;
-			do {
-				currentByte = input.read();
-				currentCharacter = (char) currentByte;
-				if (endOfWordOrText(currentByte)) {
-					writeIfNotContains(abusesSet, currentWord.toString(), out);
-					writeSpliter(currentByte, out);
-					currentWord = new StringBuilder();
-				} else {
-					currentWord.append(currentCharacter);
-				}
-			} while (currentByte != -1);
-			
+
+	public void dropAbuses(Reader input, Writer output, String[] abuse) {
+		try (BufferedReader in = new BufferedReader(input);
+			BufferedWriter out = new BufferedWriter((output))) {
+			Set<String> abuses = new HashSet<>(Arrays.asList(abuse));
+			String currentLine;
+			while ((currentLine = in.readLine()) != null) {
+				Arrays.stream(currentLine.trim().split("\\s+"))
+						.filter((word) -> !(abuses.contains(word))).forEach(
+						(word) -> writeWord(word, out)
+				);
+				out.write(System.lineSeparator());
+			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
-	
-	private boolean endOfWordOrText(int readByte) {
-		return ((char) readByte == ' ') || (readByte == -1);
-	}
-	
-	private void writeIfNotContains(HashSet<String> abuseWords, String word, OutputStream out) throws IOException {
-		if (!abuseWords.contains(word)) {
-			out.write(word.getBytes());
+
+	private void writeWord(String word, Writer out) {
+		try {
+			out.write(word);
+			out.write(" ");
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 	}
-	
-	private void writeSpliter(int readByte, OutputStream out) throws IOException {
-		if (readByte != -1) {
-			out.write(readByte);
-		}
-	}
+
 }
