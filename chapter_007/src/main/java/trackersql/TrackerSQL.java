@@ -118,7 +118,7 @@ public class TrackerSQL implements ITracker, AutoCloseable {
     @Override
     public Item add(Item item) {
         Statement statement = null;
-        try(PreparedStatement preparedStatement
+        try (PreparedStatement preparedStatement
                     = connection.prepareStatement("insert into item(id, name, description, create_date) values(?, ?, ?, ?);")) {
             preparedStatement.setInt(1, Integer.valueOf(item.getId()));
             preparedStatement.setString(2, item.getName());
@@ -157,7 +157,7 @@ public class TrackerSQL implements ITracker, AutoCloseable {
      * */
     @Override
     public void replace(String id, Item item) {
-        try(PreparedStatement preparedStatement = connection.prepareStatement("update item set name = ?, description = ?, create_date = ? where id = ?;");
+        try (PreparedStatement preparedStatement = connection.prepareStatement("update item set name = ?, description = ?, create_date = ? where id = ?;");
             Statement statement = connection.createStatement()) {
             preparedStatement.setString(1, item.getName());
             preparedStatement.setString(2, item.getDescription());
@@ -190,7 +190,7 @@ public class TrackerSQL implements ITracker, AutoCloseable {
      * */
     private boolean executeQuery(String query) {
         boolean result;
-        try(Statement statement = connection.createStatement()) {
+        try (Statement statement = connection.createStatement()) {
             statement.execute(query);
             result = true;
         } catch (Exception e) {
@@ -206,7 +206,7 @@ public class TrackerSQL implements ITracker, AutoCloseable {
      * */
     private ArrayList<Item> findByFilter(String filter) {
         ArrayList<Item> result = new ArrayList<>();
-        try(Statement statement = connection.createStatement();
+        try (Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(String.format(
                     "select * from item as i left join comments as c on i.id = c.item_id %s;", filter
             ))) {
@@ -280,7 +280,7 @@ public class TrackerSQL implements ITracker, AutoCloseable {
      * Очищает таблицы.
      * */
     public void cleanTables() {
-        try(Statement statement = connection.createStatement()) {
+        try (Statement statement = connection.createStatement()) {
             statement.execute("delete from comments;");
             statement.execute("delete from item;");
         } catch (Exception e) {
