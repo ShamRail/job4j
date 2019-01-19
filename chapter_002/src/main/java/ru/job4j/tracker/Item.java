@@ -92,10 +92,21 @@ public class Item {
             isChecked = true;
         }
         if (!isChecked) {
-            Item item = (Item)obj;
+            Item item = (Item) obj;
             result = item.id.equals(this.id) && item.create == this.create
                     && item.name.equals(this.name) && item.comments.equals(this.comments);
         }
+        return result;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result += 31 * id.hashCode();
+        result += 31 * name.hashCode();
+        result += 31 * description.hashCode();
+        result += 31 * create;
+        result += 31 * comments.hashCode();
         return result;
     }
 
