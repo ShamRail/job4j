@@ -2,6 +2,7 @@ package nonblocking;
 
 import org.hamcrest.core.Is;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.concurrent.atomic.AtomicReference;
@@ -107,6 +108,7 @@ public class BaseStorageTest {
         Assert.assertThat(baseStorage.getById(3).getData(), Is.is("Z"));
     }
 
+    @Ignore
     @Test
     public void whenStartAddingAndUnCorrectUpdatingThreadThenMustException() throws InterruptedException {
         AtomicReference<Exception> ex = new AtomicReference<>();

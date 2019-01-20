@@ -2,6 +2,7 @@ package inout;
 
 import org.hamcrest.core.Is;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
@@ -11,6 +12,7 @@ import java.util.List;
 
 public class FileFinderTest {
 
+    @Ignore
     @Test
     public void test() throws Exception {
         String initDir = System.getProperty("java.io.tmpdir");
