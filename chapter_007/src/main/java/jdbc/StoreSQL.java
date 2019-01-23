@@ -55,8 +55,9 @@ public class StoreSQL {
             try (PreparedStatement statement = connection.prepareStatement("insert into entry(field) values(?);")) {
                 for (int i = 1; i <= n; i++) {
                     statement.setInt(1, i);
-                    statement.execute();
+                    statement.addBatch();
                 }
+                statement.executeBatch();
                 connection.commit();
                 connection.setAutoCommit(true);
                 LOG.debug("All numbers have inserted!");
