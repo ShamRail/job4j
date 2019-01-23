@@ -27,7 +27,7 @@ public class ConvertXSQT {
      * @param scheme - xls source file.
      * */
     public void convert(File source, File dest, File scheme) {
-        try(FileReader fileReader = new FileReader(source)) {
+        try (FileReader fileReader = new FileReader(source)) {
             TransformerFactory factory = TransformerFactory.newInstance();
             Transformer transformer = factory.newTransformer(new StreamSource(scheme));
             LOG.debug("XSL scheme has handled successfully.");

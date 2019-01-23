@@ -32,7 +32,7 @@ public class SumParser {
         try {
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser parser = factory.newSAXParser();
-            parser.parse(source, new DefaultHandler(){
+            parser.parse(source, new DefaultHandler() {
                 @Override
                 public void startElement(String uri, String localName, String qName, Attributes attributes) {
                     if (qName.equals("entry")) {

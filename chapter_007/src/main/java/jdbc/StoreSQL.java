@@ -36,7 +36,7 @@ public class StoreSQL {
      * Create tables, if it doesn't exist.
      * */
     private void initDB() {
-        try(Statement statement = connection.createStatement()) {
+        try (Statement statement = connection.createStatement()) {
             statement.execute("drop table if exists  entry;");
             statement.execute("create table entry(field integer);");
             LOG.debug("Entry table has created again.");
@@ -52,7 +52,7 @@ public class StoreSQL {
     public void generate(int n) {
         try {
             connection.setAutoCommit(false);
-            try(PreparedStatement statement = connection.prepareStatement("insert into entry(field) values(?);")) {
+            try (PreparedStatement statement = connection.prepareStatement("insert into entry(field) values(?);")) {
                 for (int i = 1; i <= n; i++) {
                     statement.setInt(1, i);
                     statement.execute();
@@ -72,7 +72,7 @@ public class StoreSQL {
      * */
     public List<Entry> getEntriesList() {
         List<Entry> result = new LinkedList<>();
-        try(Statement statement = connection.createStatement();
+        try (Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("select * from entry;")) {
             while (resultSet.next()) {
                 result.add(new Entry(resultSet.getInt(1)));

@@ -102,7 +102,7 @@ public class TrackerSQLTest {
 
     @Test
     public void whenCloseMethodTest() {
-        try (TrackerSQL trackerSQL = new TrackerSQL()){
+        try (TrackerSQL trackerSQL = new TrackerSQL()) {
             trackerSQL.cleanTables();
             String[] string1 = {"1", "2", "3"};
             String[] string2 = {"4", "5", "6"};

@@ -27,6 +27,11 @@ public class Entry {
 
     @Override
     public boolean equals(Object obj) {
-        return (obj.getClass().equals(this.getClass()) && this.value == ((Entry)obj).getValue());
+        return (obj.getClass().equals(this.getClass()) && this.value == ((Entry) obj).getValue());
+    }
+
+    @Override
+    public int hashCode() {
+        return 31 * 17 * value;
     }
 }
