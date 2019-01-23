@@ -5,6 +5,8 @@ import ru.job4j.professionsuse.*;
 
 public class Doctor extends Profession {
 
+    private String name;
+
     public Doctor(String name) {
         this.name = name;
     }
