@@ -1,13 +1,26 @@
 package ru.job4j.srp;
 
+/**
+ * CalculatorUI.
+ * Start application.
+ * @author Shamsemukhametov Rail.
+ */
+
 public class CalculatorUI {
 
+    /**
+     * User input handler.
+     */
     private final IOHandler ioHandler;
 
     public CalculatorUI() {
         this.ioHandler = new IOHandler(new Calculator());
     }
 
+    /**
+     * start.
+     * Start main cycle of application.
+     */
     public void start() {
         String userAnswer;
         do {
