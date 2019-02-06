@@ -30,6 +30,6 @@ public class CalculatorUI {
     }
 
     public static void main(String[] args) {
-        new CalculatorUI(new Calculator()).start();
+        new CalculatorUI(new EngineerCalculator()).start();
     }
 }
