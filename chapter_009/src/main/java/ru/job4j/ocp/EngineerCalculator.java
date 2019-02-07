@@ -1,4 +1,7 @@
-package ru.job4j.srp.calculator;
+package ru.job4j.ocp;
+
+import ru.job4j.srp.calculator.Calculator;
+import ru.job4j.srp.calculator.OperationIdentifer;
 
 /**
  * Инжерный калькулятор.
