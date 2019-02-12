@@ -7,6 +7,8 @@ import ru.job4j.lsp.store.Trash;
 import ru.job4j.lsp.store.Warehouse;
 
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Food's distributor.
@@ -42,6 +44,24 @@ public class ControlQuality {
         distributor.distribute(food);
     }
 
+    /**
+     * resort all food.
+     * At first, copy and clear store's.
+     * At second, distribute food again.
+     */
+    public void resort() {
+        List<Food> allFood = new LinkedList<>();
+
+        allFood.addAll(warehouse.getFoods());
+        allFood.addAll(shop.getFoods());
+        allFood.addAll(trash.getFoods());
+
+        warehouse.getFoods().clear();
+        shop.getFoods().clear();
+        trash.getFoods().clear();
+
+        allFood.forEach(this::sendStore);
+    }
     /**
      * Define needed store for food by date.
      * @param food food.
