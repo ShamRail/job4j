@@ -5,8 +5,6 @@ import ru.job4j.firuges.Cell;
 import ru.job4j.firuges.Figure;
 
 /**
- * //TODO add comments.
- *
  * @author Petr Arsentev (parsentev@yandex.ru)
  * @version $Id$
  * @since 0.1
