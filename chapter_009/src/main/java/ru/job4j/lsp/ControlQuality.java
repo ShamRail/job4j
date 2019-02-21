@@ -52,13 +52,13 @@ public class ControlQuality {
     public void resort() {
         List<Food> allFood = new LinkedList<>();
 
-        allFood.addAll(warehouse.getFoods());
-        allFood.addAll(shop.getFoods());
-        allFood.addAll(trash.getFoods());
+        allFood.addAll(warehouse.view());
+        allFood.addAll(shop.view());
+        allFood.addAll(trash.view());
 
-        warehouse.getFoods().clear();
-        shop.getFoods().clear();
-        trash.getFoods().clear();
+        warehouse.clean();
+        shop.clean();
+        trash.clean();
 
         allFood.forEach(this::sendStore);
     }

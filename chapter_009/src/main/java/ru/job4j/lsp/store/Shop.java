@@ -2,12 +2,20 @@ package ru.job4j.lsp.store;
 
 import ru.job4j.lsp.food.Food;
 
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * Describe shop store.
  */
 
-public class Shop extends Store {
+public class Shop implements Store {
 
+    /**
+     * food's in store.
+     */
+    protected List<Food> foods = new LinkedList<>();
     /**
      * Put food to food list.
      * @param food income food.
@@ -15,8 +23,22 @@ public class Shop extends Store {
      */
     @Override
     public boolean storeFood(Food food) {
-        super.putFood(food);
+        putFood(food);
         return true;
     }
 
+    @Override
+    public void putFood(Food food) {
+        this.foods.add(food);
+    }
+
+    @Override
+    public void clean() {
+        this.foods.clear();
+    }
+
+    @Override
+    public Collection<Food> view() {
+        return this.foods;
+    }
 }
