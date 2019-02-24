@@ -38,7 +38,7 @@ public class OptionalWarehouse extends Warehouse {
      */
     @Override
     public boolean storeFood(Food food) {
-        if (input.getFoodsCount() < bound) {
+        if (input.view().size() < bound) {
             input.storeFood(food);
         } else {
             newStore.add(food);

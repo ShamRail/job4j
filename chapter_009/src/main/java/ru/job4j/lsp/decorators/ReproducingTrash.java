@@ -32,7 +32,7 @@ public class ReproducingTrash extends Trash {
      * Choose random food's and reproduced it by removing from trash.
      */
     private void reproduceFood() {
-        List<Food> foods = trash.getFoods();
+        List<Food> foods = (List<Food>) trash.view();
         List<Food> reproduced = new LinkedList<>();
         boolean isReproduced;
         for (Food food : foods) {

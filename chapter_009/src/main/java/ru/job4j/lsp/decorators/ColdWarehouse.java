@@ -39,7 +39,7 @@ public class ColdWarehouse extends Warehouse {
      * replace vegetables to cold warehouse.
      */
     private void replaceVegetables() {
-        List<Food> foods = warehouse.getFoods();
+        List<Food> foods = (List<Food>) warehouse.view();
         List<Food> vegetables = foods.stream().filter(el -> el instanceof Vegetable).collect(Collectors.toList());
         coldWareHouse.addAll(vegetables);
         foods.removeAll(vegetables);

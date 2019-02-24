@@ -60,7 +60,7 @@ public class MenuItem {
         for (int i = 0; i < level * 2; i++) {
             System.out.print("-");
         }
-        System.out.print(String.format("%s%s ", (getLevel() == 0) ? "" : " ",name));
+        System.out.print(String.format("%s%s ", (getLevel() == 0) ? "" : " ", name));
         if (!prefix.equals("")) {
             System.out.print(prefix);
         }
