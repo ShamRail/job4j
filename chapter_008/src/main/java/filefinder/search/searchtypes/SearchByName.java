@@ -1,11 +1,11 @@
 package filefinder.search.searchtypes;
 
 import java.util.Collection;
-
+import java.util.function.BiPredicate;
 /**
  * Поиск по имени файла.
  */
-public class SearchByName implements SearchType {
+public class SearchByName implements BiPredicate<String, Collection<String>> {
 
     /**
      * Сопоставляет по имени.
@@ -14,7 +14,7 @@ public class SearchByName implements SearchType {
      * @return результат сравнения.
      */
     @Override
-    public boolean compare(String source, Collection<String> samples) {
+    public boolean test(String source, Collection<String> samples) {
         return samples.stream().anyMatch((sample) -> sample.equals(source));
     }
 

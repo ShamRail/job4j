@@ -1,7 +1,7 @@
 package filefinder.search.searcher;
 
-import filefinder.search.searchtypes.SearchType;
 import java.util.Collection;
+import java.util.function.BiPredicate;
 
 /**
  * Параметры поиска.
@@ -23,7 +23,7 @@ public class SearchParams {
     /**
      * Тип поиска.
      */
-    private SearchType searchType;
+    private BiPredicate<String, Collection<String>> searchType;
 
     /**
      * Адрес логирования.
@@ -46,11 +46,11 @@ public class SearchParams {
         this.samples = samples;
     }
 
-    public SearchType getSearchType() {
+    public BiPredicate<String, Collection<String>> getSearchType() {
         return searchType;
     }
 
-    public void setSearchType(SearchType searchType) {
+    public void setSearchType(BiPredicate<String, Collection<String>> searchType) {
         this.searchType = searchType;
     }
 

@@ -30,7 +30,7 @@ public class FileSearcher implements Searcher<List<File>, SearchParams> {
                 }
                 continue;
             }
-            if (searchParams.getSearchType().compare(current.getName(), searchParams.getSamples())) {
+            if (searchParams.getSearchType().test(current.getName(), searchParams.getSamples())) {
                 rst.add(current);
             }
         }

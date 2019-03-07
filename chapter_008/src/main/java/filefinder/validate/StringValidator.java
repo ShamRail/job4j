@@ -1,14 +1,13 @@
 package filefinder.validate;
 
 import filefinder.search.searcher.SearchParams;
-import filefinder.search.factory.SearchTypeFactory;
-import filefinder.search.factory.TypeFactory;
+import filefinder.search.searchtypes.SearchByMask;
+import filefinder.search.searchtypes.SearchByName;
 import filefinder.tip.Tip;
-
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashSet;
+import java.util.*;
+import java.util.function.BiPredicate;
 
 /**
  * Описывает способ валидации строки.
@@ -21,8 +20,12 @@ public class StringValidator implements Validator<SearchParams, String[]> {
      */
     private Tip tip;
 
+    private Map<String, BiPredicate<String, Collection<String>>> searchTypes = new HashMap<>();
+
     public StringValidator(Tip tip) {
         this.tip = tip;
+        this.searchTypes.put("-m", new SearchByMask());
+        this.searchTypes.put("-f", new SearchByName());
     }
 
     /**
@@ -60,9 +63,9 @@ public class StringValidator implements Validator<SearchParams, String[]> {
      * @return результат.
      */
     private boolean checkoutKeys(String[] input) {
-        return input[0].equals("-d") && input[2].equals("-n")
-                && (input[4].equals("-m") || input[4].equals("-f") || input[4].equals("-r"))
-                && input[5].equals("-o");
+        return "-d".equals(input[0]) && "-n".equals(input[2])
+                && ("-m".equals(input[4]) || "-f".equals(input[4]) || "-r".equals(input[4]))
+                && "-o".equals(input[5]);
     }
 
     /**
@@ -102,10 +105,9 @@ public class StringValidator implements Validator<SearchParams, String[]> {
      * @param input откуда записывается.
      */
     private void fillParams(SearchParams params, String[] input) {
-        TypeFactory typeFactory = new SearchTypeFactory();
         params.setStartDirectory(input[1]);
         params.setSamples(new HashSet<>(Arrays.asList(input[3].split(",(?!\\s)"))));
-        params.setSearchType(typeFactory.createType(input[4]));
+        params.setSearchType(searchTypes.get(input[4]));
         params.setLogPath(input[6]);
     }
 }
