@@ -25,6 +25,11 @@ public class TrackerSQL implements ITracker, AutoCloseable {
         createIfNotExists();
         connect();
     }
+
+    public TrackerSQL(Connection connection) {
+        this.connection = connection;
+    }
+
     /**
      * createIfNotExists().
      * Сперва делает запрос на существование бд.
