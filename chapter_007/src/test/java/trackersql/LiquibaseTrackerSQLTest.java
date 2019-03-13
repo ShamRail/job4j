@@ -102,13 +102,13 @@ public class LiquibaseTrackerSQLTest {
     @Test
     public void whenSearchByNameThenMustReturnsItemsWithSameName() throws SQLException {
         try (TrackerSQL trackerSQL = new TrackerSQL(ConnectionRollback.create(this.init()))) {
-            String[] string1 = {"1", "2", "3"};
+            //String[] string1 = {"1", "2", "3"};
             String[] string2 = {"4", "5", "6"};
             String[] string3 = {"7", "8", "9"};
-            Item item1 = new Item("1", "1", "1", 1, string1);
+            //Item item1 = new Item("1", "1", "1", 1, string1);
             Item item2 = new Item("2", "2", "2", 2, string2);
             Item item3 = new Item("3", "2", "3", 3, string3);
-            trackerSQL.add(item1);
+            //trackerSQL.add(item1);
             trackerSQL.add(item2);
             trackerSQL.add(item3);
             ArrayList<Item> expected = new ArrayList<>(Arrays.asList(item2, item3));
