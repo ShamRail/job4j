@@ -6,6 +6,8 @@ import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SimpleGeneratorTest {
 
@@ -16,6 +18,22 @@ public class SimpleGeneratorTest {
         pairs.put("sos", "Aaaa");
         String template = "Help, ${sos}, ${sos}, ${sos}";
         String result = simpleGenerator.replace(template, pairs);
+        Assert.assertThat(result, Is.is("Help, Aaaa, Aaaa, Aaaa"));
+    }
+
+    @Test
+    public void test() {
+        SimpleGenerator simpleGenerator = new SimpleGenerator();
+        Map<String, String> pairs = new HashMap<>();
+        pairs.put("sos", "Aaaa");
+        String template = "Help, ${sos}, ${sos}, ${sos}";
+        String result = simpleGenerator.replace(template, pairs);
+
+        Pattern pattern = Pattern.compile("\\$\\{so}");
+        Matcher matcher = pattern.matcher(template);
+        boolean res = matcher.find();
+        System.out.println(res);
+
         Assert.assertThat(result, Is.is("Help, Aaaa, Aaaa, Aaaa"));
     }
 

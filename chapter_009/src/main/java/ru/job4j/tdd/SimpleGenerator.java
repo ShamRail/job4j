@@ -1,9 +1,8 @@
 package ru.job4j.tdd;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SimpleGenerator {
 
@@ -18,12 +17,11 @@ public class SimpleGenerator {
 
     public String replace(String template, Map<String, String> pairs) {
         checkout(template, pairs);
-        LinkedList<String> result = new LinkedList<>();
-        result.add(template);
-        for (Map.Entry<String, String> entry : pairs.entrySet()) {
-            result.add(result.getLast().replace(String.format("${%s}", entry.getKey()), entry.getValue()));
+        String result = template;
+        for (Map.Entry<String, String> set : pairs.entrySet()) {
+            result = result.replaceAll(String.format("\\$\\{%s\\}", set.getKey()), set.getValue());
         }
-        return result.getLast();
+        return result;
     }
 
     /**
@@ -34,35 +32,29 @@ public class SimpleGenerator {
      * @param template source string.
      * @param pairs source pairs.
      */
-
     private void checkout(String template, Map<String, String> pairs) {
-        Set<String> keysIn = new HashSet<>();
-        StringBuilder currentKey = new StringBuilder();
-        boolean toConcatenate = false;
-        char[] array = template.toCharArray();
-        for (char c : array) {
-            if (c == '{') {
-                toConcatenate = true;
-                continue;
-            }
-            if (c == '}') {
-                toConcatenate = false;
-                String key = currentKey.toString();
-                keysIn.add(key);
-                currentKey = new StringBuilder();
-            }
-            if (toConcatenate) {
-                currentKey.append(c);
+        boolean rst = true;
+        for (Map.Entry<String, String> set : pairs.entrySet()) {
+            Pattern pattern = Pattern.compile(String.format("\\$\\{%s}", set.getKey()));
+            Matcher matcher = pattern.matcher(template);
+            if (!matcher.find()) {
+                rst = false;
+                break;
             }
         }
-        if (keysIn.size() != pairs.size()) {
+        Set<String> allMatches = getMatches("\\$\\{\\w*}", template);
+        if (!rst || pairs.size() > allMatches.size() || !allMatches.equals(pairs.keySet())) {
             throw new InvalidStringTemplate("Invalid template or pairs!");
-        }
-        for (Map.Entry<String, String> entry : pairs.entrySet()) {
-            if (!keysIn.contains(entry.getKey())) {
-                throw new InvalidStringTemplate("Invalid template or pairs!");
-            }
         }
     }
 
+    private Set<String> getMatches(String regex, String template) {
+        Matcher m = Pattern.compile(regex).matcher(template);
+        Set<String> allMatches = new HashSet<>();
+        while (m.find()) {
+            String found = m.group();
+            allMatches.add(found.substring(found.indexOf('{') + 1, found.lastIndexOf('}')));
+        }
+        return allMatches;
+    }
 }
