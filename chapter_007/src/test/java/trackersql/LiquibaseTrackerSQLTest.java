@@ -1,6 +1,5 @@
 package trackersql;
 
-import org.hamcrest.Matchers;
 import org.junit.Test;
 import ru.job4j.tracker.Item;
 import java.io.InputStream;
@@ -37,7 +36,7 @@ public class LiquibaseTrackerSQLTest {
         try (TrackerSQL trackerSQL = new TrackerSQL(ConnectionRollback.create(this.init()))) {
             String[] string1 = {"1", "2", "3"};
             Item item1 = new Item("1", "1", "1", 1, string1);
-            assertThat(trackerSQL.add(item1).getId(), Matchers.is("1"));
+            assertThat(trackerSQL.add(item1).getId(), is("1"));
         }
     }
 
