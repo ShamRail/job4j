@@ -45,7 +45,7 @@ public class Config {
      * save settings to file.
      */
     private void save() {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(this.path))){
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(this.path))) {
             for (Map.Entry<String, String> entry : values.entrySet()) {
                 writer.write(String.format("%s=%s%s", entry.getKey(), entry.getValue(), System.lineSeparator()));
             }

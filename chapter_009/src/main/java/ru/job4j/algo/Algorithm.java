@@ -42,5 +42,4 @@ public class Algorithm {
         }
         return (table.get(0) / 2) * 2;
     }
-
 }
