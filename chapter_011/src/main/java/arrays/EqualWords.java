@@ -58,4 +58,34 @@ public class EqualWords {
         }
     }
 
+    /**
+     * Если слова отличаются на одну перестановку, то у них длины равны.
+     * Поэтому сначало проверяем длины, если длины равны, то идем
+     * до места перестановки, делаем ее проверяем остаток слова. Наконец,
+     * если он равен, то слова отличаются ровно на одну перестановку.
+     * */
+
+    public boolean checkReplacement(char[] word1, char[] word2) {
+        boolean result = word1.length == word2.length;
+        if (result) {
+            int replacedCount = 0;
+            for (int i = 0; i < word1.length && replacedCount < 2; i++) {
+                if (word1[i] != word2[i]) {
+                    int indexReplace;
+                    for (indexReplace = i + 1; indexReplace < word2.length; indexReplace++) {
+                        if (word2[indexReplace] == word1[i]) {
+                            break;
+                        }
+                    }
+                    char temp = word1[i];
+                    word1[i] = word2[indexReplace];
+                    word1[indexReplace] = temp;
+                    replacedCount++;
+                }
+            }
+            result = replacedCount == 1;
+        }
+        return result;
+    }
+
 }
