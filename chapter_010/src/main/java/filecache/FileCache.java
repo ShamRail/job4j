@@ -37,9 +37,15 @@ public class FileCache {
      * Otherwise load file to cache and retrieve data.
      * */
     public List<String> getFile(String fileName) throws IOException {
-        Map<String, List<String>> map = softReference.get();
-        map.putIfAbsent(fileName, Files.readAllLines(Paths.get(path.toString(), fileName)));
-        return softReference.get().putIfAbsent(fileName, Files.readAllLines(Paths.get(path.toString(), fileName)));
+        List<String> result;
+        if (cache.containsKey(fileName)) {
+            result = softReference.get().get(fileName);
+        } else {
+            List<String> fileContent = Files.readAllLines(Paths.get(path.toString(), fileName));
+            softReference.get().put(fileName, fileContent);
+            result = fileContent;
+        }
+        return result;
     }
 
 }
