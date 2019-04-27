@@ -69,7 +69,7 @@ public class EqualWords {
         boolean result = word1.length == word2.length;
         if (result) {
             int replacedCount = 0;
-            for (int i = 0; i < word1.length && replacedCount < 2; i++) {
+            for (int i = 0; i < word1.length && replacedCount < 1; i++) {
                 if (word1[i] != word2[i]) {
                     int indexReplace;
                     for (indexReplace = i + 1; indexReplace < word2.length; indexReplace++) {
@@ -85,7 +85,7 @@ public class EqualWords {
             }
             result = replacedCount == 1;
         }
-        return result;
-    }
 
+        return result;
+}
 }
