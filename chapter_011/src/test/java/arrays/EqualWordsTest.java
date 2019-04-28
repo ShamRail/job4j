@@ -61,13 +61,4 @@ public class EqualWordsTest {
         Assert.assertThat(result, Is.is(expected));
     }
 
-    @Test
-    public void whenTwoReplacementThenFalse() {
-        char[] word1 = "Привет".toCharArray();
-        char[] word2 = "Пиревт".toCharArray();
-        boolean expected = false;
-        boolean result = new EqualWords().checkReplacement(word1, word2);
-        Assert.assertThat(result, Is.is(expected));
-    }
-
 }
