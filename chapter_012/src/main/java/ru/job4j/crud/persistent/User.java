@@ -1,6 +1,7 @@
 package ru.job4j.crud.persistent;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class User {
 
@@ -48,4 +49,20 @@ public class User {
                 id, login, password, email, new Date(createDate));
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        User user = (User) o;
+        return id == user.id && createDate == user.createDate && Objects.equals(login, user.login) && Objects.equals(password, user.password) && Objects.equals(email, user.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, login, password, email, createDate);
+    }
 }

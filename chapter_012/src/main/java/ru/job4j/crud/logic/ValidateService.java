@@ -59,4 +59,8 @@ public class ValidateService {
         return memoryStore.findById(id) != null;
     }
 
+    public int getMaxID() {
+        return memoryStore.findAll().stream().mapToInt(User::getId).max().orElse(0);
+    }
+
 }
