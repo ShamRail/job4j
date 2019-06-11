@@ -8,18 +8,28 @@
         <version>2.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
+<<<<<<< HEAD
     <artifactId>chapter_012</artifactId>
     <packaging>war</packaging>
 
     <dependencies>
         <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+=======
+    <packaging>war</packaging>
+
+    <artifactId>chapter_012</artifactId>
+    <dependencies>
+>>>>>>> 1. Создать web проект
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>4.0.1</version>
             <scope>provided</scope>
         </dependency>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1. Создать web проект
     </dependencies>
 
 </project>

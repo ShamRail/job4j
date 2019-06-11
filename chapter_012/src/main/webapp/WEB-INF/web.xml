@@ -12,6 +12,7 @@
         <servlet-name>EchoServlet</servlet-name>
         <url-pattern>/echo</url-pattern>
     </servlet-mapping>
+<<<<<<< HEAD
 
     <servlet>
         <servlet-name>UserServlet</servlet-name>
@@ -63,4 +64,6 @@
         <url-pattern>/update</url-pattern>
     </servlet-mapping>
 
+=======
+>>>>>>> 1. Создать web проект
 </web-app>
