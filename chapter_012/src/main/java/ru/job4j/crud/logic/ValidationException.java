@@ -6,4 +6,8 @@ public class ValidationException extends Exception {
         super(msg);
     }
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 1. Crud servlet, Web app architecture.
