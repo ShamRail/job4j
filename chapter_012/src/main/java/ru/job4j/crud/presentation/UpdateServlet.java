@@ -61,6 +61,10 @@ public class UpdateServlet extends HttpServlet {
             validateService.update(id, user);
         } catch (Exception e) {
         }
+<<<<<<< HEAD
         resp.sendRedirect(String.format("%s/list.jsp", req.getContextPath()));
+=======
+        resp.sendRedirect(String.format("%s/list", req.getContextPath()));
+>>>>>>> 1. Реализовать приложения для работы с пользователем.
     }
 }
