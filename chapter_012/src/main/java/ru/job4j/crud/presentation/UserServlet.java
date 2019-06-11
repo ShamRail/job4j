@@ -1,9 +1,5 @@
 package ru.job4j.crud.presentation;
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 1. Crud servlet, Web app architecture.
 import ru.job4j.crud.logic.ValidateService;
 import ru.job4j.crud.persistent.User;
 import javax.servlet.ServletException;
@@ -14,10 +10,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 1. Crud servlet, Web app architecture.
 public class UserServlet extends HttpServlet {
 
     private final ValidateService validateService = ValidateService.getInstance();
