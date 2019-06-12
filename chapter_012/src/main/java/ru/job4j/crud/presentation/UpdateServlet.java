@@ -1,5 +1,7 @@
 package ru.job4j.crud.presentation;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ru.job4j.crud.logic.ValidateService;
 import ru.job4j.crud.persistent.User;
 import javax.servlet.ServletException;
@@ -11,6 +13,9 @@ import java.io.IOException;
 public class UpdateServlet extends HttpServlet {
 
     private final ValidateService validateService = ValidateService.getInstance();
+
+    private static final Logger LOG = LogManager.getLogger(UpdateServlet.class.getName());
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -52,15 +57,21 @@ public class UpdateServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        LOG.debug("Updating user ...");
+        LOG.debug("Retrieve data");
         int id = Integer.parseInt(req.getParameter("id"));
         String login = req.getParameter("login");
         String password = req.getParameter("password");
         String email = req.getParameter("email");
         User user = new User(id, login, password, email, System.currentTimeMillis());
         try {
+            LOG.debug("Try to update user");
             validateService.update(id, user);
+            LOG.debug("User is updated");
         } catch (Exception e) {
+            LOG.debug("Failure to update user. {}", e.getMessage());
         }
+        LOG.debug("Redirecting to list.jsp");
         resp.sendRedirect(String.format("%s/list.jsp", req.getContextPath()));
     }
 }
