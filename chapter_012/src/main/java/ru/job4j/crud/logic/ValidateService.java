@@ -1,6 +1,7 @@
 package ru.job4j.crud.logic;
 
-import ru.job4j.crud.persistent.MemoryStore;
+import ru.job4j.crud.persistent.DBStore;
+import ru.job4j.crud.persistent.Store;
 import ru.job4j.crud.persistent.User;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -8,7 +9,7 @@ public class ValidateService {
 
     private static final ValidateService INSTANCE = new ValidateService();
 
-    private MemoryStore memoryStore = MemoryStore.getInstance();
+    private Store memoryStore = DBStore.getInstance();
 
     private ValidateService() {
 

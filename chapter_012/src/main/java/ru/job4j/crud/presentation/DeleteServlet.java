@@ -18,6 +18,6 @@ public class DeleteServlet extends HttpServlet {
             validateService.delete(id);
         } catch (Exception e) {
         }
-        resp.sendRedirect(String.format("%s/list", req.getContextPath()));
+        resp.sendRedirect(String.format("%s/list.jsp", req.getContextPath()));
     }
 }

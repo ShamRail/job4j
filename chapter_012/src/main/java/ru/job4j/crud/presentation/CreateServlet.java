@@ -58,5 +58,6 @@ public class CreateServlet extends HttpServlet {
             validateService.add(user);
         } catch (ValidationException e) {
         }
+        resp.sendRedirect(String.format("%s/list.jsp", req.getContextPath()));
     }
 }
