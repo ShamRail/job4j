@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class UserServlet extends HttpServlet {
@@ -39,7 +40,7 @@ public class UserServlet extends HttpServlet {
                 String login = req.getParameter("login");
                 String password = req.getParameter("password");
                 String email = req.getParameter("email");
-                User user = new User(id, login, password, email, System.currentTimeMillis());
+                User user = new User(id, login, password, email, new Date().toString());
                 validateService.add(user);
                 out.println("User is added!");
             } else if ("update".equals(action)) {

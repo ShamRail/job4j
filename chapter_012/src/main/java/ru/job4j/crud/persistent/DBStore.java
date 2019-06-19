@@ -34,7 +34,7 @@ public class DBStore implements Store {
                    "login varchar(255)",
                    "password varchar(255)",
                    "email varchar(255)",
-                   "create_date bigint")
+                   "create_date varchar(255)")
            );
         } catch (SQLException e) {
             e.printStackTrace();
@@ -56,7 +56,7 @@ public class DBStore implements Store {
             preparedStatement.setString(2, user.getLogin());
             preparedStatement.setString(3, user.getPassword());
             preparedStatement.setString(4, user.getEmail());
-            preparedStatement.setBigDecimal(5, BigDecimal.valueOf(user.getCreateDate()));
+            preparedStatement.setString(5, user.getCreateDate());
             preparedStatement.execute();
         } catch (Exception e) {
             e.printStackTrace();
@@ -72,7 +72,7 @@ public class DBStore implements Store {
             preparedStatement.setString(1, newUser.getLogin());
             preparedStatement.setString(2, newUser.getPassword());
             preparedStatement.setString(3, newUser.getEmail());
-            preparedStatement.setBigDecimal(4, BigDecimal.valueOf(newUser.getCreateDate()));
+            preparedStatement.setString(4, newUser.getCreateDate());
             preparedStatement.setInt(5, id);
             preparedStatement.execute();
         } catch (Exception e) {
@@ -101,12 +101,12 @@ public class DBStore implements Store {
             String login;
             String password;
             String email;
-            long create_date;
+            String create_date;
             while (set.next()) {
                 login = set.getString(2);
                 password = set.getString(3);
                 email = set.getString(4);
-                create_date = set.getLong(5);
+                create_date = set.getString(5);
                 user = new User(id, login, password, email, create_date);
             }
         } catch (SQLException e) {
@@ -126,13 +126,13 @@ public class DBStore implements Store {
             String login;
             String password;
             String email;
-            long create_date;
+            String create_date;
             while (set.next()) {
                 id = set.getInt(1);
                 login = set.getString(2);
                 password = set.getString(3);
                 email = set.getString(4);
-                create_date = set.getLong(5);
+                create_date = set.getString(5);
                 result.add(new User(id, login, password, email, create_date));
             }
         } catch (SQLException e) {

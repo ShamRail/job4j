@@ -48,12 +48,8 @@ public class ValidateService {
         return user;
     }
 
-    public CopyOnWriteArrayList<User> findAll() throws ValidationException {
-        CopyOnWriteArrayList<User> users = memoryStore.findAll();
-        if (users.isEmpty()) {
-            throw new ValidationException("No one user was created!");
-        }
-        return users;
+    public CopyOnWriteArrayList<User> findAll() {
+        return memoryStore.findAll();
     }
 
     public boolean contains(int id) {

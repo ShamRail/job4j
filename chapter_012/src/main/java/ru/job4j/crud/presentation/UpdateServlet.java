@@ -24,7 +24,7 @@ public class UpdateServlet extends HttpServlet {
         req.setAttribute("login", req.getParameter("login"));
         req.setAttribute("password", req.getParameter("password"));
         req.setAttribute("email", req.getParameter("email"));
-        req.setAttribute("date", new Date(Long.parseLong(req.getParameter("date"))));
+        req.setAttribute("date", req.getParameter("date"));
         req.getRequestDispatcher("/WEB-INF/views/update.jsp").forward(req, resp);
     }
 
@@ -36,7 +36,7 @@ public class UpdateServlet extends HttpServlet {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
         String email = req.getParameter("email");
-        User user = new User(id, login, password, email, System.currentTimeMillis());
+        User user = new User(id, login, password, email, new Date().toString());
         try {
             LOG.debug("Try to update user");
             validateService.update(id, user);

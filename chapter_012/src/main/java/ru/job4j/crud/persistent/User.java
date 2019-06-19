@@ -13,9 +13,9 @@ public class User {
 
     private final String email;
 
-    private final long createDate;
+    private final String createDate;
 
-    public User(int id, String login, String password, String email, long createDate) {
+    public User(int id, String login, String password, String email, String createDate) {
         this.id = id;
         this.login = login;
         this.password = password;
@@ -39,7 +39,7 @@ public class User {
         return email;
     }
 
-    public long getCreateDate() {
+    public String getCreateDate() {
         return createDate;
     }
 
@@ -58,7 +58,7 @@ public class User {
             return false;
         }
         User user = (User) o;
-        return id == user.id && createDate == user.createDate && Objects.equals(login, user.login) && Objects.equals(password, user.password) && Objects.equals(email, user.email);
+        return id == user.id && createDate.equals(user.createDate) && Objects.equals(login, user.login) && Objects.equals(password, user.password) && Objects.equals(email, user.email);
     }
 
     @Override

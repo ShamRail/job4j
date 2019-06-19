@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 
 public class CreateServlet extends HttpServlet {
 
@@ -30,8 +31,8 @@ public class CreateServlet extends HttpServlet {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
         String email = req.getParameter("email");
-        long date = System.currentTimeMillis();
-        User user = new User(id, login, password, email, date);
+        Date date = new Date();
+        User user = new User(id, login, password, email, date.toString());
         try {
             LOG.debug("Try to add user");
             validateService.add(user);
