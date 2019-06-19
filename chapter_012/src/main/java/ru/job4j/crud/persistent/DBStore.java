@@ -95,9 +95,9 @@ public class DBStore implements Store {
     public User findById(int id) {
         User user = null;
         try (Connection connection = SOURCE.getConnection();
-             Statement statement = connection.createStatement()
+             Statement statement = connection.createStatement();
+             ResultSet set = statement.executeQuery(String.format("select * from users where id = %s;", id))
         ) {
-            ResultSet set = statement.executeQuery(String.format("select * from users where id = %s;", id));
             String login;
             String password;
             String email;
@@ -119,9 +119,9 @@ public class DBStore implements Store {
     public CopyOnWriteArrayList<User> findAll() {
         CopyOnWriteArrayList<User> result = new CopyOnWriteArrayList<>();
         try (Connection connection = SOURCE.getConnection();
-             Statement statement = connection.createStatement()
+             Statement statement = connection.createStatement();
+             ResultSet set = statement.executeQuery("select * from users;")
         ) {
-            ResultSet set = statement.executeQuery("select * from users;");
             int id;
             String login;
             String password;
