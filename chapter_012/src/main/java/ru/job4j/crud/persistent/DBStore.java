@@ -65,8 +65,8 @@ public class DBStore implements Store {
 
     @Override
     public void update(int id, User newUser) {
-        try (   Connection connection = SOURCE.getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(
+        try (Connection connection = SOURCE.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(
                         "update users set login = ?, password = ?, email = ?, create_date = ? where id = ?;")
         ) {
             preparedStatement.setString(1, newUser.getLogin());
@@ -101,13 +101,13 @@ public class DBStore implements Store {
             String login;
             String password;
             String email;
-            String create_date;
+            String createDate;
             while (set.next()) {
                 login = set.getString(2);
                 password = set.getString(3);
                 email = set.getString(4);
-                create_date = set.getString(5);
-                user = new User(id, login, password, email, create_date);
+                createDate = set.getString(5);
+                user = new User(id, login, password, email, createDate);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -126,14 +126,14 @@ public class DBStore implements Store {
             String login;
             String password;
             String email;
-            String create_date;
+            String createDate;
             while (set.next()) {
                 id = set.getInt(1);
                 login = set.getString(2);
                 password = set.getString(3);
                 email = set.getString(4);
-                create_date = set.getString(5);
-                result.add(new User(id, login, password, email, create_date));
+                createDate = set.getString(5);
+                result.add(new User(id, login, password, email, createDate));
             }
         } catch (SQLException e) {
             e.printStackTrace();
