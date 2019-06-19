@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,7 +7,7 @@
 </head>
 <body>
 <h2>Create</h2>
-<form action="<%=request.getContextPath()%>/create" method="POST">
+<form action="${pageContext.servletContext.contextPath}/create" method="POST">
     <table>
         <tr>
             <td>Login: </td>

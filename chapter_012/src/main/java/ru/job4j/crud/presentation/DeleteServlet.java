@@ -28,6 +28,6 @@ public class DeleteServlet extends HttpServlet {
             LOG.debug("Failure to delete user. {}", e.getMessage());
         }
         LOG.debug("Redirecting to list.jsp");
-        resp.sendRedirect(String.format("%s/list.jsp", req.getContextPath()));
+        resp.sendRedirect(String.format("%s/list", req.getContextPath()));
     }
 }
