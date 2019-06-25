@@ -3,11 +3,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Create</title>
+    <title>Registration</title>
 </head>
 <body>
-<h2>Create</h2>
-<form action="${pageContext.servletContext.contextPath}/create" method="POST" id="f">
+<h2>Registration</h2>
+<form action="${pageContext.servletContext.contextPath}/signup" method="POST" id="f">
     <table>
         <tr>
             <td>Login: </td>

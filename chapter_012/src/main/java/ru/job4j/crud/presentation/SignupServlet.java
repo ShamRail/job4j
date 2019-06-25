@@ -1,7 +1,5 @@
 package ru.job4j.crud.presentation;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import ru.job4j.crud.logic.ValidateService;
 import ru.job4j.crud.logic.ValidationException;
 import ru.job4j.crud.persistent.Role;
@@ -10,39 +8,37 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Date;
 
-public class CreateServlet extends HttpServlet {
+public class SignupServlet extends HttpServlet {
 
     private final ValidateService validateService = ValidateService.getInstance();
 
-    private static final Logger LOG = LogManager.getLogger(CreateServlet.class.getName());
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/WEB-INF/views/create.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/views/signup.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        LOG.debug("Creating user ...");
-        LOG.debug("Retrieve data");
-        int id = validateService.getMaxID() + 1;
         String login = req.getParameter("login");
         String password = req.getParameter("password");
         String email = req.getParameter("email");
         Role role = new Role(req.getParameter("roles"));
-        Date date = new Date();
-        User user = new User(id, login, password, email, date.toString(), role);
+        String date = new Date().toString();
+        int id = validateService.getMaxID() + 1;
+        User user = new User(id, login, password, email, date, role);
         try {
-            LOG.debug("Try to add user");
             validateService.add(user);
-            LOG.debug("User is added");
+            HttpSession session = req.getSession();
+            session.setAttribute("login", login);
+            session.setAttribute("password", password);
+            session.setAttribute("role", req.getParameter("roles"));
+            resp.sendRedirect(String.format("%s/list", req.getContextPath()));
         } catch (ValidationException e) {
-            LOG.debug("Failure to add user. {}", e.getMessage());
+            resp.sendRedirect(String.format("%s/signup", req.getContextPath()));
         }
-        LOG.debug("Redirecting to list.jsp");
-        resp.sendRedirect(String.format("%s/list", req.getContextPath()));
     }
 }

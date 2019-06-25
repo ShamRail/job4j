@@ -3,6 +3,8 @@ package ru.job4j.crud.logic;
 import ru.job4j.crud.persistent.DBStore;
 import ru.job4j.crud.persistent.Store;
 import ru.job4j.crud.persistent.User;
+
+import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ValidateService {
@@ -58,6 +60,18 @@ public class ValidateService {
 
     public int getMaxID() {
         return memoryStore.findAll().stream().mapToInt(User::getId).max().orElse(0);
+    }
+
+    public User findByLogin(String login) {
+        List<User> users = memoryStore.findAll();
+        User rst = null;
+        for (User user : users) {
+            if (login.equals(user.getLogin())) {
+                rst = user;
+                break;
+            }
+        }
+        return rst;
     }
 
 }

@@ -14,6 +14,7 @@
         <td>Password</td>
         <td>Email</td>
         <td>Date</td>
+        <td>Role</td>
     </tr>
     <c:forEach items="${users}" var="user">
         <tr>
@@ -22,6 +23,7 @@
             <td><c:out value="${user.password}"></c:out></td>
             <td><c:out value="${user.email}"></c:out></td>
             <td><c:out value="${user.createDate}"></c:out></td>
+            <td><c:out value="${user.role.role}"></c:out></td>
             <td>
                 <form action="${pageContext.servletContext.contextPath}/update" method="GET">
                     <input type="hidden" name="id" value="${user.id}">
@@ -29,6 +31,7 @@
                     <input type="hidden" name="password" value="${user.password}">
                     <input type="hidden" name="email" value="${user.email}">
                     <input type="hidden" name="date" value="${user.createDate}">
+                    <input type="hidden" name="role" value="${user.role.role}">
                     <input type="submit" value="Edit">
                 </form>
             </td>

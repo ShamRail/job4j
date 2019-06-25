@@ -1,7 +1,6 @@
 package ru.job4j.crud.persistent;
 
 import org.apache.commons.dbcp2.BasicDataSource;
-import java.math.BigDecimal;
 import java.sql.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -29,12 +28,13 @@ public class DBStore implements Store {
     private void initTable() {
         try (Connection connection = SOURCE.getConnection();
              Statement statement = connection.createStatement()) {
-           statement.execute(String.format("create table if not exists users(%s, %s, %s, %s, %s);",
+           statement.execute(String.format("create table if not exists users(%s, %s, %s, %s, %s, %s);",
                    "id int",
                    "login varchar(255)",
                    "password varchar(255)",
                    "email varchar(255)",
-                   "create_date varchar(255)")
+                   "create_date varchar(255)",
+                   "role varchar(255)")
            );
         } catch (SQLException e) {
             e.printStackTrace();
@@ -50,13 +50,14 @@ public class DBStore implements Store {
         try (Connection connection = SOURCE.getConnection();
              PreparedStatement preparedStatement
                      = connection.prepareStatement(
-                             "insert into users(id, login, password, email, create_date) values(?, ?, ?, ?, ?);")
+                             "insert into users(id, login, password, email, create_date, role) values(?, ?, ?, ?, ?, ?);")
         ) {
             preparedStatement.setInt(1, user.getId());
             preparedStatement.setString(2, user.getLogin());
             preparedStatement.setString(3, user.getPassword());
             preparedStatement.setString(4, user.getEmail());
             preparedStatement.setString(5, user.getCreateDate());
+            preparedStatement.setString(6, user.getRole().getRole());
             preparedStatement.execute();
         } catch (Exception e) {
             e.printStackTrace();
@@ -67,13 +68,14 @@ public class DBStore implements Store {
     public void update(int id, User newUser) {
         try (Connection connection = SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(
-                        "update users set login = ?, password = ?, email = ?, create_date = ? where id = ?;")
+                        "update users set login = ?, password = ?, email = ?, create_date = ?, role = ? where id = ?;")
         ) {
             preparedStatement.setString(1, newUser.getLogin());
             preparedStatement.setString(2, newUser.getPassword());
             preparedStatement.setString(3, newUser.getEmail());
             preparedStatement.setString(4, newUser.getCreateDate());
-            preparedStatement.setInt(5, id);
+            preparedStatement.setString(5, newUser.getRole().getRole());
+            preparedStatement.setInt(6, id);
             preparedStatement.execute();
         } catch (Exception e) {
             e.printStackTrace();
@@ -102,12 +104,14 @@ public class DBStore implements Store {
             String password;
             String email;
             String createDate;
+            Role role;
             while (set.next()) {
                 login = set.getString(2);
                 password = set.getString(3);
                 email = set.getString(4);
                 createDate = set.getString(5);
-                user = new User(id, login, password, email, createDate);
+                role = new Role(set.getString(6));
+                user = new User(id, login, password, email, createDate, role);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -127,13 +131,15 @@ public class DBStore implements Store {
             String password;
             String email;
             String createDate;
+            Role role;
             while (set.next()) {
                 id = set.getInt(1);
                 login = set.getString(2);
                 password = set.getString(3);
                 email = set.getString(4);
                 createDate = set.getString(5);
-                result.add(new User(id, login, password, email, createDate));
+                role = new Role(set.getString(6));
+                result.add(new User(id, login, password, email, createDate, role));
             }
         } catch (SQLException e) {
             e.printStackTrace();

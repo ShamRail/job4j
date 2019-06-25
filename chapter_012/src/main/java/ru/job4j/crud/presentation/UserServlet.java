@@ -1,6 +1,7 @@
 package ru.job4j.crud.presentation;
 
 import ru.job4j.crud.logic.ValidateService;
+import ru.job4j.crud.persistent.Role;
 import ru.job4j.crud.persistent.User;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -40,7 +41,8 @@ public class UserServlet extends HttpServlet {
                 String login = req.getParameter("login");
                 String password = req.getParameter("password");
                 String email = req.getParameter("email");
-                User user = new User(id, login, password, email, new Date().toString());
+                Role role = new Role(req.getParameter("roles"));
+                User user = new User(id, login, password, email, new Date().toString(), role);
                 validateService.add(user);
                 out.println("User is added!");
             } else if ("update".equals(action)) {
@@ -48,7 +50,8 @@ public class UserServlet extends HttpServlet {
                 String password = req.getParameter("password");
                 String email = req.getParameter("email");
                 User oldUser = validateService.findById(id);
-                User newUser = new User(id, login, password, email, oldUser.getCreateDate());
+                Role role = new Role(req.getParameter("roles"));
+                User newUser = new User(id, login, password, email, oldUser.getCreateDate(), role);
                 validateService.update(id, newUser);
                 out.println("User is updated!");
             } else if ("delete".equals(action)) {

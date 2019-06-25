@@ -8,7 +8,7 @@
 </head>
 <body>
 <h2>Update</h2>
-<form action="${pageContext.servletContext.contextPath}/update" method="POST">
+<form action="${pageContext.servletContext.contextPath}/update" method="POST" id="f">
     <table>
         <tr>
             <td>Login: </td>
@@ -26,6 +26,23 @@
         <tr>
             <td>Date: </td>
             <td>"${date}"</td>
+        </tr>
+        <tr>
+            <td>Role: </td>
+            <td>
+                <label>
+                    <select name="roles" form="f">
+                        <c:if test="${role == 'user'}">
+                            <option value="user" selected>User</option>
+                            <option value="admin">Admin</option>
+                        </c:if>
+                        <c:if test="${role == 'admin'}">
+                            <option value="user">User</option>
+                            <option value="admin" selected>Admin</option>
+                        </c:if>
+                    </select>
+                </label>
+            </td>
         </tr>
         <tr>
             <td></td>

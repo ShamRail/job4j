@@ -3,6 +3,7 @@ package ru.job4j.crud.presentation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ru.job4j.crud.logic.ValidateService;
+import ru.job4j.crud.persistent.Role;
 import ru.job4j.crud.persistent.User;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -25,6 +26,7 @@ public class UpdateServlet extends HttpServlet {
         req.setAttribute("password", req.getParameter("password"));
         req.setAttribute("email", req.getParameter("email"));
         req.setAttribute("date", req.getParameter("date"));
+        req.setAttribute("role", req.getParameter("role"));
         req.getRequestDispatcher("/WEB-INF/views/update.jsp").forward(req, resp);
     }
 
@@ -36,7 +38,8 @@ public class UpdateServlet extends HttpServlet {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
         String email = req.getParameter("email");
-        User user = new User(id, login, password, email, new Date().toString());
+        Role role = new Role(req.getParameter("roles"));
+        User user = new User(id, login, password, email, new Date().toString(), role);
         try {
             LOG.debug("Try to update user");
             validateService.update(id, user);

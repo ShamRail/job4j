@@ -15,12 +15,15 @@ public class User {
 
     private final String createDate;
 
-    public User(int id, String login, String password, String email, String createDate) {
+    private final Role role;
+
+    public User(int id, String login, String password, String email, String createDate, Role role) {
         this.id = id;
         this.login = login;
         this.password = password;
         this.email = email;
         this.createDate = createDate;
+        this.role = role;
     }
 
     public int getId() {
@@ -43,10 +46,14 @@ public class User {
         return createDate;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
     @Override
     public String toString() {
         return String.format("id: %-4d login: %-10s password: %-10s email: %-15s create_date: %s",
-                id, login, password, email, new Date(createDate));
+                id, login, password, email, createDate);
     }
 
     @Override
