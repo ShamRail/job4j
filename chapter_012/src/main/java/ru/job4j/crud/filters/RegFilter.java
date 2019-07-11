@@ -1,5 +1,6 @@
 package ru.job4j.crud.filters;
 
+import ru.job4j.crud.logic.Validate;
 import ru.job4j.crud.logic.ValidateService;
 
 import javax.servlet.*;
@@ -9,7 +10,7 @@ import java.io.IOException;
 
 public class RegFilter implements Filter {
 
-    private final ValidateService vs = ValidateService.getInstance();
+    private final Validate vs = ValidateService.getInstance();
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {

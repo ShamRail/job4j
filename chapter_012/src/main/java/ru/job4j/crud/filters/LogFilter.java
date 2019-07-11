@@ -1,5 +1,6 @@
 package ru.job4j.crud.filters;
 
+import ru.job4j.crud.logic.Validate;
 import ru.job4j.crud.logic.ValidateService;
 import ru.job4j.crud.persistent.User;
 
@@ -10,7 +11,7 @@ import java.io.IOException;
 
 public class LogFilter implements Filter {
 
-    private final ValidateService validateService = ValidateService.getInstance();
+    private final Validate validateService = ValidateService.getInstance();
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {

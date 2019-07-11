@@ -1,5 +1,6 @@
 package ru.job4j.crud.presentation;
 
+import ru.job4j.crud.logic.Validate;
 import ru.job4j.crud.logic.ValidateService;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -9,7 +10,7 @@ import java.io.IOException;
 
 public class ReadServlet extends HttpServlet {
 
-    private final ValidateService validateService = ValidateService.getInstance();
+    private final Validate validateService = ValidateService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
