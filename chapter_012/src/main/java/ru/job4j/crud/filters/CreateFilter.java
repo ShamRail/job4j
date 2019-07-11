@@ -1,5 +1,7 @@
 package ru.job4j.crud.filters;
 
+import ru.job4j.crud.persistent.Role;
+
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +16,7 @@ public class CreateFilter implements Filter {
         HttpServletResponse resp = (HttpServletResponse) response;
         HttpSession session = req.getSession();
         String role = (String) session.getAttribute("role");
-        if ("admin".equals(role)) {
+        if (Role.ADMIN.equals(role)) {
             chain.doFilter(request, response);
         } else {
             resp.sendRedirect(String.format("%s/list", req.getContextPath()));

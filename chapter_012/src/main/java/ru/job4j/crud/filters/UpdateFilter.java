@@ -1,5 +1,7 @@
 package ru.job4j.crud.filters;
 
+import ru.job4j.crud.persistent.Role;
+
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,7 +20,7 @@ public class UpdateFilter implements Filter {
         String role = (String) session.getAttribute("role");
         String login = req.getParameter("login");
         String password = req.getParameter("password");
-        if ("admin".equals(role) || (login.equals(loginS) && password.equals(passwordS))) {
+        if (Role.ADMIN.equals(role) || (login.equals(loginS) && password.equals(passwordS))) {
             chain.doFilter(request, response);
         } else {
             resp.sendRedirect(String.format("%s/list", req.getContextPath()));

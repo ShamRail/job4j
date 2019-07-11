@@ -3,6 +3,7 @@ package ru.job4j.crud.filters;
 import ru.job4j.crud.logic.Validate;
 import ru.job4j.crud.logic.ValidateService;
 import ru.job4j.crud.logic.ValidationException;
+import ru.job4j.crud.persistent.Role;
 import ru.job4j.crud.persistent.User;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +33,7 @@ public class DeleteFilter implements Filter {
                 session.setAttribute("role", "");
                 validateService.delete(user.getId());
                 resp.sendRedirect(String.format("%s/login", req.getContextPath()));
-            } else if ("admin".equals(role)) {
+            } else if (Role.ADMIN.equals(role)) {
                 chain.doFilter(request, response);
             } else {
                 resp.sendRedirect(String.format("%s/list", req.getContextPath()));
