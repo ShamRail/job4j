@@ -7,11 +7,43 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        // Валидация на непустые поля
+        function validateFields() {
+            var isValidated = true;
+            var id = $("#id");
+            var name = $("#name");
+            var surname = $("#surname");
+            if (id.val() == "" || name.val() == "" || surname.val() == "") {
+                alert("Invalid input!");
+                isValidated = false;
+            }
+            return isValidated;
+        }
+        // Валидация на уникальность id
+        function validateId() {
+            var isValidated = true;
+            var ids = $(".ids");
+            var id = $("#id").val();
+            for (var i = 0; i < ids.length; i++) {
+                if (ids[i].innerHTML == id) {
+                    alert("Id is already existed!");
+                    isValidated = false;
+                    break;
+                }
+            }
+            return isValidated;
+        }
+    </script>
 </head>
 <body>
 
 <div id="form-input">
     <form action="">
+        <div class="form-group">
+            <label for="id">ID:</label>
+            <input type="text" class="form-control" id="id">
+        </div>
         <div class="form-group">
             <label for="name">Name:</label>
             <input type="text" class="form-control" id="name">
@@ -31,7 +63,7 @@
             <label for="description">Description:</label>
             <input type="text" class="form-control" id="description">
         </div>
-        <button type="submit" class="btn btn-default">Submit</button>
+        <button type="submit" class="btn btn-default" onclick="validateFields(); validateId()">Submit</button>
     </form>
 </div>
 <div class="table-container">
@@ -39,6 +71,7 @@
     <table class="table table-bordered">
         <thead>
         <tr>
+            <th>Id</th>
             <th>Name</th>
             <th>Surname</th>
             <th>Gender</th>
@@ -47,18 +80,21 @@
         </thead>
         <tbody>
         <tr>
+            <td class="ids">0</td>
             <td>John</td>
             <td>Doe</td>
             <td>Male</td>
             <td>john@example.com</td>
         </tr>
         <tr>
+            <td class="ids">1</td>
             <td>Mary</td>
             <td>Moe</td>
             <td>Female</td>
             <td>mary@example.com</td>
         </tr>
         <tr>
+            <td class="ids">2</td>
             <td>July</td>
             <td>Female</td>
             <td>Dooley</td>
