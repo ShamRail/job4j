@@ -87,6 +87,14 @@
         <servlet-name>LogServlet</servlet-name>
         <url-pattern>/signin</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>AjaxServlet</servlet-name>
+        <servlet-class>ru.job4j.servlets.AjaxServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AjaxServlet</servlet-name>
+        <url-pattern>/ajaxexample</url-pattern>
+    </servlet-mapping>
 
     <filter>
         <filter-name>AuthenFilter</filter-name>

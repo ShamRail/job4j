@@ -51,6 +51,22 @@
                         "<td>" + description + "</td>" +
                     "</tr>";
                 $("tr:last").after(newRow);
+                var person = {
+                    id: parseInt(id, 10),
+                    name: name,
+                    surname: surname,
+                    gender: gender,
+                    description: description
+                };
+                var json = JSON.stringify(person);
+                $.ajax({
+                    url: '/chapter_012/ajaxexample',
+                    dataType: 'json',
+                    type: 'post',
+                    contentType: 'application/json',
+                    data: json,
+                    processData: false
+                });
             }
         }
     </script>
@@ -58,7 +74,7 @@
 <body>
 
 <div id="form-input">
-    <form action="">
+    <form>
         <div class="form-group">
             <label for="id">ID:</label>
             <input type="text" class="form-control" id="id">
@@ -82,8 +98,8 @@
             <label for="description">Description:</label>
             <input type="text" class="form-control" id="description">
         </div>
-        <button type="button" class="btn btn-default" onclick="addRow()">Submit</button>
     </form>
+    <button type="button" class="btn btn-default" onclick="addRow()">Submit</button>
 </div>
 <div class="table-container">
     <h2>Table</h2>
