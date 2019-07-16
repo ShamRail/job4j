@@ -43,16 +43,20 @@ public class UserServlet extends HttpServlet {
                 String password = req.getParameter("password");
                 String email = req.getParameter("email");
                 Role role = new Role(req.getParameter("roles"));
-                User user = new User(id, login, password, email, new Date().toString(), role);
+                String country = req.getParameter("country");
+                String town = req.getParameter("town");
+                User user = new User(id, login, password, email, new Date().toString(), role, country, town);
                 validateService.add(user);
                 out.println("User is added!");
             } else if ("update".equals(action)) {
                 String login = req.getParameter("login");
                 String password = req.getParameter("password");
                 String email = req.getParameter("email");
+                String country = req.getParameter("country");
+                String town = req.getParameter("town");
                 User oldUser = validateService.findById(id);
                 Role role = new Role(req.getParameter("roles"));
-                User newUser = new User(id, login, password, email, oldUser.getCreateDate(), role);
+                User newUser = new User(id, login, password, email, oldUser.getCreateDate(), role, country, town);
                 validateService.update(id, newUser);
                 out.println("User is updated!");
             } else if ("delete".equals(action)) {

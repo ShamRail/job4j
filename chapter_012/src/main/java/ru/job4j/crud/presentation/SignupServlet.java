@@ -29,8 +29,10 @@ public class SignupServlet extends HttpServlet {
         String email = req.getParameter("email");
         Role role = new Role(req.getParameter("roles"));
         String date = new Date().toString();
+        String country = req.getParameter("country");
+        String town = req.getParameter("town");
         int id = validateService.getMaxID() + 1;
-        User user = new User(id, login, password, email, date, role);
+        User user = new User(id, login, password, email, date, role, country, town);
         try {
             validateService.add(user);
             HttpSession session = req.getSession();

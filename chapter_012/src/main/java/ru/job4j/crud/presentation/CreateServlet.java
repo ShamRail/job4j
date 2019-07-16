@@ -34,8 +34,10 @@ public class CreateServlet extends HttpServlet {
         String password = req.getParameter("password");
         String email = req.getParameter("email");
         Role role = new Role(req.getParameter("roles"));
+        String country = req.getParameter("country");
+        String town = req.getParameter("town");
         Date date = new Date();
-        User user = new User(id, login, password, email, date.toString(), role);
+        User user = new User(id, login, password, email, date.toString(), role, country, town);
         try {
             LOG.debug("Try to add user");
             validateService.add(user);

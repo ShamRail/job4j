@@ -17,13 +17,19 @@ public class User {
 
     private final Role role;
 
-    public User(int id, String login, String password, String email, String createDate, Role role) {
+    private final String country;
+
+    private final String town;
+
+    public User(int id, String login, String password, String email, String createDate, Role role, String country, String town) {
         this.id = id;
         this.login = login;
         this.password = password;
         this.email = email;
         this.createDate = createDate;
         this.role = role;
+        this.country = country;
+        this.town = town;
     }
 
     public int getId() {
@@ -48,6 +54,14 @@ public class User {
 
     public Role getRole() {
         return role;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public String getTown() {
+        return town;
     }
 
     @Override

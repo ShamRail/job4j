@@ -28,6 +28,8 @@ public class UpdateServlet extends HttpServlet {
         req.setAttribute("email", req.getParameter("email"));
         req.setAttribute("date", req.getParameter("date"));
         req.setAttribute("role", req.getParameter("role"));
+        req.setAttribute("country", req.getParameter("country"));
+        req.setAttribute("town", req.getParameter("town"));
         req.getRequestDispatcher("/WEB-INF/views/update.jsp").forward(req, resp);
     }
 
@@ -39,8 +41,10 @@ public class UpdateServlet extends HttpServlet {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
         String email = req.getParameter("email");
+        String country = req.getParameter("country");
+        String town = req.getParameter("town");
         Role role = new Role(req.getParameter("roles"));
-        User user = new User(id, login, password, email, new Date().toString(), role);
+        User user = new User(id, login, password, email, new Date().toString(), role, country, town);
         try {
             LOG.debug("Try to update user");
             validateService.update(id, user);

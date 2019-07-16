@@ -28,7 +28,7 @@ public class DeleteServletTest {
     public void test() throws ValidationException, ServletException, IOException {
         Validate validate = new ValidateStub();
         User user = new User(
-                0, "log", "pass", "email", "123", new Role("user")
+                0, "log", "pass", "email", "123", new Role("user"), "", ""
         );
         validate.add(user);
         PowerMockito.mockStatic(ValidateService.class);

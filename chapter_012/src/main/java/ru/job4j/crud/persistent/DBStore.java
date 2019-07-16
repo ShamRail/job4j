@@ -28,13 +28,15 @@ public class DBStore implements Store {
     private void initTable() {
         try (Connection connection = SOURCE.getConnection();
              Statement statement = connection.createStatement()) {
-           statement.execute(String.format("create table if not exists users(%s, %s, %s, %s, %s, %s);",
+           statement.execute(String.format("create table if not exists users(%s, %s, %s, %s, %s, %s, %s, %s);",
                    "id int",
                    "login varchar(255)",
                    "password varchar(255)",
                    "email varchar(255)",
                    "create_date varchar(255)",
-                   "role varchar(255)")
+                   "role varchar(255)",
+                   "country varchar(255)",
+                   "town varchar(255)")
            );
         } catch (SQLException e) {
             e.printStackTrace();
@@ -50,7 +52,7 @@ public class DBStore implements Store {
         try (Connection connection = SOURCE.getConnection();
              PreparedStatement preparedStatement
                      = connection.prepareStatement(
-                             "insert into users(id, login, password, email, create_date, role) values(?, ?, ?, ?, ?, ?);")
+                             "insert into users(id, login, password, email, create_date, role, country, town) values(?, ?, ?, ?, ?, ?, ?, ?);")
         ) {
             preparedStatement.setInt(1, user.getId());
             preparedStatement.setString(2, user.getLogin());
@@ -58,6 +60,8 @@ public class DBStore implements Store {
             preparedStatement.setString(4, user.getEmail());
             preparedStatement.setString(5, user.getCreateDate());
             preparedStatement.setString(6, user.getRole().getRole());
+            preparedStatement.setString(7, user.getCountry());
+            preparedStatement.setString(8, user.getTown());
             preparedStatement.execute();
         } catch (Exception e) {
             e.printStackTrace();
@@ -68,14 +72,16 @@ public class DBStore implements Store {
     public void update(int id, User newUser) {
         try (Connection connection = SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(
-                        "update users set login = ?, password = ?, email = ?, create_date = ?, role = ? where id = ?;")
+                        "update users set login = ?, password = ?, email = ?, create_date = ?, role = ?, country = ?, town = ? where id = ?;")
         ) {
             preparedStatement.setString(1, newUser.getLogin());
             preparedStatement.setString(2, newUser.getPassword());
             preparedStatement.setString(3, newUser.getEmail());
             preparedStatement.setString(4, newUser.getCreateDate());
             preparedStatement.setString(5, newUser.getRole().getRole());
-            preparedStatement.setInt(6, id);
+            preparedStatement.setString(6, newUser.getCountry());
+            preparedStatement.setString(7, newUser.getTown());
+            preparedStatement.setInt(8, id);
             preparedStatement.execute();
         } catch (Exception e) {
             e.printStackTrace();
@@ -105,13 +111,17 @@ public class DBStore implements Store {
             String email;
             String createDate;
             Role role;
+            String country;
+            String town;
             while (set.next()) {
                 login = set.getString(2);
                 password = set.getString(3);
                 email = set.getString(4);
                 createDate = set.getString(5);
                 role = new Role(set.getString(6));
-                user = new User(id, login, password, email, createDate, role);
+                country = set.getString(7);
+                town = set.getString(8);
+                user = new User(id, login, password, email, createDate, role, country, town);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -131,6 +141,8 @@ public class DBStore implements Store {
             String password;
             String email;
             String createDate;
+            String country;
+            String town;
             Role role;
             while (set.next()) {
                 id = set.getInt(1);
@@ -139,7 +151,9 @@ public class DBStore implements Store {
                 email = set.getString(4);
                 createDate = set.getString(5);
                 role = new Role(set.getString(6));
-                result.add(new User(id, login, password, email, createDate, role));
+                country = set.getString(7);
+                town = set.getString(8);
+                result.add(new User(id, login, password, email, createDate, role, country, town));
             }
         } catch (SQLException e) {
             e.printStackTrace();

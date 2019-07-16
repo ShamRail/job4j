@@ -95,6 +95,14 @@
         <servlet-name>AjaxServlet</servlet-name>
         <url-pattern>/ajaxexample</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>TownsServlet</servlet-name>
+        <servlet-class>ru.job4j.crud.presentation.TownsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TownsServlet</servlet-name>
+        <url-pattern>/towns</url-pattern>
+    </servlet-mapping>
 
     <filter>
         <filter-name>AuthenFilter</filter-name>
