@@ -103,6 +103,30 @@
         <servlet-name>TownsServlet</servlet-name>
         <url-pattern>/towns</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>HallServlet</servlet-name>
+        <servlet-class>ru.job4j.cinema.controllers.HallServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>HallServlet</servlet-name>
+        <url-pattern>/hall</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>AccountServlet</servlet-name>
+        <servlet-class>ru.job4j.cinema.controllers.AccountServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AccountServlet</servlet-name>
+        <url-pattern>/account</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>AjaxHallServlet</servlet-name>
+        <servlet-class>ru.job4j.cinema.controllers.AjaxHallServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AjaxHallServlet</servlet-name>
+        <url-pattern>/ajaxhall</url-pattern>
+    </servlet-mapping>
 
     <filter>
         <filter-name>AuthenFilter</filter-name>

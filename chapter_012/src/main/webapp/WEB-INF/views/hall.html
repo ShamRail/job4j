@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            $.get('/chapter_012/ajaxhall', function(data, status) {
+                var places = JSON.parse(data).hall;
+                console.log("data: " + places);
+                var rows = places.length;
+                console.log("rows: " + rows);
+                var cols = places[0].length;
+                console.log("cols:" + cols);
+                var table = "<tr>";
+                table += "<td style='width: 120px;'>Ряд / Место</td>";
+                for (var c = 0; c < cols; c++) {
+                    table += "<td>" + (c + 1) + "</td>";
+                }
+                table += "</tr>";
+                for (var row = 0; row < rows; row++) {
+                    table += "<tr>";
+                    table += "<td>" + (row + 1) + "</td>";
+                    for (var col = 0; col < cols; col++) {
+                        if (places[row][col] == false) {
+                            table += "<td bgcolor='#90ee90'>" +
+                                        "<input type='radio' name='place' value='" + (row + 1) + "." + (col + 1) + "'>"
+                                        + " Ряд " + (row + 1) + ", Место " + (col + 1) +
+                                     "</td>";
+                        } else {
+                            table += "<td bgcolor='#f08080'>" + "Занято" + "</td>";
+                        }
+
+                    }
+                    table += "</tr>";
+                }
+                $("#places").append(table);
+            });
+        });
+    </script>
+    <title>Hall</title>
+</head>
+<body>
+<div class="container">
+    <form action="/chapter_012/hall" method="post">
+        <div class="row pt-3">
+            <h4>
+                Бронирование мест на сеанс
+            </h4>
+            <table class="table table-bordered" id="places">
+
+            </table>
+        </div>
+        <div class="row float-right">
+            <button type="submit" class="btn btn-success">Оплатить</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
