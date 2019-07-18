@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Example</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            $('#form2Submit').on('submit', uploadFile);
+        });
+
+        function uploadFile(event) {
+            event.stopPropagation();
+            event.preventDefault();
+            var form = document.getElementById('form2Submit');
+            var data = new FormData(form);
+            postFilesData(data);
+        }
+
+        function postFilesData(data) {
+            $.ajax({
+                url :  '/chapter_012/fileupload',
+                type : 'POST',
+                data : data,
+                cache : false,
+                dataType : 'text',
+                processData : false,
+                contentType : false,
+                success : function(data, textStatus, jqXHR) {
+                    alert(data);
+                },
+                error : function(jqXHR, textStatus, errorThrown) {
+                    alert('ERRORS: ' + textStatus);
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+<form id ="form2Submit" action="/chapter_012/fileupload" enctype="multipart/form-data">
+    <input id="fileSelect" name="file" type="file">
+    <br>
+    <input type="submit" value="Submit">
+</form>
+<a href="/chapter_012/download">download file</a>
+</body>
+</html>

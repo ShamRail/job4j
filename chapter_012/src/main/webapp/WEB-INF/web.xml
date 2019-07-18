@@ -96,6 +96,27 @@
         <url-pattern>/ajaxexample</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>FileUploadServlet</servlet-name>
+        <servlet-class>ru.job4j.servlets.FileUploadServlet</servlet-class>
+        <multipart-config>
+            <max-file-size>20848820</max-file-size>
+            <max-request-size>418018841</max-request-size>
+            <file-size-threshold>1048576</file-size-threshold>
+        </multipart-config>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FileUploadServlet</servlet-name>
+        <url-pattern>/fileupload</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>FileDownloadServlet</servlet-name>
+        <servlet-class>ru.job4j.servlets.FileDownloadServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FileDownloadServlet</servlet-name>
+        <url-pattern>/download</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>TownsServlet</servlet-name>
         <servlet-class>ru.job4j.crud.presentation.TownsServlet</servlet-class>
     </servlet>
