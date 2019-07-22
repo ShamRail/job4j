@@ -1,5 +1,7 @@
 package ru.job4j.cinema.models;
 
+import java.util.Objects;
+
 public class Account {
 
     private int id;
@@ -30,5 +32,21 @@ public class Account {
 
     public Place getPlace() {
         return place;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Account account = (Account) o;
+        return id == account.id &&
+                Objects.equals(name, account.name) &&
+                Objects.equals(telNumber, account.telNumber) &&
+                Objects.equals(place, account.place);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, telNumber, place);
     }
 }

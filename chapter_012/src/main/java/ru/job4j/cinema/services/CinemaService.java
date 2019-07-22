@@ -4,6 +4,8 @@ import ru.job4j.cinema.models.Account;
 import ru.job4j.cinema.models.Hall;
 import ru.job4j.cinema.models.Place;
 
+import java.sql.SQLException;
+
 public class CinemaService {
 
     private final static AccountsDAO ACCOUNTS = AccountsDAO.getInstance();
@@ -28,8 +30,16 @@ public class CinemaService {
         return HALL.getHall();
     }
 
-    public void occupy(Place place) {
+    public void occupy(Place place) throws SQLException {
         HALL.occupy(place);
+    }
+
+    public void inProcess(Place place) throws SQLException {
+        HALL.inProcess(place);
+    }
+
+    public void free(Place place) throws SQLException {
+        HALL.free(place);
     }
 
 }

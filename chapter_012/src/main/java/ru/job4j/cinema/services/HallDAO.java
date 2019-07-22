@@ -3,7 +3,6 @@ package ru.job4j.cinema.services;
 import org.apache.commons.dbcp2.BasicDataSource;
 import ru.job4j.cinema.models.Hall;
 import ru.job4j.cinema.models.Place;
-
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -38,7 +37,7 @@ public class HallDAO {
                     "id serial primary key",
                     "halls_row int",
                     "halls_col int",
-                    "isBusy boolean")
+                    "status varchar(16)")
              );
         } catch (SQLException e) {
             e.printStackTrace();
@@ -47,13 +46,13 @@ public class HallDAO {
 
     private void fillTable() {
         try (Connection connection = SOURCE.getConnection();
-             PreparedStatement ps = connection.prepareStatement("insert into places(halls_row, halls_col, isBusy) values(?, ?, ?);")) {
+             PreparedStatement ps = connection.prepareStatement("insert into places(halls_row, halls_col, status) values(?, ?, ?);")) {
              connection.setAutoCommit(false);
              for (int i = 0; i < 3; i++) {
                  for (int j = 0; j < 3; j++) {
                      ps.setInt(1, i + 1);
                      ps.setInt(2, j + 1);
-                     ps.setBoolean(3, false);
+                     ps.setString(3, "free");
                      ps.addBatch();
                  }
              }
@@ -73,13 +72,13 @@ public class HallDAO {
         Hall hall = null;
         try (Connection connection = SOURCE.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet rs = statement.executeQuery("select halls_row, halls_col, isBusy from places;")){
+             ResultSet rs = statement.executeQuery("select halls_row, halls_col, status from places;")){
              List<Place> places = new LinkedList<>();
              while (rs.next()) {
                  int row = rs.getInt(1);
                  int col = rs.getInt(2);
-                 boolean isBusy = rs.getBoolean(3);
-                 places.add(new Place(row, col, isBusy));
+                 String status = rs.getString(3);
+                 places.add(new Place(row, col, status));
              }
              int maxRow = -1;
              int maxCol = -1;
@@ -87,9 +86,9 @@ public class HallDAO {
                  maxRow = Math.max(maxRow, place.getRow());
                  maxCol = Math.max(maxCol, place.getCol());
              }
-             boolean[][] table = new boolean[maxRow][maxCol];
+             String[][] table = new String[maxRow][maxCol];
              for (Place place : places) {
-                 table[place.getRow() - 1][place.getCol() - 1] = place.isBusy();
+                 table[place.getRow() - 1][place.getCol() - 1] = place.status();
              }
              hall = new Hall(table);
         } catch (SQLException e) {
@@ -98,15 +97,29 @@ public class HallDAO {
         return hall;
     }
 
-    public void occupy(Place place) {
+    public void occupy(Place place) throws SQLException {
+        setValue(place, "busy", "wait");
+    }
+
+    public void inProcess(Place place) throws SQLException {
+        setValue(place, "wait", "free");
+    }
+
+    public void free(Place place) throws SQLException {
+        setValue(place, "free", "wait");
+    }
+
+    private void setValue(Place place,  String status, String beforeStatus) throws SQLException {
         try (Connection connection = SOURCE.getConnection();
-             Statement statement = connection.createStatement();
-        ) {
-             statement.execute(String.format("update places set isBusy = true where halls_row = %s and halls_col = %s;",
-                     place.getRow(),
-                     place.getCol()));
-        } catch (SQLException e) {
-            e.printStackTrace();
+             PreparedStatement ps = connection.prepareStatement(
+                     "update places set status = ? where halls_row = ? and halls_col = ? and status = ?;")) {
+             ps.setString(1, status);
+             ps.setInt(2, place.getRow());
+             ps.setInt(3, place.getCol());
+             ps.setString(4, beforeStatus);
+             if (ps.executeUpdate() == 0) {
+                 throw new SQLException();
+             }
         }
     }
 

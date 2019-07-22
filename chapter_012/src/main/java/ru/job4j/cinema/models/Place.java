@@ -1,17 +1,19 @@
 package ru.job4j.cinema.models;
 
+import java.util.Objects;
+
 public class Place {
 
     private final int row;
 
     private final int col;
 
-    private final boolean isBusy;
+    private final String status;
 
-    public Place(int row, int col, boolean isBusy) {
+    public Place(int row, int col, String status) {
         this.row = row;
         this.col = col;
-        this.isBusy = isBusy;
+        this.status = status;
     }
 
     public int getRow() {
@@ -22,7 +24,22 @@ public class Place {
         return col;
     }
 
-    public boolean isBusy() {
-        return isBusy;
+    public String status() {
+        return status;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Place place = (Place) o;
+        return row == place.row &&
+                col == place.col &&
+                status.equals(place.status);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(row, col, status);
     }
 }

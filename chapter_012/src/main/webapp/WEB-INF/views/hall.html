@@ -7,6 +7,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script>
+
+        setTimeout(function() {
+            location.reload();
+        }, 3000);
+
         $(document).ready(function() {
             $.get('/chapter_012/ajaxhall', function(data, status) {
                 var places = JSON.parse(data).hall;
@@ -25,13 +30,15 @@
                     table += "<tr>";
                     table += "<td>" + (row + 1) + "</td>";
                     for (var col = 0; col < cols; col++) {
-                        if (places[row][col] == false) {
+                        if (places[row][col] == "free") {
                             table += "<td bgcolor='#90ee90'>" +
                                         "<input type='radio' name='place' value='" + (row + 1) + "." + (col + 1) + "'>"
                                         + " Ряд " + (row + 1) + ", Место " + (col + 1) +
                                      "</td>";
-                        } else {
+                        } else if (places[row][col] == "busy") {
                             table += "<td bgcolor='#f08080'>" + "Занято" + "</td>";
+                        } else {
+                            table += "<td bgcolor='#fffacd'>" + "В обработке" + "</td>";
                         }
 
                     }
