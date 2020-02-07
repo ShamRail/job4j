@@ -57,11 +57,14 @@
             <version>1.8.3</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api -->
         <dependency>
-            <groupId>ru.job4j</groupId>
-            <artifactId>chapter_008</artifactId>
-            <version>2.0</version>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.4.0-b180830.0359</version>
         </dependency>
+
+
     </dependencies>
 
     <build>

@@ -2,8 +2,6 @@ package trackersql;
 
 import ru.job4j.tracker.ITracker;
 import ru.job4j.tracker.Item;
-
-import javax.xml.ws.WebServiceException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.sql.*;
@@ -277,7 +275,7 @@ public class TrackerSQL implements ITracker, AutoCloseable {
      * Закрывает подключение.
      * */
     @Override
-    public void close() throws WebServiceException {
+    public void close() {
         closeObj(this.connection);
     }
     /**
