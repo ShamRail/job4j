@@ -72,7 +72,7 @@ public class HallDAO {
         Hall hall = null;
         try (Connection connection = SOURCE.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet rs = statement.executeQuery("select halls_row, halls_col, status from places;")){
+             ResultSet rs = statement.executeQuery("select halls_row, halls_col, status from places;")) {
              List<Place> places = new LinkedList<>();
              while (rs.next()) {
                  int row = rs.getInt(1);

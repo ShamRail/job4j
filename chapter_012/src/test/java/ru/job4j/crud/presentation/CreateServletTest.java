@@ -1,5 +1,6 @@
 package ru.job4j.crud.presentation;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
@@ -16,6 +17,7 @@ import static org.junit.Assert.*;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(ValidateService.class)
+@Ignore
 public class CreateServletTest {
 
     @Test

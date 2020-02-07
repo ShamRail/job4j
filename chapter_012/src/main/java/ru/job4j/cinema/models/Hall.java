@@ -23,8 +23,12 @@ public class Hall {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Hall hall1 = (Hall) o;
         return Arrays.equals(hall, hall1.hall);
     }

@@ -32,8 +32,12 @@ public class Email {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Email email = (Email) o;
         return Objects.equals(name, email.name);
     }
@@ -45,8 +49,10 @@ public class Email {
 
     @Override
     public String toString() {
-        return "Email{" +
-                "name='" + name + '\'' +
-                '}';
+        return "Email{"
+                + "name='"
+                + name
+                + '\''
+                + '}';
     }
 }

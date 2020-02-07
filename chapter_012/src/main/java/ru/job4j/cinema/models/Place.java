@@ -30,12 +30,16 @@ public class Place {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Place place = (Place) o;
-        return row == place.row &&
-                col == place.col &&
-                status.equals(place.status);
+        return row == place.row
+                && col == place.col
+                && status.equals(place.status);
     }
 
     @Override

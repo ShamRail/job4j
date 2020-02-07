@@ -17,10 +17,10 @@ public class FileDownloadServlet extends HttpServlet {
         String filename = "test.txt";
         String filepath = "c:\\";
         resp.setContentType("APPLICATION/OCTET-STREAM");
-        resp.setHeader("Content-Disposition","attachment; filename=\"" + filename + "\"");
+        resp.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
         FileInputStream fileInputStream = new FileInputStream(filepath + filename);
         int i;
-        while ((i=fileInputStream.read()) != -1) {
+        while ((i = fileInputStream.read()) != -1) {
             out.write(i);
         }
         fileInputStream.close();
