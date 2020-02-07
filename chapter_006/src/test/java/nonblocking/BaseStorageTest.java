@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-
+@Ignore
 public class BaseStorageTest {
 
     @Test
